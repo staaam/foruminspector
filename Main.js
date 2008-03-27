@@ -1,6 +1,6 @@
 var ctrl = function () {
-    var prefs = new _IG_Prefs(__MODULE_ID__);
-    var tabs = new _IG_Tabs(__MODULE_ID__);
+	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
+	var tabs = new _IG_Tabs(moduleID);
     var board = new Board(null, prefs.getString("url"));
     var selForums = {};
     var selTopics = {};

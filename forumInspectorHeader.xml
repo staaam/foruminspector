@@ -9,4 +9,7 @@
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
     <Content type="html"><![CDATA[
-        <script>
+ 		<script>
+			var moduleID =__MODULE_ID__;
+		</script>
+		<script>
