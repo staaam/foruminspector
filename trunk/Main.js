@@ -1,6 +1,6 @@
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
-	var tabs = new _IG_Tabs(moduleID);
+	var tabs = new _IG_Tabs(moduleID, "one", _gel("TabsDiv"));
     var board = new Board(null, prefs.getString("url"));
     var selForums = {};
     var selTopics = {};
@@ -11,10 +11,15 @@ var ctrl = function () {
     var divMostViews;
     var divMostPosts;
     var divForumList;
+    
+    var divStared;
+    var displayGeneral = new DisplayGeneral();
 
     return {
         init: function () {
             ctrl.createTabs();
+            
+            displayGeneral.init(divStared);
             
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
@@ -31,6 +36,9 @@ var ctrl = function () {
 
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
+            divStared = tabs.addDynamicTab("Stared", ctrl.resize);
+            
+            tabs.alignTabs("left", 10);
         },
         
         newForum: function (parent, url, title) {
