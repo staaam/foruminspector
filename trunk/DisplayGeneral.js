@@ -4,6 +4,22 @@ function DisplayGeneral() {
 
 DisplayGeneral.prototype.init = function (divStared) {
 	
+	var afterTabsDiv = "afterTabsDiv";
+	var staredDivHeader = "" +
+		"<div class=\"staredTitle\">" +
+		"	Old motorcycle restoration" +
+		"</div>" +
+		"<div class=\"staredStared\">" +
+		"	Stared" +
+		"</div>" +
+		"<div class=\"staredNewStared\">" +
+		"	New topic UTL:" +
+		"	<input type=\"text\">" +
+		"	<input type=\"button\" value=\"Add Topic\">" +
+		"</div>";
+	
+	var staredDivFooter = "";	
+	
 	var forumItemStr = "" +
 		"<div class=\"forumItem\">" +
 		"	<a href=\"http://www.kuku.com?motorcycles=1\" class=\"name\">Classic Cars & Motorcycles</a>" +
@@ -15,11 +31,16 @@ DisplayGeneral.prototype.init = function (divStared) {
 		"			<a href=\"http://www.kuku.com?user=dan\" class=\"lastPostUser\">Dan</a>" +
 		"		</div>" +
 		"	</div>" +
-		"</div>"
+		"</div>";
 	
 	//alert(divStared);
-	_gel(divStared).innerHTML = forumItemStr; 
+	_gel(divStared).innerHTML = forumItemStr + forumItemStr + forumItemStr;
+	_gel(divStared).className = "staredTab";
 	
+	_gel(afterTabsDiv).innerHTML = staredDivHeader;
+	
+	//<img src="http://hosting.gmodules.com/ig/gadgets/file/102059220620070378482/minus.bmp" alt="Big Boat">
+	//<img src="http://hosting.gmodules.com/ig/gadgets/file/102059220620070378482/plus.bmp" alt="Big Boat">
 }
 
 
