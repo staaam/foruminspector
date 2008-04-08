@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-    <ModulePrefs title="hello world example">
+    <ModulePrefs title="Forums Board Inspector, Gadget">
         <Require feature="dynamic-height"/>
         <Require feature='setprefs'/>
         <Require feature='tabs'/>
@@ -9,7 +9,16 @@
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
     <Content type="html"><![CDATA[
+		<link rel="stylesheet" type="text/css" href="http://hosting.gmodules.com/ig/gadgets/file/102059220620070378482/tabs.css" />
  		<script>
 			var moduleID =__MODULE_ID__;
 		</script>
+
+		<div id ="beforeTabsDiv">
+		</div>
+		<div id="TabsDiv">
+		</div>
+		<div id ="afterTabsDiv">
+		</div>
+		
 		<script>
