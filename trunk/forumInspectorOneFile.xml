@@ -159,6 +159,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.myself.appendChild(this.expandedPart);
    	
    	this.isClosed = true;
+   	that.loadingSpan.style.display = "none";
+   	that.expandedPart.style.display = "none";
    	
    	var that = this;
    	 
