@@ -19,16 +19,26 @@ var ctrl = function () {
         init: function () {
             ctrl.createTabs();
             
-            displayGeneral.init(divStared);
+            display.init(divStared);
             
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
-            board.load();
+            board.load(ctrl.onBoardReady);
             for (var fid in selForums) {
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
-                forum.load();
+                forum.load(ctrl.onForumReady);
             }
             return false;
+        },
+        
+        onBoardReady: function (board) {
+        	display.boardInfo(divBoardInfo, board);
+        	display.categories(divForumList, board.subItems);
+        	//ctrl.displayBoard(board);
+        },
+        
+        onForumReady: function (forum) {
+        	ctrl.displayForum(forum);
         },
         
         createTabs: function () {
@@ -60,14 +70,14 @@ var ctrl = function () {
             return all[id];
         },
         
-        display: function (forumItem) {
-            if (forumItem instanceof Board) {
-                ctrl.displayBoard(forumItem);
-            } else
-            if (forumItem instanceof Forum) {
-                ctrl.displayForum(forumItem);
-            }
-        },
+//        display: function (forumItem) {
+//            if (forumItem instanceof Board) {
+//                ctrl.displayBoard(forumItem);
+//            } else
+//            if (forumItem instanceof Forum) {
+//                ctrl.displayForum(forumItem);
+//            }
+//        },
         
         displayBoard: function (board) {
             //var frmLst_id = tabs.addDynamicTab(board.label.forum, ctrl.resize);

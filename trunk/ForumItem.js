@@ -28,31 +28,32 @@ ForumItem.prototype.mkFullUrl = function (relUrl) {
     return this.boardUrl + relUrl;
 };
 
-ForumItem.prototype.load = function () {
+ForumItem.prototype.load = function (callback) {
     if (this.isLoaded) {
+    	callback(this);
         return;
     }
-    this.reload();
+    this.reload(callback);
 };
 
-ForumItem.prototype.reload = function () {
+ForumItem.prototype.reload = function (callback) {
     this.isLoaded = true;
     var that = this;
     _IG_FetchContent(this.url, function (content) {
         that.onLoad(content);
+        callback(that);
     });
 };
 
 ForumItem.prototype.onLoad = function (content) {
     this.parse(content);
-    this.display();
 };
 
 ForumItem.prototype.parse = function (content) {
 };
 
-ForumItem.prototype.display = function () {
-    ctrl.display(this);
-};
+//ForumItem.prototype.display = function () {
+//    ctrl.display(this);
+//};
 
 /* end ForumItem class */
