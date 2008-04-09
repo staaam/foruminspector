@@ -3,7 +3,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 
 	this.initDisplayItem(parent);
 	
-	this.myself.className = "display-item";
+	this.myself.className = this.myself.className + " display-item";
    	
    	var header = document.createElement("div");
    	header.className = "di-header";
@@ -17,9 +17,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	this.plusImg = document.createElement("img");
 	this.plusImg.className = "di-sign-plus";
-	//plusImg.src = "cleardot.gif";
-	//plusImg.style.width = "9px";
-	//plusImg.style.height = "9px";
+	plusImg.src = "cleardot.gif";
+	plusImg.style.width = "9px";
+	plusImg.style.height = "9px";
 	header.appendChild(this.plusImg);
 	
 	var headerTextSpan = document.createElement("span");
@@ -41,6 +41,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	header.appendChild(this.loadingSpan);
 	
 	var bylineDiv = document.createElement("div");
+	bylineDiv.className = "di-byline";
 	bylineDiv.innerHTML = subHeader;
 	header.appendChild(bylineDiv);
 	  	
@@ -79,6 +80,11 @@ CategoryDisplayItem.prototype = new DisplayItem();
 
 CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 {
+	while ( this.myself.childNodes.length >= 1 )
+    {
+        this.myself.removeChild( this.myself.firstChild );       
+    } 
+    
 	display.categories( this.myself, forumsArr );
 }
 
