@@ -24,7 +24,7 @@ var displayGeneral = function () {
         	
         	for(var i = 0; i < cats.length; i++)
         	{
-        		var displayItem = new createCategoryItem( listDisplayItem.myself, cats[i] )
+        		var displayItem = new createCategoryItem( listDisplayItem.myself, cats[i] );
         		listDisplayItem.addItem( displayItem );
         	}
         },
