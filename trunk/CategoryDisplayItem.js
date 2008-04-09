@@ -17,9 +17,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	this.plusImg = document.createElement("img");
 	this.plusImg.className = "di-sign-plus";
-	plusImg.src = "cleardot.gif";
-	plusImg.style.width = "9px";
-	plusImg.style.height = "9px";
+	this.plusImg.src = "cleardot.gif";
+	this.plusImg.style.width = "9px";
+	this.plusImg.style.height = "9px";
 	header.appendChild(this.plusImg);
 	
 	var headerTextSpan = document.createElement("span");
@@ -30,9 +30,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	gotoLink.href = headerUrl;
 	header.appendChild(gotoLink);
 	
-	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder smallImage gotoArrow";
-	//gotoImg.src = "order_arrow.gif";
+	var gotoImg = document.createElement("div");
+	gotoImg.className = "noborder gotoArrow";
+	//gotoImg.src = "cleardot.gif";
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
@@ -80,12 +80,12 @@ CategoryDisplayItem.prototype = new DisplayItem();
 
 CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 {
-	while ( this.myself.childNodes.length >= 1 )
+	while ( this.expandedPart.childNodes.length >= 1 )
     {
-        this.myself.removeChild( this.myself.firstChild );       
+        this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
     
-	display.categories( this.myself, forumsArr );
+	display.categories( this.expandedPart, forumsArr );
 }
 
 /* end CategoryDisplayItem class */
