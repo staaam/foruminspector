@@ -20,7 +20,13 @@ var displayGeneral = function () {
         
         categories: function ( parentElem, cats )
         {
+        	var listDisplayItem = ListDisplayItem( parentElem );
         	
+        	for(var i = 0; i < cats.length; i++)
+        	{
+        		var displayItem = new createCategoryItem( listDisplayItem.myself, cats[i] )
+        		listDisplayItem.addItem( displayItem );
+        	}
         },
         
         createForumItem: function (parentElem, forum) {
