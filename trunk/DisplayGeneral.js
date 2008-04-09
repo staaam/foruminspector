@@ -18,6 +18,11 @@ var displayGeneral = function () {
         		loadCategoryFunction);
         },
         
+        categories: function ( parentElem, cats )
+        {
+        	
+        },
+        
         createForumItem: function (parentElem, forum) {
         	
         	var loadForumFunction = function(callback) { ctrl.loadForum(forum, callback) };
