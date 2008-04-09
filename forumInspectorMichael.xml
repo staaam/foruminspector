@@ -77,7 +77,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     // spans[0] -- Who is Online
     // spans[1] -- General Info
     // spans[2] -- Users online
-    
+    alert(a.innerHTML);
     this.label.whoIsOnline = a.innerHTML;
     this.boardInfo = {
     	general: spans[1].innerHTML,
