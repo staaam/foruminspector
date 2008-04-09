@@ -136,7 +136,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder"; //gotoArrow
-	gotoImg.src = "order_arrow_small.gif";
+	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/order_arrow_small.gif";
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
@@ -192,7 +192,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
     } 
     
 	display.categories( this.expandedPart, forumsArr );
-	that.loadingSpan.style.display = "none";
+	this.loadingSpan.style.display = "none";
 }
 
 /* end CategoryDisplayItem class *//* begin DisplayGeneral class */
