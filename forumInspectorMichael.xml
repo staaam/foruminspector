@@ -66,6 +66,9 @@ Board.prototype.tryParseForumsTable = function (table) {
 
 Board.prototype.tryParseBoardInfo = function (table) {
     var trs = table.getElementsByTagName('tr');
+    if (!trs || !trs[0] || !trs[0].getElementsByTagName('a')) {
+    	return false;
+    }
     if (!trs[0].getElementsByTagName('a').getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
