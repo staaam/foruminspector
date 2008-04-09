@@ -1,4 +1,33 @@
 /* begin DisplayGeneral class */
+
+var displayGeneral = function () {
+	var privatea;
+
+    return {
+        init: function () {
+        },
+        
+        createCategoryItem: function (parentElem, category) {
+        	
+        	// callback( forums[] )
+        	var loadCategoryFunction = function(callback) 
+        		{ ctrl.loadCategory(category, callback) };
+        	
+        	var displayItem = new CategoryItem();
+        	displayItem.init(parentElem, category.title, null, "empty sub header", 
+        		loadCategoryFunction);
+        },
+        
+        createForumItem: function (parentElem, forum) {
+        	
+        	var loadForumFunction = function(callback) { ctrl.loadForum(forum, callback) };
+        	
+        	//var displayItem(parentElem, "asdf", "asdfa", )
+        }
+
+    }
+}();
+
 function DisplayGeneral() {
 }
 
@@ -31,6 +60,7 @@ DisplayGeneral.prototype.init = function (divStared) {
 		"			<a href=\"http://www.kuku.com?user=dan\" class=\"lastPostUser\">Dan</a>" +
 		"		</div>" +
 		"	</div>" +
+		"	<span class=\"fg-loading\"> (Loading...)</span>" +
 		"</div>";
 	
 	//alert(divStared);
