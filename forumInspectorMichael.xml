@@ -44,11 +44,34 @@ Board.prototype.parse = function (content) {
     var dom = toDOM(getBody(content));
     var tables = dom.getElementsByTagName('table');
     for (var i=0; i<tables.length; i++) {
-        this.tryParseForumsTable(tables[i]);
+        this.tryParseBoardTable(tables[i]);
     }
+    var spans = dom.getElementsByTagName('span');
+    var e = getEl(spans, 'class', 'maintitle');
+    if (!e) {
+	    e = getEl(spans, 'class', 'gen');
+    }
+    if (!e) {
+	    spans = dom.getElementsByTagName('div');
+	    e = getEl(spans, 'class', 'maintitle');
+	    if (!e) {
+		    e = getEl(spans, 'class', 'gen');
+	    }
+    }
+
+    this.title = maintitle;
+    alert(this.title);
 };
 
-Board.prototype.tryParseForumsTable = function (table) {
+function getEl(els, attr, val) {
+    for (var i in els) {
+    	if (els[i].getAttribute(attr) == val) {
+    		return els[i];
+    	}
+    }
+}
+
+Board.prototype.tryParseBoardTable = function (table) {
     if (table.getAttribute('class') != 'forumline') {
     	return false;
     }
@@ -58,7 +81,7 @@ Board.prototype.tryParseForumsTable = function (table) {
     	return true;
     }
     
-    if (this.tryParseBoardInfo(table)) {
+    if (this.tryarseBoardInfo(table)) {
     	return true;
     }
     
@@ -373,7 +396,6 @@ Forum.prototype.parseBoardTableRow = function(tr) {
 		authorProfileLink: this.mkFullUrl(author.getAttribute('href')),
 		link: this.mkFullUrl(as[1].getAttribute('href'))
     };
-    var x = 'a';
 };
 
 Forum.prototype.parse = function (content) {
