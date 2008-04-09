@@ -32,8 +32,8 @@ var ctrl = function () {
         },
         
         onBoardReady: function (board) {
-        	display.boardInfo(divBoardInfo, board);
-        	display.categories(divForumList, board.subItems);
+        	//display.boardInfo(divBoardInfo, board);
+        	display.categories(_gel(divForumList), board.subItems);
         	//ctrl.displayBoard(board);
         },
         
