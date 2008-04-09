@@ -134,14 +134,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	gotoLink.href = headerUrl;
 	header.appendChild(gotoLink);
 	
-	var gotoImg = document.createElement("span");
+	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow";
-	//gotoImg.innerHTML = "     ";
-	//gotoImg.src = "cleardot.gif";
-	var tmp = document.createElement("div");
-	tmp.style.width = "22px";
-	tmp.style.height = "14px";
-	gotoImg.appendChild(tmp);
+	gotoImg.src = "order_arrow_small.gif";
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
