@@ -1,5 +1,5 @@
-/* begin CategoryDislpayItem class */
-function CategoryDislpayItem(parent, headerText, headerUrl, subHeader, expandingFunction) {
+/* begin CategoryDisplayItem class */
+function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction) {
 
 	this.initDisplayItem(parent);
 	this.myself.className = "display-item";
@@ -74,11 +74,11 @@ function CategoryDislpayItem(parent, headerText, headerUrl, subHeader, expanding
    	}
 }
 
-CategoryDislpayItem.prototype = new DisplayItem();
+CategoryDisplayItem.prototype = new DisplayItem();
 
-CategoryDislpayItem.prototype.loadItemsCallback = function( forumsArr )
+CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 {
 	display.categories( this.myself, forumsArr );
 }
 
-/* end CategoryDislpayItem class */
+/* end CategoryDisplayItem class */
