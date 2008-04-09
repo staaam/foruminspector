@@ -60,11 +60,9 @@
 }
 
 .gotoArrow {
-	background-image:url(http://foruminspector.googlecode.com/svn/trunk/order_arrow_small.gif);
-	position: relative;
+	background-image:url(order_arrow_small.gif);
 	height: 14px;
 	width: 22px;
-	left:50px;
 }
 	
 body {
