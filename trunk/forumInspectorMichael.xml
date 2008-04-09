@@ -59,7 +59,7 @@ Board.prototype.parse = function (content) {
 	    }
     }
 
-    this.title = maintitle;
+    this.title = e.textContent;
     alert(this.title);
 };
 
