@@ -136,8 +136,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow";
-	//gotoImg.src = "order_arrow.gif";
-	header.appendChild(gotoImg);
+	gotoImg.src = "cleardot.gif";
+	gotoImg.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
  	this.loadingSpan.className = "di-loading";
