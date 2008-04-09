@@ -144,6 +144,11 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.loadingSpan.innerHTML = "(Loading...)";
 	header.appendChild(this.loadingSpan);
 	
+	this.select = document.createElement("input");
+	this.select.className = "di-select";	
+	this.select.type = "checkbox";
+	header.appendChild(this.select);
+	
 	var bylineDiv = document.createElement("div");
 	bylineDiv.className = "di-byline";
 	bylineDiv.innerHTML = subHeader;
