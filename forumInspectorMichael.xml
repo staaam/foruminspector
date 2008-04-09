@@ -72,6 +72,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     if (!trs[0].getElementsByTagName('a')[0].getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
+    var spans = table.getElementsByTagName('span');
     
     var cat;
     for (var i=1; i<trs.length; i++) {
