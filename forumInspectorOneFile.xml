@@ -135,7 +135,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder"; //gotoArrow
+	gotoImg.className = "noborder gotoArrow";
 	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/order_arrow_small.gif";
 	gotoLink.appendChild(gotoImg);
 	
