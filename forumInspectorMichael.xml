@@ -9,7 +9,7 @@
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
     <Content type="html"><![CDATA[
-		<link rel="stylesheet" type="text/css" href="http://hosting.gmodules.com/ig/gadgets/file/102059220620070378482/tabs.css" />
+		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
 			var moduleID =__MODULE_ID__;
 		</script>
@@ -66,7 +66,7 @@ Board.prototype.tryParseForumsTable = function (table) {
 };
 
 Board.prototype.tryParseBoardInfo = function (table) {
-    if (!table || table.getElementsByTagName('a')) {
+    if (!table || !table.getElementsByTagName('a')) {
     	return false;
     }
     var a = table.getElementsByTagName('a')[0];
@@ -140,7 +140,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 
 	this.initDisplayItem(parent);
 	
-	this.myself.className = "display-item";
+	this.myself.className = this.myself.className + " display-item";
    	
    	var header = document.createElement("div");
    	header.className = "di-header";
@@ -154,9 +154,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	this.plusImg = document.createElement("img");
 	this.plusImg.className = "di-sign-plus";
-	//plusImg.src = "cleardot.gif";
-	//plusImg.style.width = "9px";
-	//plusImg.style.height = "9px";
+	this.plusImg.src = "cleardot.gif";
+	this.plusImg.style.width = "9px";
+	this.plusImg.style.height = "9px";
 	header.appendChild(this.plusImg);
 	
 	var headerTextSpan = document.createElement("span");
@@ -167,9 +167,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	gotoLink.href = headerUrl;
 	header.appendChild(gotoLink);
 	
-	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder smallImage gotoArrow";
-	//gotoImg.src = "order_arrow.gif";
+	var gotoImg = document.createElement("div");
+	gotoImg.className = "noborder gotoArrow";
+	//gotoImg.src = "cleardot.gif";
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
@@ -178,6 +178,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	header.appendChild(this.loadingSpan);
 	
 	var bylineDiv = document.createElement("div");
+	bylineDiv.className = "di-byline";
 	bylineDiv.innerHTML = subHeader;
 	header.appendChild(bylineDiv);
 	  	
@@ -216,7 +217,12 @@ CategoryDisplayItem.prototype = new DisplayItem();
 
 CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 {
-	display.categories( this.myself, forumsArr );
+	while ( this.expandedPart.childNodes.length >= 1 )
+    {
+        this.expandedPart.removeChild( this.expandedPart.firstChild );       
+    } 
+    
+	display.categories( this.expandedPart, forumsArr );
 }
 
 /* end CategoryDisplayItem class *//* begin DisplayGeneral class */
@@ -326,6 +332,7 @@ DisplayItem.prototype.initDisplayItem = function (parent) {
     this.parent = parent;
    
 	this.myself = document.createElement("div");
+	this.className = "display-item";
    	parent.appendChild(this.myself);
 }
 
@@ -493,7 +500,7 @@ ForumItem.prototype.parse = function (content) {
 /* end ForumItem class *//* begin ListDisplayItem class */
 function ListDisplayItem(parent) {
 	this.initDisplayItem(parent)
-	this.myself.className = "listDisplayItem";
+	this.myself.className = this.myself.className + " listDisplayItem";
 }
 
 ListDisplayItem.prototype = new DisplayItem();
