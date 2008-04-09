@@ -11,11 +11,21 @@ var displayGeneral = function () {
         	
         	// callback( forums[] )
         	var loadCategoryFunction = function(callback) 
-        		{ ctrl.loadCategory(category, callback) };
+        		{ category.load( callback ); };
         	
-        	var displayItem = new CategoryDisplayItem();
-        	displayItem.init(parentElem, category.title, null, "empty sub header", 
-        		loadCategoryFunction);
+        	var displayItem = new CategoryDisplayItem(
+        			parentElem, category.title, null, 
+        			"empty sub header", loadCategoryFunction);
+        },
+        
+        createForumItem: function (parentElem, forum) {
+        	
+        	var loadForumFunction = function(callback)
+        		{ forum.load( callback ); };
+        	
+        	var displayItem = new CategoryDisplayItem(
+        		parentElem, forum.title, null, 
+        		"empty sub header", loadForumFunction);
         },
         
         categories: function ( parentElem, cats )
@@ -34,18 +44,8 @@ var displayGeneral = function () {
         	
         	for(var i in forums)
         	{
-        		var displayItem = new createCategoryItem( listDisplayItem.myself, forums[i] );
+        		var displayItem = new createForumItem( listDisplayItem.myself, forums[i] );
         	}        	
-        },
-        
-        createForumItem: function (parentElem, forum) {
-        	
-        	var loadForumFunction = function(callback)
-        		{ ctrl.loadForum(forum, callback) };
-        	
-        	var displayItem = new CategoryItem();
-        	displayItem.init(parentElem, category.title, null, "empty sub header", 
-        		loadCategoryFunction);
         }
 
     }
