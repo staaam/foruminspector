@@ -41,7 +41,7 @@ var display = function () {
         forums: function ( parentElem, forums )
         {
         	var listDisplayItem = new ListDisplayItem( parentElem );
-        	
+   
         	for(var i in forums)
         	{
         		var displayItem = display.createForumItem( listDisplayItem.myself, forums[i] );
