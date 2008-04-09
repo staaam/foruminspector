@@ -33,6 +33,11 @@
 	height: 500px;
 }
 
+.di-select {
+	position:relative;
+	left:90%;
+}
+
 .di-header {
 	background-color:#E5ECF9;
 	background-repeat:no-repeat;
