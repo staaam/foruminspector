@@ -22,7 +22,7 @@ var displayGeneral = function () {
         {
         	var listDisplayItem = new ListDisplayItem( parentElem );
         	
-        	for(var i = 0; i < cats.length; i++)
+        	for(var i in cats)
         	{
         		var displayItem = new createCategoryItem( listDisplayItem.myself, cats[i] );
         		listDisplayItem.addItem( displayItem );
