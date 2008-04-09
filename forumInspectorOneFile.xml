@@ -121,9 +121,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	this.plusImg = document.createElement("img");
 	this.plusImg.className = "di-sign-plus";
-	plusImg.src = "cleardot.gif";
-	plusImg.style.width = "9px";
-	plusImg.style.height = "9px";
+	this.plusImg.src = "cleardot.gif";
+	this.plusImg.style.width = "9px";
+	this.plusImg.style.height = "9px";
 	header.appendChild(this.plusImg);
 	
 	var headerTextSpan = document.createElement("span");
