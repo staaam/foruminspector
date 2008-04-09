@@ -69,7 +69,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     if (!trs || !trs[0] || !trs[0].getElementsByTagName('a')) {
     	return false;
     }
-    if (!trs[0].getElementsByTagName('a').getAttribute('href').match(/viewonline.php/)) {
+    if (!trs[0].getElementsByTagName('a')[0].getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
     
