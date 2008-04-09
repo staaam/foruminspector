@@ -29,7 +29,8 @@ function Board(parent, url, title) {
         forum: "Forum",
         topics: "Topics",
         posts: "Posts",
-        lastPost: "Last Post"
+        lastPost: "Last Post",
+        whoIsOnline: "Who is Online"
     };
 }
 
@@ -65,22 +66,23 @@ Board.prototype.tryParseForumsTable = function (table) {
 };
 
 Board.prototype.tryParseBoardInfo = function (table) {
-    var trs = table.getElementsByTagName('tr');
-    if (!trs || !trs[0] || !trs[0].getElementsByTagName('a')) {
+    if (!table || table.getElementsByTagName('a')) {
     	return false;
     }
-    if (!trs[0].getElementsByTagName('a')[0].getAttribute('href').match(/viewonline.php/)) {
+    var a = table.getElementsByTagName('a')[0];
+    if (!a.getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
     var spans = table.getElementsByTagName('span');
+    // spans[0] -- Who is Online
+    // spans[1] -- General Info
+    // spans[2] -- Users online
     
-    var cat;
-    for (var i=1; i<trs.length; i++) {
-        var tr = trs[i];
-        var as = tr.getElementsByTagName('a');
-        if (as[0].getAttribute('class') == 'cattitle') {
-        }
-    }
+    this.label.whoIsOnline = a.innerHTML;
+    this.boardInfo = {
+    	general: spans[1].innerHTML,
+    	users: spans[2].innerHTML,
+    };
 };
 
 Board.prototype.parseForumsTable = function (table) {
