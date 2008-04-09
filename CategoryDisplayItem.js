@@ -55,7 +55,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	
    	var that = this;
    	 
-   	this.header.onclick = function() {
+   	header.onclick = function() {
    		if (that.isClosed)
    		{
    			that.loadingSpan.style.display = "inline";
