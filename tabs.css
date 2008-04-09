@@ -60,7 +60,7 @@
 }
 
 .gotoArrow {
-	background-image:url(http://foruminspector.googlecode.com/svn/trunk/order_arrow.gif);
+	background-image:url(order_arrow.gif);
 	width: 9px;
 	height: 9px;
 }
@@ -110,7 +110,4 @@ a, a:link {
 .noborder {
 	border:0px solid gray;
 }
-			
-.smallImage {
-	height: 10px;
-}
+
