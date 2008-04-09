@@ -81,7 +81,7 @@ Board.prototype.tryParseBoardTable = function (table) {
     	return true;
     }
     
-    if (this.tryarseBoardInfo(table)) {
+    if (this.tryParseBoardInfo(table)) {
     	return true;
     }
     
