@@ -370,8 +370,8 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     this.lastPost = {
     	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
 		author: author.textContent,
-		authorProfileLink: author.getAttribute('href'),
-		link: as[1]
+		authorProfileLink: this.mkFullUrl(author.getAttribute('href')),
+		link: this.mkFullUrl(as[1].getAttribute('href'))
     };
     var x = 'a';
 };
