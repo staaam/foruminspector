@@ -30,8 +30,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	gotoLink.href = headerUrl;
 	header.appendChild(gotoLink);
 	
-	var gotoImg = document.createElement("div");
+	var gotoImg = document.createElement("span");
 	gotoImg.className = "noborder gotoArrow";
+	//gotoImg.innerHTML = "     ";
 	//gotoImg.src = "cleardot.gif";
 	gotoLink.appendChild(gotoImg);
 	
@@ -54,6 +55,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.myself.appendChild(this.expandedPart);
    	
    	this.isClosed = true;
+   	this.loadingSpan.style.display = "none";
+   	this.expandedPart.style.display = "none";
    	
    	var that = this;
    	 
@@ -86,6 +89,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
     } 
     
 	display.categories( this.expandedPart, forumsArr );
+	that.loadingSpan.style.display = "none";
 }
 
 /* end CategoryDisplayItem class */
