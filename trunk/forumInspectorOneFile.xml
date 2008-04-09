@@ -136,6 +136,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	var gotoImg = document.createElement("span");
 	gotoImg.className = "noborder gotoArrow";
+	gotoImg.innerHTML = "asdf";
 	//gotoImg.src = "cleardot.gif";
 	gotoLink.appendChild(gotoImg);
 	
