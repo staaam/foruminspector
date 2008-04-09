@@ -34,8 +34,8 @@
 }
 
 .di-select {
-	position:relative;
-	left:90%;
+	position:absolute;
+	left:93%;
 }
 
 .di-header {
