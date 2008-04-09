@@ -76,7 +76,7 @@ function CategoryDislpayItem(parent, headerText, headerUrl, subHeader, expanding
 
 CategoryDislpayItem.prototype = new DisplayItem();
 
-CategoryDislpayItem.prototype.loadItemsCallback( forumsArr )
+CategoryDislpayItem.prototype.loadItemsCallback = function( forumsArr )
 {
 	display.categories( this.myself, forumsArr );
 }
