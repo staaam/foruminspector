@@ -102,8 +102,8 @@ Category.prototype = new ForumItem();
 
 Category.prototype.idRegEx = /[?&]c=(\d+)/;
 Category.prototype.viewer = "index.php";
-/* end Category class *//* begin CategoryDislpayItem class */
-function CategoryDislpayItem(parent, headerText, headerUrl, subHeader, expandingFunction) {
+/* end Category class *//* begin CategoryDisplayItem class */
+function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction) {
 
 	this.initDisplayItem(parent);
 	this.myself.className = "display-item";
@@ -178,14 +178,14 @@ function CategoryDislpayItem(parent, headerText, headerUrl, subHeader, expanding
    	}
 }
 
-CategoryDislpayItem.prototype = new DisplayItem();
+CategoryDisplayItem.prototype = new DisplayItem();
 
-CategoryDislpayItem.prototype.loadItemsCallback = function( forumsArr )
+CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 {
 	display.categories( this.myself, forumsArr );
 }
 
-/* end CategoryDislpayItem class *//* begin DisplayGeneral class */
+/* end CategoryDisplayItem class *//* begin DisplayGeneral class */
 
 var display = function () {
 	var privatea;
@@ -221,7 +221,7 @@ var display = function () {
         	
         	for(var i in cats)
         	{
-        		var displayItem = display.createCategoryItem( listDisplayItem.myself, cats[i] );
+        		display.createCategoryItem( listDisplayItem.myself, cats[i] );
         	}
         },
         
@@ -231,7 +231,7 @@ var display = function () {
    
         	for(var i in forums)
         	{
-        		var displayItem = display.createForumItem( listDisplayItem.myself, forums[i] );
+        		display.createForumItem( listDisplayItem.myself, forums[i] );
         	}        	
         }
 
