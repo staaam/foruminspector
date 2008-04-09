@@ -2,6 +2,7 @@
 function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction) {
 
 	this.initDisplayItem(parent);
+	
 	this.myself.className = "display-item";
    	
    	var header = document.createElement("div");
@@ -62,7 +63,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    			that.expandedPart.style.display = "block";
    			that.plusImg.className = "di-sign-minus";
    			that.isClosed = false;
-   			expandingFunction( that.loadItemsCallback );
+   			expandingFunction( function( o ) { that.loadItemsCallback( o ); } );
    		}
    		else
    		{

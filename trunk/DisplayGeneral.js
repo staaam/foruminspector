@@ -11,7 +11,7 @@ var display = function () {
         	
         	// callback( forums[] )
         	var loadCategoryFunction = function(callback) 
-        		{ category.load( callback ); };
+        		{ category.load( function ( o ) { callback( o.subitems ); } ); };
         	
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, null, 
@@ -21,7 +21,7 @@ var display = function () {
         createForumItem: function (parentElem, forum) {
         	
         	var loadForumFunction = function(callback)
-        		{ forum.load( callback ); };
+        		{ forum.load( function ( o ) { callback( o.subitems ); } ); };
         	
         	var displayItem = new CategoryDisplayItem(
         		parentElem, forum.title, null, 
