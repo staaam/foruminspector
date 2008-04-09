@@ -1,6 +1,6 @@
 /* begin DisplayGeneral class */
 
-var displayGeneral = function () {
+var display = function () {
 	var privatea;
 
     return {
