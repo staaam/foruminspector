@@ -184,9 +184,9 @@ CategoryDisplayItem.prototype = new DisplayItem();
 
 CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 {
-	while ( this.myself.childNodes.length >= 1 )
+	while ( this.expandedPart.childNodes.length >= 1 )
     {
-        this.expandedPart.removeChild( this.myself.firstChild );       
+        this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
     
 	display.categories( this.expandedPart, forumsArr );
