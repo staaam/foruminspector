@@ -8,7 +8,7 @@
     <UserPref name="url" display_name="Board URL" default_value="http://forums.asat.co.il" />
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
-    <Content type="html"><![CDATA[ 
+    <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://hosting.gmodules.com/ig/gadgets/file/102059220620070378482/tabs.css" />
  		<script>
 			var moduleID =__MODULE_ID__;
@@ -221,7 +221,7 @@ var display = function () {
         	
         	for(var i in cats)
         	{
-        		var displayItem = dislpay.createCategoryItem( listDisplayItem.myself, cats[i] );
+        		var displayItem = display.createCategoryItem( listDisplayItem.myself, cats[i] );
         	}
         },
         
@@ -231,7 +231,7 @@ var display = function () {
         	
         	for(var i in forums)
         	{
-        		var displayItem = dislpay.createForumItem( listDisplayItem.myself, forums[i] );
+        		var displayItem = display.createForumItem( listDisplayItem.myself, forums[i] );
         	}        	
         }
 
