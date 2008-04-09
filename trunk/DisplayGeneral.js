@@ -20,7 +20,7 @@ var displayGeneral = function () {
         
         categories: function ( parentElem, cats )
         {
-        	var listDisplayItem = ListDisplayItem( parentElem );
+        	var listDisplayItem = new ListDisplayItem( parentElem );
         	
         	for(var i = 0; i < cats.length; i++)
         	{
