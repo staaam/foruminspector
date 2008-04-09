@@ -1,14 +1,8 @@
 /* begin ListDisplayItem class */
-function ListDisplayItem() {
+function ListDisplayItem(parent) {
+	this.initDisplayItem(parent)
+	this.myself.className = "listDisplayItem";
 }
 
-ListDisplayItem.prototype.init = function (parent) {
-	
-}
-
-ListDisplayItem.prototype.addItem( item )
-{
-	
-}
-
-/* end ListDisplayItem class */
+ListDisplayItem.prototype = new DisplayItem();
+/* end ListDisplayItem class */	

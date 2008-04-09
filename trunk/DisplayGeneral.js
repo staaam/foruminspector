@@ -13,7 +13,7 @@ var displayGeneral = function () {
         	var loadCategoryFunction = function(callback) 
         		{ ctrl.loadCategory(category, callback) };
         	
-        	var displayItem = new CategoryItem();
+        	var displayItem = new CategoryDisplayItem();
         	displayItem.init(parentElem, category.title, null, "empty sub header", 
         		loadCategoryFunction);
         },
@@ -25,15 +25,27 @@ var displayGeneral = function () {
         	for(var i in cats)
         	{
         		var displayItem = new createCategoryItem( listDisplayItem.myself, cats[i] );
-        		listDisplayItem.addItem( displayItem );
         	}
+        },
+        
+        forums: function ( parentElem, forums )
+        {
+        	var listDisplayItem = new ListDisplayItem( parentElem );
+        	
+        	for(var i in forums)
+        	{
+        		var displayItem = new createCategoryItem( listDisplayItem.myself, forums[i] );
+        	}        	
         },
         
         createForumItem: function (parentElem, forum) {
         	
-        	var loadForumFunction = function(callback) { ctrl.loadForum(forum, callback) };
+        	var loadForumFunction = function(callback)
+        		{ ctrl.loadForum(forum, callback) };
         	
-        	//var displayItem(parentElem, "asdf", "asdfa", )
+        	var displayItem = new CategoryItem();
+        	displayItem.init(parentElem, category.title, null, "empty sub header", 
+        		loadCategoryFunction);
         }
 
     }
