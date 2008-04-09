@@ -30,16 +30,20 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	gotoLink.href = headerUrl;
 	header.appendChild(gotoLink);
 	
-	var gotoImg = document.createElement("span");
+	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow";
-	//gotoImg.innerHTML = "     ";
-	//gotoImg.src = "cleardot.gif";
+	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/order_arrow_small.gif";
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
  	this.loadingSpan.className = "di-loading";
 	this.loadingSpan.innerHTML = "(Loading...)";
 	header.appendChild(this.loadingSpan);
+	
+	this.select = document.createElement("input");
+	this.select.className = "di-select";	
+	this.select.type = "checkbox";
+	header.appendChild(this.select);
 	
 	var bylineDiv = document.createElement("div");
 	bylineDiv.className = "di-byline";
@@ -89,7 +93,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
     } 
     
 	display.categories( this.expandedPart, forumsArr );
-	that.loadingSpan.style.display = "none";
+	this.loadingSpan.style.display = "none";
 }
 
 /* end CategoryDisplayItem class */
