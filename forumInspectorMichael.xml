@@ -64,7 +64,7 @@ Board.prototype.parse = function (content) {
 };
 
 function getEl(els, attr, val) {
-    for (var i in els) {
+    for (var i=0; i<els.length; i++) {
     	if (els[i] && els[i].getAttribute(attr) == val) {
     		return els[i];
     	}
@@ -394,7 +394,7 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
 		author: author.textContent,
 		authorProfileLink: this.mkFullUrl(author.getAttribute('href')),
-		link: this.mkFullUrl(as[1].getAttribute('href'))
+		link: as[1] ? this.mkFullUrl(as[1].getAttribute('href')) : ""
     };
 };
 
