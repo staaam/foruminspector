@@ -65,7 +65,7 @@ Board.prototype.parse = function (content) {
 
 function getEl(els, attr, val) {
     for (var i in els) {
-    	if (els[i].getAttribute(attr) == val) {
+    	if (els[i] && els[i].getAttribute(attr) == val) {
     		return els[i];
     	}
     }
