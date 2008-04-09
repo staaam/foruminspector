@@ -136,7 +136,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	var gotoImg = document.createElement("span");
 	gotoImg.className = "noborder gotoArrow";
-	//gotoImg.innerHTML = "";
+	gotoImg.innerHTML = "     ";
 	//gotoImg.src = "cleardot.gif";
 	gotoLink.appendChild(gotoImg);
 	
@@ -193,6 +193,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
     } 
     
 	display.categories( this.expandedPart, forumsArr );
+	that.loadingSpan.style.display = "none";
 }
 
 /* end CategoryDisplayItem class *//* begin DisplayGeneral class */
