@@ -135,9 +135,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder smallImage gotoArrow";
+	gotoImg.className = "noborder gotoArrow";
 	//gotoImg.src = "order_arrow.gif";
-	gotoLink.appendChild(gotoImg);
+	header.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
  	this.loadingSpan.className = "di-loading";
