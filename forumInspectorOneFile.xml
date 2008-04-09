@@ -186,10 +186,10 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 {
 	while ( this.myself.childNodes.length >= 1 )
     {
-        this.myself.removeChild( this.myself.firstChild );       
+        this.expandedPart.removeChild( this.myself.firstChild );       
     } 
     
-	display.categories( this.myself, forumsArr );
+	display.categories( this.expandedPart, forumsArr );
 }
 
 /* end CategoryDisplayItem class *//* begin DisplayGeneral class */
