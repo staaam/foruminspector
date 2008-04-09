@@ -138,6 +138,10 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	gotoImg.className = "noborder gotoArrow";
 	//gotoImg.innerHTML = "     ";
 	//gotoImg.src = "cleardot.gif";
+	var tmp = document.createElement("div");
+	tmp.style.width = "22px";
+	tmp.style.height = "14px";
+	gotoImg.appendChild(tmp);
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
