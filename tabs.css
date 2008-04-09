@@ -1,0 +1,38 @@
+.tablib_emptyTab {
+	display: none;
+}
+
+.tablib_spacerTab, .tablib_selected, .tablib_unselected {
+	border-width: 0px;
+	border-bottom: 0px solid #d2ecf5;
+}
+
+.tablib_selected, .tablib_unselected {
+	padding: 4px;
+}
+
+.tablib_content_container {
+	padding: 3px;
+	background-color: #fff;
+	text-align: center;
+}
+
+.tablib_main_container {
+	background-color: #a5bce9;
+	padding: 5px;
+}
+
+.tablib_selected table td, .tablib_unselected table td {
+	font-size: 11px;
+	text-align: center;
+	color: #a40;
+}
+
+.staredTab {
+	overflow-y: auto;
+	height: 500px;
+}
+
+.forumItem {
+}
+
