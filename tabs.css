@@ -60,9 +60,7 @@
 }
 
 .gotoArrow {
-	background-image:url(order_arrow_small.gif);
-	height: 14px;
-	width: 22px;
+	height: 12px;
 }
 	
 body {
