@@ -363,6 +363,9 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     // tds[1] forum title, link; description; moderator(s)
     this.topics = tds[2].textContent;
     this.posts = tds[3].textContent;
+    var lastPost = tds[4].getElementsByTagName('span')[0];
+    this.lastPostDate = lastPost.innerHTML.match(/^(.*?)<br/)[0];
+    this.lastPostAuthor = lastPost.getElementsByTagName('a')[0];
     // tds[4] last post date; author, link
 };
 
