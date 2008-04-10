@@ -199,7 +199,7 @@ var labels = {
     whoIsOnline: "Who is Online",
     
     author: "Aurhor",
-    views: "Views",
+    views: "Views"
 };
 
 function splitKeys(str) {
