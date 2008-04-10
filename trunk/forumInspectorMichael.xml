@@ -723,8 +723,9 @@ var ctrl = function () {
         	return selTopics[topic.id] != undefined;
         },
         
-        toggleForum: function (form, name) {
-            if (form["f"+name].checked) {
+        toggleForum: function (forum, checked) {
+        	var name = forum.id;
+            if (checked) {
                 selForums[name] = 1;
                 allForums[name].load();
             } else {
@@ -733,8 +734,9 @@ var ctrl = function () {
             prefs.set("selForums", joinKeys(selForums));
         },
 
-        toggleTopic: function (form, name) {
-            if (form["f"+name].checked) {
+        toggleTopic: function (topic, checked) {
+        	var name = topic.id;
+            if (checked) {
                 selTopics[name] = 1;
             } else {
                 selTopics[name] = undefined;
