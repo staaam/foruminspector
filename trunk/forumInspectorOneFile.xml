@@ -277,10 +277,10 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	if (subHeader != null)
 	{
-		var bylineDiv = document.createElement("div");
-		bylineDiv.className = "di-byline";
-		bylineDiv.innerHTML = subHeader;
-		this.header.appendChild(bylineDiv);
+		this.bylineDiv = document.createElement("div");
+		this.bylineDiv.className = "di-byline";
+		this.bylineDiv.innerHTML = subHeader;
+		this.header.appendChild(this.bylineDiv);
 	}
 	  	
    	this.myself.appendChild(this.header);
@@ -290,6 +290,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.expandedPart = document.createElement("div");
    	this.expandedPart.className = "di-expanded";
    	this.myself.appendChild(this.expandedPart);
+   	
+   	display.reduceSpanText( headerTextSpan, 300 );
+   	display.reduceSpanText( this.bylineDiv, 300 );
    	
    	this.isClosed = true;
    	this.loadingSpan.style.display = "none";
@@ -486,14 +489,32 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, topics )
-        {
+        topics: function( parentElem, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
    
         	for(var i=0; i<topics.length; i++)
         	{
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
         	}    	
+        },
+        
+        reduceSpanText: function( objSpan, widthFinal ) {
+        	// while width of dynamic span is greater than final width
+			var widthTemp = objSpan.offsetWidth;
+			var lengthText = getText(objSpan).length;
+			
+            while(widthTemp > widthFinal && lengthText > 0)
+            {
+                // reduce one character from original text
+
+                lengthText--;
+                textTrimmed = textOrigional.substring(0, lengthText);
+
+                // get width of reduced text
+
+                objSpan.innerHTML = textTrimmed;
+                widthTemp = objSpan.offsetWidth;
+            }
         }
 
     }
