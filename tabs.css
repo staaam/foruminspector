@@ -8,29 +8,26 @@
 }
 
 .tablib_selected, .tablib_unselected {
-	padding: 4px;
+	padding: 0px;
 }
 
 .tablib_content_container {
-	padding: 3px;
+	overflow-y: auto;
+	height: 500px;
+	padding: 0px;
 	background-color: #fff;
 	text-align: left;
 }
 
 .tablib_main_container {
 	background-color: #a5bce9;
-	padding: 5px;
+	padding: 0px;
 }
 
 .tablib_selected table td, .tablib_unselected table td {
 	font-size: 11px;
 	text-align: center;
 	color: #a40;
-}
-
-.staredTab {
-	overflow-y: auto;
-	height: 500px;
 }
 
 .di-select {
