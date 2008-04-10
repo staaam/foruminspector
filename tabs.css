@@ -30,6 +30,10 @@
 	color: #a40;
 }
 
+.boardTitle {
+	font-size:medium;
+}
+
 .di-select {
 	position:absolute;
 	left:93%;
