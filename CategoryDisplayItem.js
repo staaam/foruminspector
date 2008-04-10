@@ -1,5 +1,5 @@
 /* begin CategoryDisplayItem class */
-function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, selectFunction ) {
+function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, isSelected, selectFunction ) {
 
 	this.initDisplayItem(parent);
 	
@@ -38,21 +38,23 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.loadingSpan.innerHTML = "(Loading...)";
 	this.header.appendChild(this.loadingSpan);
 	
-	/*this.select = document.createElement("input");
-	this.select.className = "di-select";
-	this.select.type = "checkbox";
-	var onClickSelect = function (e) {
-		
-		if (!e) var e = window.event;
-		e.cancelBubble = true;
-		if (e.stopPropagation) e.stopPropagation();
-		
-		selectFunction( this.checked );
-        
+	if (selectFunction != null) {
+		this.select = document.createElement("input");
+		this.select.className = "di-select";	
+		this.select.type = "checkbox";
+		this.select.checked = isSelected;
+		var onClickSelect = function (e) {
+			
+			if (!e) var e = window.event;
+			e.cancelBubble = true;
+			if (e.stopPropagation) e.stopPropagation();
+			
+			selectFunction( this.checked );
+	        
+		}
+		this.select.addEventListener('click',onClickSelect,false);
+		this.header.appendChild(this.select);
 	}
-	this.select.addEventListener('click',onClickSelect,false);
-	
-	this.header.appendChild(this.select);*/
 	
 	if (subHeader != null)
 	{
