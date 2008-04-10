@@ -111,13 +111,6 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	
    	var header = document.createElement("div");
    	header.className = "di-header";
-   	//header.innerHTML = "" +
-   	//	"<img class=\"fg-sign\" src=\"cleardot.gif\" style=\"width: 9px; height: 9px;\"/>" +
-	//	headerText +
-	//	"<a href=\"" + headerUrl + "\" class=\"name\">" + 
-	//	"<img class=\"noborder smallImage\" src=\"order_arrow.gif\"/></a>" +
-	//	"<span class=\"di-loading\" style=\"display: none\">(Loading...)</span>" + 
-	//	"<div class=\"fg-byline\">" + subHeader + "</div>";
 	
 	this.plusImg = document.createElement("img");
 	this.plusImg.className = "di-sign-plus";
@@ -136,7 +129,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow";
-	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/order_arrow_small.gif";
+	//gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/order_arrow_small.gif";
+	gotoImg.src = "cleardot.gif";
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
@@ -231,10 +225,10 @@ var display = function () {
         		{ ctrl.toggleForum( category, status ); };
         		
         	var displayItem = new CategoryDisplayItem(
-        			parentElem, category.title, null, 
-        			"empty sub header", loadCategoryFunction, selectCategoryFunction);
+        			parentElem, category.title, category.url, 
+        			null, loadCategoryFunction, selectCategoryFunction);
         },
-        
+                
         createForumItem: function (parentElem, forum) {
         	
         	var loadForumFunction = function(callback)
