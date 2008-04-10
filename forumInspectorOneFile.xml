@@ -353,7 +353,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     labels.whoIsOnline = a.innerHTML;
     this.boardInfo = {
     	general: spans[1].innerHTML,
-    	users: spans[2].innerHTML,
+    	users: spans[2].innerHTML
     };
 };
 
