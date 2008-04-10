@@ -1042,7 +1042,7 @@ function splitKeys(str) {
     var s = str.split(";");
     for (var i in s) {
         if (s[i].length > 0) {
-        	var a = s.split("=");
+        	var a = s[i].split("=");
             map[a[0]] = a[1];
         }
     }
