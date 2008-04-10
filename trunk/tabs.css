@@ -69,6 +69,11 @@
 }
 
 .di-secondary-header {
+	background-repeat:no-repeat;
+	cursor:pointer;
+	font-family:Arial,sans-serif;
+	font-size:small;
+	position:relative;
 	background-color:white;
 	padding:0px 0px 0px 5px;
 }
