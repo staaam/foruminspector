@@ -463,7 +463,7 @@ var display = function () {
         	var span = document.createElement("span");
         	span.className = "boardTitle";
         	span.innerHTML = board.title;
-        	parentElem.appentChild(span);
+        	parentElem.appendChild(span);
         	
         	display.reduceSpanText( span, 300 );
         },
