@@ -49,10 +49,13 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
-        	for (var i=0; i<selForums.length; i++) {
-        		selForums[i].load(function(forum) {
-        			display.topics(_gel(divNewTopics), forum.subItems);
-        		});
+            for (var i in allForums) {
+            	var forum = allForums[i];
+            	if (forum.isSelected()) {
+	        		forum.load(function(forum) {
+	        			display.topics(_gel(divNewTopics), forum.subItems);
+	        		});
+            	}
         	}
         	ctrl.resize();
         },
@@ -245,17 +248,18 @@ var sorters = {
     }
 }
 
-Array.prototype.grep = function (f){
-	var output=new Array();
-	for(var i=0;i<this.length;i++){
-	     if(f(this[i])){
-	     	output.push(this[i])
-			//output.length++
-			//output[output.length-1]=this[i];
-	     }
-	}
-	return output;
-}
+
+//Array.prototype.grep = function (f){
+//	var output=new Array();
+//	for(var i=0;i<this.length;i++){
+//	     if(f(this[i])){
+//	     	output.push(this[i])
+//			//output.length++
+//			//output[output.length-1]=this[i];
+//	     }
+//	}
+//	return output;
+//}
 
 var greps = {
 	hotTopic: function (topic) { return topic.isHot; },
