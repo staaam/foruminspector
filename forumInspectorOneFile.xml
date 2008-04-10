@@ -223,13 +223,14 @@ Category.prototype.idRegEx = /[?&]c=(\d+)/;
 Category.prototype.viewer = "index.php";
 /* end Category class *//* begin CategoryDisplayItem class */
 function CategoryDisplayItem(parent, headerText, headerUrl,
-	subHeader, expandingFunction, isSelected, selectFunction, isForums ) {
+	subHeader, expandingFunction, isSelected, selectFunction, isForums, direction ) {
 
 	this.initDisplayItem(parent);
 	
 	this.isForums = isForums;
 	
    	this.header = document.createElement("div");
+   	this.header.dir = direction;
    	this.header.className = "di-header";
 	
 	this.plusImg = document.createElement("img");
@@ -432,7 +433,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null, true);
+        			null, loadCategoryFunction, null, null, true, category.dir);
         },
                 
         createSecondaryForumItem: function (parentElem, forum) {
@@ -473,7 +474,7 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction, false );
+        			topic.isSelected(), selectTopicFunction, false, topic.dir );
         },
         
         createBoardInfo: function ( parentElem, board )
