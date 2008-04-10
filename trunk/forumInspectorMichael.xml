@@ -746,7 +746,7 @@ var ctrl = function () {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function(forum) {
-	        			display.topics(_gel(divNewTopics), getValues(allTopics).sort(sorters.neg(sorters.byId)).splice(0, prefs.getInt("nTopics")));
+	        			display.topics(_gel(divNewTopics), getValues(allTopics).sort(sorters.byId).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
         	}
