@@ -458,6 +458,13 @@ var display = function () {
 				"</div>";
         },
         
+        createBoardTitle: function ( parentElem, board ){
+        	parentElem.className = "boardTitle";
+        	parentElem.innerHTML = board.title;
+        	
+        	display.reduceSpanText( parentElem, 300 );
+        },
+        
         getForumSubHeader: function ( forum ) {
         	return labels.topics + ": " + forum.topics + " " +
   			labels.posts + ": " + forum.posts + "<br>" +
@@ -801,6 +808,7 @@ var ctrl = function () {
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
+            	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
 	        });
