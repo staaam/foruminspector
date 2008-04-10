@@ -751,11 +751,21 @@ var ctrl = function () {
             	if (forum.isSelected()) {
 	        		forum.load(function(forum) {
 	        			display.clear(_gel(divNewTopics));
-	        			display.topics(_gel(divNewTopics), getValues(allTopics).sort(sorters.byId).splice(0, prefs.getInt("nTopics")));
+	        			display.topics(_gel(divNewTopics), ctrl.getAllTopics().sort(sorters.byId).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
         	}
         	ctrl.resize();
+        },
+        
+        getAllTopics: function () {
+			var r = [];
+			for (var i in allTopics) {
+				if (allTopics[i].parent.isSelected()) {
+					r.push(allTopics[i]);
+				}
+			}
+			return r;        	
         },
         
         newForum: function (parent, url, title) {
@@ -883,14 +893,6 @@ var labels = {
     author: "Aurhor",
     views: "Views"
 };
-
-function getValues(o) {
-	var r = [];
-	for (var i in o) {
-		r.push(o[i]);
-	}
-	return r;
-}
 
 function getText(node) {
 	if (!node) {
