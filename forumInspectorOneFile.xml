@@ -460,10 +460,12 @@ var display = function () {
         
         createBoardTitle: function ( parentElem, board ){
         	
-        	var span = document.createElement("h2");
+        	var h2 = document.createElement("h2");
+        	var span = document.createElement("span");
         	span.className = "boardTitle";
         	span.innerHTML = board.title;
-        	parentElem.appendChild(span);
+        	h2.appendChild(span);
+        	parentElem.appendChild(h2);
         	
         	display.reduceSpanText( span, 300 );
         },
