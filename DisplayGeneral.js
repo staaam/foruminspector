@@ -13,19 +13,25 @@ var display = function () {
         	var loadCategoryFunction = function(callback) 
         		{ category.load( function ( o ) { callback( o.subItems ); } ); };
         	
+        	var selectCategoryFunction = function( status )
+        		{ ctrl.toggleForum( cat, status ); };
+        		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, null, 
-        			"empty sub header", loadCategoryFunction);
+        			"empty sub header", loadCategoryFunction, selectCategoryFunction);
         },
         
         createForumItem: function (parentElem, forum) {
         	
         	var loadForumFunction = function(callback)
         		{ forum.load( function ( o ) { callback( o.subItems ); } ); };
+        		
+        	var selectForumFunction = function( status )
+        		{ ctrl.toggleForum(forum, status ); };
         	
         	var displayItem = new CategoryDisplayItem(
         		parentElem, forum.title, null, 
-        		"empty sub header", loadForumFunction);
+        		"empty sub header", loadForumFunction, selectForumFunction);
         },
         
         categories: function ( parentElem, cats )
