@@ -448,9 +448,11 @@ var display = function () {
         createBoardInfo: function ( parentElem, board )
         {
         	parentElem.innerHTML = "" +
-        		"<div class=\"boardInfo\">" +
         		"<div class=\"di-divider\"></div>" + 
+        		"<div class=\"boardInfo\">" +
         		board.boardInfo.general + 
+        		"</div>" + 
+        		"<div class=\"boardInfo\">" +
 				"<div class=\"di-divider\"></div>" +
 				board.boardInfo.users +
 				"</div>";
