@@ -56,7 +56,8 @@ var ctrl = function () {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function(forum) {
-	        			display.topics(_gel(divNewTopics), forum.subItems);
+	        			display.clear(_gel(divNewTopics));
+	        			display.topics(_gel(divNewTopics), getValues(allTopics).sort(sorters.byId).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
         	}
@@ -101,7 +102,7 @@ var ctrl = function () {
                     var forum=cat.subItems[j];
                     var name = forum.id;
                     var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
-                    s += "<li>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
+                    s += "<getValuesli>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
                 }
                 s += "</ul>";
             }
@@ -189,6 +190,14 @@ var labels = {
     views: "Views"
 };
 
+function getValues(o) {
+	var r = [];
+	for (var i in o) {
+		r.push(o[i]);
+	}
+	return r;
+}
+
 function getText(node) {
 	if (!node) {
 		return undefined;
@@ -244,6 +253,7 @@ var sorters = {
     byPosts: function (a,b) { return b.posts - a.posts; },
     byViews: function (a,b) { return b.views - a.views; },
     byIndex: function (a,b) { return b.index - a.index; },
+    byId: function (a,b) { return b.id - a.id; },
     neg: function (f) {
         return function(a,b) {
             return -1 * f(a,b);

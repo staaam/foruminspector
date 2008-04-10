@@ -7,6 +7,10 @@ var display = function () {
         init: function () {
         },
         
+        clear: function (el) {
+        	el.innerHTML = "";
+        },
+        
         createCategoryItem: function (parentElem, category) {
         	var loadCategoryFunction = function(callback) 
         		{ category.load( function ( o ) { callback( o.subItems ); } ); };
