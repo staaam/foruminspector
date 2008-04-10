@@ -175,8 +175,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.expandedPart.style.display = "none";
    	
    	var that = this;
-   	 
-   	header.onclick = function() {
+   	
+   	var onClickHeader = function() {
    		if (that.isClosed)
    		{
    			that.loadingSpan.style.display = "inline";
@@ -193,6 +193,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    			that.isClosed = true;
    		}
    	}
+   	header.addEventListener('click',onClickHeader,false);
 }
 
 CategoryDisplayItem.prototype = new DisplayItem();
