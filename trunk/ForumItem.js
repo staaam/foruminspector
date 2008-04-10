@@ -29,7 +29,10 @@ ForumItem.prototype.linkMatch = function (url) {
 }
 
 ForumItem.prototype.mkFullUrl = function (relUrl) {
-    return this.boardUrl + relUrl;
+	if (relUrl.substr(0, 4) == "http")
+		return relUrl;
+	else
+    	return this.boardUrl + relUrl;
 };
 
 ForumItem.prototype.load = function (callback) {

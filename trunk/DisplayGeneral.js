@@ -20,7 +20,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null);
+        			null, loadCategoryFunction, null, null, true);
         },
                 
         createSecondaryForumItem: function (parentElem, forum) {
@@ -30,7 +30,25 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
+        		display.getForumSubHeader(forum) , forum.isSelected(),
+        		selectForumFunction);
+        },
+        
+        createSecondaryPostItem: function ( parentElem, post ) {
+        	
+        	var postItem = document.createElement("div");
+        	postItem.className = "di-secondary-header";
+        	
+        	var span = document.createElement("span");
+        	//aDiv.className
+        	span.innerHTML = post.text;
+        	postItem.appendChild(span);
+        	parentElem.appendChild(postItem);
+        	
+        	var divider = document.createElement("div");
+        	divider.className = "di-divider";
+        	parentElem.appendChild(divider);
+        	
         },
         
         createTopicItem: function ( parentElem, topic ) {
@@ -43,7 +61,7 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction );
+        			topic.isSelected(), selectTopicFunction, false );
         },
         
         createBoardInfo: function ( parentElem, board )
@@ -106,6 +124,16 @@ var display = function () {
         	{
         		display.createSecondaryForumItem( listDisplayItem.myself, forums[i] );
         	}        	
+        },
+        
+        secondaryPosts: function ( parentElem, posts )
+        {
+        	var listDisplayItem = new ListDisplayItem( parentElem );
+   
+        	for(var i=0; i<posts.length; i++)
+        	{
+        		display.createSecondaryPostItem( listDisplayItem.myself, posts[i] );
+        	} 
         },
         
         forums: function( parentElem, forums )
