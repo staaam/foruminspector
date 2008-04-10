@@ -452,8 +452,8 @@ var display = function () {
         		"<div class=\"boardInfo\">" +
         		board.boardInfo.general + 
         		"</div>" + 
-        		"<div class=\"boardInfo\">" +
 				"<div class=\"di-divider\"></div>" +
+				"<div class=\"boardInfo\">" +
 				board.boardInfo.users +
 				"</div>";
         },
