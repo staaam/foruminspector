@@ -54,7 +54,7 @@ ForumItem.prototype.linkMatch = function (url) {
 }
 
 ForumItem.prototype.mkFullUrl = function (relUrl) {
-	if (relUrl.substr(0, 3) == "http")
+	if (relUrl.substr(0, 4) == "http")
 		return relUrl;
 	else
     	return this.boardUrl + relUrl;
