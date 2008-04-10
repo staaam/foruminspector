@@ -1,5 +1,5 @@
 /* begin CategoryDisplayItem class */
-function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction) {
+function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, selectFunction ) {
 
 	this.initDisplayItem(parent);
 	
@@ -43,6 +43,17 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
 	this.select.type = "checkbox";
+	var onClickSelect = function (e) {
+		
+		if (!e) var e = window.event;
+		e.cancelBubble = true;
+		if (e.stopPropagation) e.stopPropagation();
+		
+		selectFunction( this.select.checked );
+        
+	}
+	this.select.addEventListener('click',onClickSelect,false);
+	
 	header.appendChild(this.select);
 	
 	var bylineDiv = document.createElement("div");
@@ -63,8 +74,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.expandedPart.style.display = "none";
    	
    	var that = this;
-   	 
-   	header.onclick = function() {
+   	
+   	var onClickHeader = function() {
    		if (that.isClosed)
    		{
    			that.loadingSpan.style.display = "inline";
@@ -81,6 +92,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    			that.isClosed = true;
    		}
    	}
+   	header.addEventListener('click',onClickHeader,false);
 }
 
 CategoryDisplayItem.prototype = new DisplayItem();
