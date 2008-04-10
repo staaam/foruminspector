@@ -147,7 +147,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
 	this.select.type = "checkbox";
-	var onClickSelect = function () {
+	var onClickSelect = function (e) {
 		
 		var lala = "2";
 		
