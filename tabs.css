@@ -137,6 +137,10 @@ body {
 	width: 295px;
 }
 
+.outerImages {
+	max-width: 270px;
+}
+
 .di-byline-secondary {
 	color:#7E7E7E;
 	font-size:x-small;
