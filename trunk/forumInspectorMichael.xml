@@ -492,11 +492,15 @@ Forum.prototype.parseForumTableRow = function (tr, idx) {
     return true;
 };
 
-ForumItem.prototype.toHTML = function () {
+Forum.prototype.isSelected = function () {
+	return ctrl.isSelectedForum(this);
+};
+
+Forum.prototype.toHTML = function () {
     return "<span class='forum'>" + this.toHTMLlink() + "</span>";
 };
 
-ForumItem.prototype.toHTMLlink = function () {
+Forum.prototype.toHTMLlink = function () {
     return "<a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a>";
 };
 /* end Forum class *//* begin ForumItem class */
@@ -535,6 +539,10 @@ ForumItem.prototype.load = function (callback) {
         return;
     }
     this.reload(callback);
+};
+
+ForumItem.prototype.isSelected = function () {
+	return false;
 };
 
 ForumItem.prototype.reload = function (callback) {
@@ -664,7 +672,7 @@ var ctrl = function () {
                 for (var j in cat.subItems) {
                     var forum=cat.subItems[j];
                     var name = forum.id;
-                    var checked = selForums[name] != undefined ? " checked=\"yes\"" : "";
+                    var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
                     s += "<li>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
                 }
                 s += "</ul>";
@@ -699,12 +707,20 @@ var ctrl = function () {
             for (var i in sortedTopics) {
                     var topic = sortedTopics[i];
                     var name = topic.id;
-                    var checked = selTopics[name] != undefined ? " checked=\"yes\"" : "";
+                    var checked = ctrl.isSelectedTopic(topic) ? " checked=\"yes\"" : "";
                     s += "<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleTopic(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+ topic.toHTML() +"<br>";
             }
             s += "</form>";
             _gel(divId).dir = dir;
             _gel(divId).innerHTML = s;
+        },
+        
+        isSelectedForum: function (forum) {
+        	return selForums[forum.id] != undefined;
+        },
+        
+        isSelectedTopic: function (topic) {
+        	return selTopics[topic.id] != undefined;
         },
         
         toggleForum: function (form, name) {
@@ -754,9 +770,22 @@ var sorters = {
     }
 }
 
+Array.prototype.grep = function (f){
+	var output=new Array();
+	for(var i=0;i<this.length;i++){
+	     if(f(this[i])){
+	     	output.push(this[i])
+			//output.length++
+			//output[output.length-1]=this[i];
+	     }
+	}
+	return output;
+}
+
 var greps = {
 	hotTopic: function (topic) { return topic.isHot; },
-	not: function (f) { return function(t) { return !f(t); }; }
+//	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
+//	not: function (f) { return function(t) { return !f(t); }; }
 }
 
 function joinKeys(map) {
@@ -831,6 +860,10 @@ Topic.prototype.parseForumTableRow = function (tr) {
     this.views = tds[4].textContent;
     this.lastPost = parseLastPost(this, tds[5]);
     // tds[5] last post date; author, link
+};
+
+Topic.prototype.isSelected = function () {
+	return ctrl.isSelectedTopic(this);
 };
 
 Topic.prototype.toHTML = function () {
