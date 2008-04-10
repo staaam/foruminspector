@@ -821,7 +821,7 @@ var labels = {
     views: "Views"
 };
 
-function getText(el) {
+function getText(node) {
 	return node.text || node.textContent || (function(node){
         var _result = "";
         if (node == null) {
