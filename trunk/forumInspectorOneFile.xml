@@ -292,7 +292,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.expandedPart.className = "di-expanded";
    	this.myself.appendChild(this.expandedPart);
    	
-   	display.reduceSpanText( headerTextSpan, 300 );
+   	display.reduceSpanText( headerTextSpan, 290 );
   	
    	this.isClosed = true;
    	this.loadingSpan.style.display = "none";
@@ -393,7 +393,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
    	divider.className = "di-divider";
    	this.myself.appendChild(divider);
   	
-  	display.reduceSpanText( headerTextSpan, 300 );
+  	display.reduceSpanText( headerTextSpan, 290 );
 }
 
 ForumDisplayItemSecondary.prototype = new DisplayItem();
@@ -465,7 +465,7 @@ var display = function () {
         	span.innerHTML = board.title;
         	parentElem.appendChild(span);
         	
-        	display.reduceSpanText( span, 300 );
+        	display.reduceSpanText( span, 310 );
         },
         
         getForumSubHeader: function ( forum ) {
@@ -480,7 +480,7 @@ var display = function () {
         getTopicSubHeader: function ( topic ) {
         	return labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
-  			labels.views + ": " + topic.views + "<br>" +
+  			labels.views + ": " + topic.views + " " +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
     		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +
