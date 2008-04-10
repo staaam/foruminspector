@@ -116,6 +116,12 @@ body {
 	position:relative;
 	left: 20px;
 }
+
+.di-byline-secondary {
+	color:#7E7E7E;
+	font-size:x-small;
+	text-align:left;
+}
 			
 a, a:link {
 	color:#0000CC;
