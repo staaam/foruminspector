@@ -361,9 +361,9 @@ var display = function () {
         },
         
         getForumSubHeader: function ( forum ) {
-        	return forum.label.topics + ": " + forum.topics + " " +
-  			forum.label.posts + ": " + forum.posts + " " +
-    		forum.label.lastPost + ": " + forum.lastPost.date + " " +
+        	return labels.topics + ": " + forum.topics + " " +
+  			labels.posts + ": " + forum.posts + " " +
+    		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		forum.lastPost.author + "</a href=\"" + forum.lastPost.link + "\">" +
     		" <img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\">";//
