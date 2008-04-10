@@ -326,7 +326,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 }
 
 /* end CategoryDisplayItem class *//* begin ForumDisplayItemSecondary class */
-function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, selectFunction) {
+function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isSelected, selectFunction) {
 	this.initDisplayItem(parent)
 	this.myself.className = this.myself.className + " ForumDisplayItemSecondary";
 	
@@ -355,6 +355,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
 	this.select.type = "checkbox";
+	this.select.checked = isSelected;
 	var onClickSelect = function (e) {
 		
 		if (!e) var e = window.event;
@@ -417,7 +418,7 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		display.getForumSubHeader(forum) , selectForumFunction);
+        		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
         },
         
         getForumSubHeader: function ( forum ) {
