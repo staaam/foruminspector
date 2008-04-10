@@ -506,6 +506,7 @@ var display = function () {
 			if (widthTemp > widthFinal)
 			{
 				text = text + "...";
+				alert(text);
 			}
 			
 			var lengthText = text.length;
