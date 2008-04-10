@@ -1,7 +1,10 @@
 /* begin CategoryDisplayItem class */
-function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, isSelected, selectFunction ) {
+function CategoryDisplayItem(parent, headerText, headerUrl,
+	subHeader, expandingFunction, isSelected, selectFunction, isForums ) {
 
 	this.initDisplayItem(parent);
+	
+	this.isForums = isForums;
 	
    	this.header = document.createElement("div");
    	this.header.className = "di-header";
@@ -110,8 +113,15 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
     {
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
-    
-	display.secondaryForums( this.expandedPart, forumsArr );
+
+	if (this.isForums)
+	{    
+		display.secondaryForums( this.expandedPart, forumsArr );
+	}
+	else
+	{
+		display.secondaryPosts( this.expandedPart, forumsArr );
+	}
 	this.loadingSpan.style.display = "none";
 	_IG_AdjustIFrameHeight();
 }
