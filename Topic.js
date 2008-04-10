@@ -28,9 +28,9 @@ Topic.prototype.parseForumTableRow = function (tr) {
    	this.isHot = img.src.match("_hot") ? true : false;
     
    // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
-    this.posts = tds[2].innerText;
-    this.author = tds[3].innerText;
-    this.views = tds[4].innerText;
+    this.posts = getText(tds[2]);
+    this.author = getText(tds[3]);
+    this.views = getText(tds[4]);
     this.lastPost = parseLastPost(this, tds[5]);
     // tds[5] last post date; author, link
 };
