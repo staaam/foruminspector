@@ -149,7 +149,11 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.select.type = "checkbox";
 	this.select.onclick = function () {
 		
-		return false;
+        e = window.event;
+    	e.cancelBubble = true; /* Microsoft */
+    	if (e.stopPropagation)
+       		e.stopPropagation(); /* W3C */
+        
 	}
 	header.appendChild(this.select);
 	
