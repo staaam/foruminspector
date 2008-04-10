@@ -13,21 +13,25 @@ Topic.prototype.parseForumTableRow = function (tr) {
     // tds[0] img, whether has new posts?
     var img = tds[0].getElementsByTagName('img')[0];
     this.icon = img.src; // icon
-    this.hasNewPosts = img.title; // has/has no new posts
-    if (img.src.match("folder_announce")) {
+    this.hasNewPostsTitle = img.title; // has/has no new posts
+    if (img.src.match("_announce")) {
         this.type = "announce";
     }
-    else if (img.src.match("folder_sticky")) {
+    else if (img.src.match("_sticky")) {
         this.type = "sticky";
     }
     else {
         this.type = "normal";
     }
+  	this.hasNewPosts = img.src.match("_new") ? true : false;
+   	this.isLocked = img.src.match("_lock") ? true : false;
+   	this.isHot = img.src.match("_hot") ? true : false;
     
-    // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
+   // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
     this.posts = tds[2].textContent;
     this.author = tds[3].textContent;
     this.views = tds[4].textContent;
+    this.lastPost = parseLastPost(this, tds[5]);
     // tds[5] last post date; author, link
 };
 

@@ -26,7 +26,20 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     this.topics = tds[2].textContent;
     this.posts = tds[3].textContent;
     // tds[4] last post date; author, link
+    this.lastPost = parseLastPost(this, tds[4]);
 };
+
+function parseLastPost(that, td) {
+    var lastPost = td.getElementsByTagName('span')[0];
+	var as = lastPost.getElementsByTagName('a');
+    var author = as[0];
+    return {
+    	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
+		author: author.textContent,
+		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
+		link: as[1] ? that.mkFullUrl(as[1].getAttribute('href')) : ""
+    };
+}
 
 Forum.prototype.parse = function (content) {
     if (content == null) {

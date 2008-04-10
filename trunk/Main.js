@@ -178,6 +178,11 @@ var sorters = {
     }
 }
 
+var greps = {
+	hotTopic: function (topic) { return topic.isHot; },
+	not: function (f) { return function(t) { return !f(t); }; }
+}
+
 function joinKeys(map) {
     var str = "";
     for (var i in map) {
