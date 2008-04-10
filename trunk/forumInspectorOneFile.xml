@@ -501,14 +501,15 @@ var display = function () {
         reduceSpanText: function( objSpan, widthFinal ) {
         	// while width of dynamic span is greater than final width
 			var widthTemp = objSpan.offsetWidth;
-			var lengthText = getText(objSpan).length;
+			var text = getText(objSpan)
+			var lengthText = text.length;
 			
             while(widthTemp > widthFinal && lengthText > 0)
             {
                 // reduce one character from original text
 
                 lengthText--;
-                textTrimmed = textOrigional.substring(0, lengthText);
+                var textTrimmed = text.substring(0, lengthText);
 
                 // get width of reduced text
 
