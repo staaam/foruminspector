@@ -725,6 +725,10 @@ Post.prototype = new ForumItem();
 
 Post.prototype.idRegEx = /[?&]p=(\d+)/;
 Post.prototype.viewer = "viewpost.php?p=";
+
+Post.prototype.parseTopicTableRow = function (tr) {
+	
+};
 /* end Post class */
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
@@ -734,6 +738,7 @@ var ctrl = function () {
     var selTopics = {};
     var allForums = {};
     var allTopics = {};
+    var allPosts = {};
     
     var divLog;
     var divMostViews;
@@ -824,6 +829,10 @@ var ctrl = function () {
         
         newTopic: function (parent, url, title) {
             return ctrl.newItem(allTopics, new Topic(parent, url, title));
+        },
+        
+        newPost: function (parent, url, title) {
+            return ctrl.newItem(allPosts, new Post(parent, url, title));
         },
         
         newItem: function (all, item) {
@@ -1174,8 +1183,12 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     if (text.length == 0) {
     	return false;
     }
-    alert(text);
-    asdd;
+    var as = tr.getElementsByTagName('table')[0].getElementsByTagName('a');
+    
+    var post = ctrl.newPost(this, this.mkFullUrl(as[0].getAttribute('href')));
+    post.text = text;
+    post.parseTopicTableRow(tr);
+    this.addItem(topic);    
     // title/link is is first <a> tag, so look into it
 //    var topic = ctrl.newTopic(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
 //    topic.index = idx;
