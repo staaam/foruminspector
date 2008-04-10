@@ -147,6 +147,10 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
 	this.select.type = "checkbox";
+	this.select.onclick = function () {
+		
+		return false;
+	}
 	header.appendChild(this.select);
 	
 	var bylineDiv = document.createElement("div");
