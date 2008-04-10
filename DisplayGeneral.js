@@ -49,12 +49,24 @@ var display = function () {
         createBoardInfo: function ( parentElem, board )
         {
         	parentElem.innerHTML = "" +
-        		"<div class=\"boardInfo\">" +
         		"<div class=\"di-divider\"></div>" + 
+        		"<div class=\"boardInfo\">" +
         		board.boardInfo.general + 
+        		"</div>" + 
 				"<div class=\"di-divider\"></div>" +
+				"<div class=\"boardInfo\">" +
 				board.boardInfo.users +
 				"</div>";
+        },
+        
+        createBoardTitle: function ( parentElem, board ){
+        	
+        	parentElem.className = "boardTitle thinBorder";
+        	var span = document.createElement("span");
+        	span.innerHTML = board.title;
+        	parentElem.appendChild(span);
+        	
+        	display.reduceSpanText( span, 330 );
         },
         
         getForumSubHeader: function ( forum ) {
@@ -69,7 +81,7 @@ var display = function () {
         getTopicSubHeader: function ( topic ) {
         	return labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
-  			labels.views + ": " + topic.views + "<br>" +
+  			labels.views + ": " + topic.views + " " +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
     		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +

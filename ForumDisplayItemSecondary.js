@@ -55,7 +55,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
    	divider.className = "di-divider";
    	this.myself.appendChild(divider);
   	
-  	display.reduceSpanText( headerTextSpan, 300 );
+  	display.reduceSpanText( headerTextSpan, 290 );
 }
 
 ForumDisplayItemSecondary.prototype = new DisplayItem();
