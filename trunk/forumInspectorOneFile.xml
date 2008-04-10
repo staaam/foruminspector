@@ -323,6 +323,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
     
 	display.forums( this.expandedPart, forumsArr );
 	this.loadingSpan.style.display = "none";
+	_IG_AdjustIFrameHeight();
 }
 
 /* end CategoryDisplayItem class *//* begin ForumDisplayItemSecondary class */
@@ -410,9 +411,6 @@ var display = function () {
                 
         createForumItem: function (parentElem, forum) {
         	
-        	var loadForumFunction = function(callback)
-        		{ forum.load( function ( o ) { callback( o.subItems ); } ); };
-        		
         	var selectForumFunction = function( status )
         		{ ctrl.toggleForum( forum, status ); };
         	
