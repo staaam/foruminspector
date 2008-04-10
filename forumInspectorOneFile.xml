@@ -451,12 +451,13 @@ var display = function () {
         	var span = document.createElement("span");
         	//aDiv.className
         	span.innerHTML = post.text;
-        	parentElem.appendChild(span);
+        	postItem.appendChild(span);
+        	parentElem.appendChild(postItem);
         	
         	var divider = document.createElement("div");
         	divider.className = "di-divider";
-        	postItem.appendChild(divider);
-        	parentElem.appendChild(postItem);
+        	parentElem.appendChild(divider);
+        	
         },
         
         createTopicItem: function ( parentElem, topic ) {
