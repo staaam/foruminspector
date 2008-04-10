@@ -805,12 +805,14 @@ var ctrl = function () {
         	var map = {};        	
 			for (var tid in selTopics) {
         		var fid = selTopics[tid];
-        		map[fid] = tid;
+        		if (fid) {
+	        		map[fid] = tid;
+        		}
         	}
         	var diTopics = [];
         	
         	for (var fid in map) {
-            	var forum = allForums[fid];
+            	var frum = allForums[fid];
             	if (!forum) {
 	                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
             	}
