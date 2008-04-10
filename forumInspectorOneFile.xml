@@ -114,7 +114,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	this.plusImg = document.createElement("img");
 	this.plusImg.className = "di-sign-plus";
-	this.plusImg.src = "cleardot.gif";
+	this.plusImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
 	this.plusImg.style.width = "9px";
 	this.plusImg.style.height = "9px";
 	header.appendChild(this.plusImg);
@@ -130,7 +130,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow";
 	//gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/order_arrow_small.gif";
-	gotoImg.src = "cleardot.gif";
+	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
