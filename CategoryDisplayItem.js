@@ -3,8 +3,6 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 
 	this.initDisplayItem(parent);
 	
-	this.myself.className = this.myself.className + " display-item";
-   	
    	this.header = document.createElement("div");
    	this.header.className = "di-header";
 	
@@ -41,7 +39,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.header.appendChild(this.loadingSpan);
 	
 	this.select = document.createElement("input");
-	this.select.className = "di-select";	
+	this.select.className = "di-select";
 	this.select.type = "checkbox";
 	var onClickSelect = function (e) {
 		
