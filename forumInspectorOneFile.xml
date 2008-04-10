@@ -432,6 +432,17 @@ var display = function () {
         		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
         },
         
+        createSecondaryPostItem: function ( parentElem, post ) {
+        	var aDiv = document.createElement("div");
+        	//aDiv.className
+        	aDiv.innerHTML = post.text;
+        	parentElem.appendChild(aDiv);
+        	
+        	var divider = document.createElement("div");
+        	divider.className = "di-divider";
+        	parentElem.appendChild(divider);
+        },
+        
         createTopicItem: function ( parentElem, topic ) {
         	var loadTopicFunction = function(callback) 
         		{ topic.load( function ( o ) { callback( o.subItems ); } ); };
@@ -505,6 +516,16 @@ var display = function () {
         	{
         		display.createSecondaryForumItem( listDisplayItem.myself, forums[i] );
         	}        	
+        },
+        
+        secondaryPosts: function ( parentElem, posts )
+        {
+        	var listDisplayItem = new ListDisplayItem( parentElem );
+   
+        	for(var i=0; i<posts.length; i++)
+        	{
+        		display.createSecondaryPostItem( listDisplayItem.myself, posts[i] );
+        	} 
         },
         
         forums: function( parentElem, forums )
