@@ -8,6 +8,7 @@
     <UserPref name="url" display_name="Board URL" default_value="http://forums.asat.co.il" />
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
+    <UserPref name="nTopics" display_name="# Topics to show" default_value="10" />
     <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
@@ -405,6 +406,10 @@ var display = function () {
         init: function () {
         },
         
+        clear: function (el) {
+        	el.innerHTML = "";
+        },
+        
         createCategoryItem: function (parentElem, category) {
         	var loadCategoryFunction = function(callback) 
         		{ category.load( function ( o ) { callback( o.subItems ); } ); };
@@ -438,6 +443,11 @@ var display = function () {
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
         			topic.isSelected(), selectTopicFunction );
+        },
+        
+        createBoardInfo: function ( parentElem, board )
+        {
+        	parentElem.innerHTML = board.boardInfo.general + "<br>" + board.boardInfo.users;
         },
         
         getForumSubHeader: function ( forum ) {
@@ -783,6 +793,7 @@ var ctrl = function () {
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
+            	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
 	        });
 	        
@@ -813,11 +824,22 @@ var ctrl = function () {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function(forum) {
-	        			display.topics(_gel(divNewTopics), forum.subItems);
+	        			display.clear(_gel(divNewTopics));
+	        			display.topics(_gel(divNewTopics), ctrl.getAllTopics().sort(sorters.byId).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
         	}
         	ctrl.resize();
+        },
+        
+        getAllTopics: function () {
+			var r = [];
+			for (var i in allTopics) {
+				if (allTopics[i].parent.isSelected()) {
+					r.push(allTopics[i]);
+				}
+			}
+			return r;        	
         },
         
         newForum: function (parent, url, title) {
@@ -858,7 +880,7 @@ var ctrl = function () {
                     var forum=cat.subItems[j];
                     var name = forum.id;
                     var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
-                    s += "<li>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
+                    s += "<getValuesli>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
                 }
                 s += "</ul>";
             }
@@ -1001,6 +1023,7 @@ var sorters = {
     byPosts: function (a,b) { return b.posts - a.posts; },
     byViews: function (a,b) { return b.views - a.views; },
     byIndex: function (a,b) { return b.index - a.index; },
+    byId: function (a,b) { return b.id - a.id; },
     neg: function (f) {
         return function(a,b) {
             return -1 * f(a,b);
