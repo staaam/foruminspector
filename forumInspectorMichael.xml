@@ -8,6 +8,7 @@
     <UserPref name="url" display_name="Board URL" default_value="http://forums.asat.co.il" />
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
+    <UserPref name="nTopics" display_name="# Topics to show" default_value="10" />
     <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
@@ -367,7 +368,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
-        			getTopicSubHeader( topic ), loadTopicFunction,
+        			display.getTopicSubHeader( topic ), loadTopicFunction,
         			topic.isSelected(), selectTopicFunction );
         },
         
@@ -381,7 +382,7 @@ var display = function () {
         },
         
         getTopicSubHeader: function ( topic ) {
-        	return labels.replies + ": " + topic.replies + " " +
+        	return labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
   			labels.views + ": " + topic.views + " " +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
@@ -701,6 +702,7 @@ var ctrl = function () {
     var divMostPosts;
     var divForumList;
     var divNewTopics;
+    var divBoardInfo;
     
     var divStared;
     var displayGeneral = new DisplayGeneral();
@@ -734,6 +736,8 @@ var ctrl = function () {
             
             divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             
+            divBoardInfo = tabs.addDynamicTab("Board Info", ctrl.resize);
+            
             tabs.alignTabs("left", 10);
         },
         
@@ -742,7 +746,7 @@ var ctrl = function () {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function(forum) {
-	        			display.topics(_gel(divNewTopics), forum.subItems);
+	        			display.topics(_gel(divNewTopics), allTopics.sort(sorters.neg(sorters.byId)).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
         	}
@@ -930,6 +934,7 @@ var sorters = {
     byPosts: function (a,b) { return b.posts - a.posts; },
     byViews: function (a,b) { return b.views - a.views; },
     byIndex: function (a,b) { return b.index - a.index; },
+    byIndex: function (a,b) { return b.id - a.id; },
     neg: function (f) {
         return function(a,b) {
             return -1 * f(a,b);
