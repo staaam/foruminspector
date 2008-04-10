@@ -8,17 +8,15 @@ var display = function () {
         },
         
         createCategoryItem: function (parentElem, category) {
-        	
-        	// callback( forums[] )
-        	var loadCategoryFunction = function(callback) 
-        		{ category.load( function ( o ) { callback( o.subItems ); } ); };
+        	//var loadCategoryFunction = function(callback) 
+        	//	{ category.load( function ( o ) { callback( o.subItems ); } ); };
         	
         	var selectCategoryFunction = function( status )
         		{ ctrl.toggleForum( category, status ); };
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, selectCategoryFunction);
+        			null, loadCategoryFunction, null, null);
         },
                 
         createSecondaryForumItem: function (parentElem, forum) {
@@ -31,16 +29,17 @@ var display = function () {
         		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
         },
         
-        createForumItem: function ( parentElem, forum ) {
-        	var loadForumFunction = function(callback) 
-        		{ forum.load( function ( o ) { callback( o.subItems ); } ); };
+        createTopicItem: function ( parentElem, topic ) {
+        	var loadTopicFunction = function(callback) 
+        		{ topic.load( function ( o ) { callback( o.subItems ); } ); };
         	
-        	var selectForumFunction = function( status )
-        		{ ctrl.toggleForum( forum, status ); };
+        	var selectTopicFunction = function( status )
+        		{ ctrl.toggleTopic( topic, status ); };
         		
         	var displayItem = new CategoryDisplayItem(
-        			parentElem, forum.title, forum.url, 
-        			getForumSubHeader( forum ), loadCategoryFunction);
+        			parentElem, topic.title, topic.url, 
+        			getTopicSubHeader( topic ), loadTopicFunction,
+        			topic.isSelected(), selectTopicFunction );
         },
         
         getForumSubHeader: function ( forum ) {
@@ -49,6 +48,16 @@ var display = function () {
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\" target=\"_blank\">" +
+    		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
+        },
+        
+        getTopicSubHeader: function ( topic ) {
+        	return labels.replies + ": " + topic.replies + " " +
+  			labels.author + ": " + topic.author + " " +
+  			labels.views + ": " + topic.views + " " +
+    		labels.lastPost + ": " + topic.lastPost.date + " " +
+    		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
+    		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +
     		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
         },
         
