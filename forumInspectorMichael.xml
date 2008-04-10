@@ -337,6 +337,10 @@ var display = function () {
         init: function () {
         },
         
+        clear: function (el) {
+        	el.innerHTML = "";
+        },
+        
         createCategoryItem: function (parentElem, category) {
         	var loadCategoryFunction = function(callback) 
         		{ category.load( function ( o ) { callback( o.subItems ); } ); };
@@ -746,6 +750,7 @@ var ctrl = function () {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function(forum) {
+	        			display.clear(_gel(divNewTopics));
 	        			display.topics(_gel(divNewTopics), getValues(allTopics).sort(sorters.byId).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
