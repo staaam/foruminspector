@@ -32,6 +32,8 @@
 
 .boardTitle {
 	font-size:medium;
+	font-weight:bold;
+	background-color:#E5ECF9;
 }
 
 .di-select {
