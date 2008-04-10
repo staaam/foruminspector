@@ -195,7 +195,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    			that.isClosed = true;
    		}
    	}
-   	header.addEventListener('click',onClickHeader,false);
+   	this.header.addEventListener('click',onClickHeader,false);
 }
 
 CategoryDisplayItem.prototype = new DisplayItem();
