@@ -154,10 +154,13 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	header.appendChild(this.select);
 	
-	var bylineDiv = document.createElement("div");
-	bylineDiv.className = "di-byline";
-	bylineDiv.innerHTML = subHeader;
-	header.appendChild(bylineDiv);
+	if (subHeader != null)
+	{
+		var bylineDiv = document.createElement("div");
+		bylineDiv.className = "di-byline";
+		bylineDiv.innerHTML = subHeader;
+		header.appendChild(bylineDiv);
+	}
 	  	
    	this.myself.appendChild(header);
    	var divider = document.createElement("div");
