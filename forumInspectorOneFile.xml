@@ -292,10 +292,10 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 	}
 	gotoLink.addEventListener('click',onClickLink,false);
 	headerTextSpanH3.appendChild(gotoLink);
+	headerTextSpanH3.className = "di-maintitle";
 	this.header.appendChild(headerTextSpanH3);
 	
 	var headerTextSpan = document.createElement("span");
-	headerTextSpan.className = "di-maintitle";
 	headerTextSpan.innerHTML = headerText;
 	gotoLink.appendChild(headerTextSpan);
 	
