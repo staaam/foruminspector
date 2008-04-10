@@ -8,7 +8,7 @@
 }
 
 .tablib_selected, .tablib_unselected {
-	padding: 0px;
+	padding: 1px;
 }
 
 .tablib_content_container {
@@ -66,6 +66,10 @@
 	vertical-align:bottom;
 	height: 12px;
 	width: 19px;
+}
+
+.di-secondary-header {
+	background-color:white;
 }
 	
 body {
