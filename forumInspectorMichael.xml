@@ -306,7 +306,7 @@ var display = function () {
         {
         	var listDisplayItem = new ListDisplayItem( parentElem );
         	
-        	for(var i in cats)
+        	for(var i=0; i<cats.length; i++)
         	{
         		display.createCategoryItem( listDisplayItem.myself, cats[i] );
         	}
@@ -316,7 +316,7 @@ var display = function () {
         {
         	var listDisplayItem = new ListDisplayItem( parentElem );
    
-        	for(var i in forums)
+        	for(var i=0; i<forums.length; i++)
         	{
         		display.createForumItem( listDisplayItem.myself, forums[i] );
         	}        	
@@ -435,7 +435,7 @@ Forum.prototype.parse = function (content) {
     if (this.title == this.url) {
         // try load title from the page
         var as = dom.getElementsByTagName('a');
-        for (var i in as) {
+        for (var i=0;i<as.length;i++) {
             var cl = as[i].getAttribute('class');
             var hr = as[i].getAttribute('href');
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
@@ -667,10 +667,10 @@ var ctrl = function () {
         displayBoard: function (board) {
             //var frmLst_id = tabs.addDynamicTab(board.label.forum, ctrl.resize);
             var s ="<form action=\"?\">";
-            for (var i in board.subItems) {
+            for (var i=0;i<board.subItems.length;i++) {
                 var cat = board.subItems[i];
                 s += "<a href=\"" + cat.url + "\">"+cat.title+"</a><ul>";
-                for (var j in cat.subItems) {
+                for (var j=0;j<cat.subItems.length;j++) {
                     var forum=cat.subItems[j];
                     var name = forum.id;
                     var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
@@ -701,11 +701,11 @@ var ctrl = function () {
             var s ="<form action=\"?\">";
             //var topics = forum.subItems;
             var arTopics = [];
-            for (var t in topics) {
+            for (var t=0;t<topics.length;t++) {
                 arTopics.push(topics[t]);
             }
             var sortedTopics = arTopics.sort(sortFunc);
-            for (var i in sortedTopics) {
+            for (var i=0;i<sortedTopics.length;i++) {
                     var topic = sortedTopics[i];
                     var name = topic.id;
                     var checked = ctrl.isSelectedTopic(topic) ? " checked=\"yes\"" : "";
