@@ -802,7 +802,6 @@ var ctrl = function () {
         },
         
         onStarred: function () {
-        	var topics = ctrl.getSelTopics();
         	var map = {};        	
 			for (var tid in selTopics) {
         		var fid = selTopics[tid];
