@@ -433,7 +433,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
-        			getTopicSubHeader( topic ), loadTopicFunction,
+        			display.getTopicSubHeader( topic ), loadTopicFunction,
         			topic.isSelected(), selectTopicFunction );
         },
         
