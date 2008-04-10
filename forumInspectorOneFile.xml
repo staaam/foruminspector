@@ -223,6 +223,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 
 	this.initDisplayItem(parent);
 	
+	this.isForums = isForums;
+	
    	this.header = document.createElement("div");
    	this.header.className = "di-header";
 	
@@ -331,7 +333,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
 
-	if (isForums)
+	if (this.isForums)
 	{    
 		display.secondaryForums( this.expandedPart, forumsArr );
 	}
