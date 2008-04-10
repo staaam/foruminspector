@@ -26,7 +26,7 @@ var ctrl = function () {
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
-            	display.createBoardInfo(_gel(divBoardInfo), board);
+            	//display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
 	        });
 	        
@@ -46,6 +46,9 @@ var ctrl = function () {
             divStared = tabs.addDynamicTab("Stared", ctrl.resize);
             
             divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
+            divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
+            divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.onMostPosts);
+            //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             
             divBoardInfo = tabs.addDynamicTab("Board Info", ctrl.resize);
             
@@ -53,12 +56,24 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
+        	ctrl.displayTopics(_gel(divNewTopics), sorters.byId);
+        },
+        
+        onMostViews: function () {
+        	ctrl.displayTopics(_gel(divMostViews), sorters.byViews);
+        },
+        
+        onMostPosts: function () {
+        	ctrl.displayTopics(_gel(divMostPosts), sorters.byPosts);
+        },
+        
+        displayTopics: function (el, sorter) {
             for (var i in allForums) {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function(forum) {
-	        			display.clear(_gel(divNewTopics));
-	        			display.topics(_gel(divNewTopics), ctrl.getAllTopics().sort(sorters.byId).splice(0, prefs.getInt("nTopics")));
+	        			display.clear(el);
+	        			display.topics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
         	}
