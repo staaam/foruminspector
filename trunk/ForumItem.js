@@ -13,7 +13,6 @@ ForumItem.prototype.init = function (parent, url, title) {
     this.id = url.match(this.idRegEx)[1];
     this.subItems = [];
     this.isLoaded = false;
-    this.isSelect = false;
     //printStr("new item url=" + this.url + " title=" + this.title);
 }
 
@@ -35,6 +34,10 @@ ForumItem.prototype.load = function (callback) {
         return;
     }
     this.reload(callback);
+};
+
+ForumItem.prototype.isSelected = function () {
+	return false;
 };
 
 ForumItem.prototype.reload = function (callback) {

@@ -107,11 +107,15 @@ Forum.prototype.parseForumTableRow = function (tr, idx) {
     return true;
 };
 
-ForumItem.prototype.toHTML = function () {
+Forum.prototype.isSelected = function () {
+	return ctrl.isSelectedForum(this);
+};
+
+Forum.prototype.toHTML = function () {
     return "<span class='forum'>" + this.toHTMLlink() + "</span>";
 };
 
-ForumItem.prototype.toHTMLlink = function () {
+Forum.prototype.toHTMLlink = function () {
     return "<a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a>";
 };
 /* end Forum class */
