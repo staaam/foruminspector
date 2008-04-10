@@ -1183,7 +1183,11 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     if (text.length == 0) {
     	return false;
     }
-    var as = tr.getElementsByTagName('table')[0].getElementsByTagName('a');
+    var tbs = tr.getElementsByTagName('table');
+    if (!tbs) {
+    	return false;
+    }
+    var as = tbs[0].getElementsByTagName('a');
     
     var post = ctrl.newPost(this, this.mkFullUrl(as[0].getAttribute('href')));
     post.text = text;
