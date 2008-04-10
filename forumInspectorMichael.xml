@@ -738,6 +738,7 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
+        	alert(selForums.length);
         	for (var i=0; i<selForums.length; i++) {
         		var name = selForums[i];
         		allForums[name].load(function(forum) {
