@@ -175,7 +175,7 @@ var labels = {
     whoIsOnline: "Who is Online",
     
     author: "Aurhor",
-    views: "Views",
+    views: "Views"
 };
 
 function splitKeys(str) {
@@ -214,8 +214,8 @@ Array.prototype.grep = function (f){
 
 var greps = {
 	hotTopic: function (topic) { return topic.isHot; },
-//	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
-//	not: function (f) { return function(t) { return !f(t); }; }
+	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
+	not: function (f) { return function(t) { return !f(t); }; }
 }
 
 function joinKeys(map) {

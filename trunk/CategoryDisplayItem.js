@@ -38,7 +38,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.loadingSpan.innerHTML = "(Loading...)";
 	this.header.appendChild(this.loadingSpan);
 	
-	this.select = document.createElement("input");
+	/*this.select = document.createElement("input");
 	this.select.className = "di-select";
 	this.select.type = "checkbox";
 	var onClickSelect = function (e) {
@@ -52,7 +52,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	}
 	this.select.addEventListener('click',onClickSelect,false);
 	
-	this.header.appendChild(this.select);
+	this.header.appendChild(this.select);*/
 	
 	if (subHeader != null)
 	{
