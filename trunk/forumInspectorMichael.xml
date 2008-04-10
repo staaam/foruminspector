@@ -811,6 +811,9 @@ var ctrl = function () {
         	
         	for (var fid in map) {
             	var forum = allForums[fid];
+            	if (!forum) {
+	                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
+            	}
         		forum.load(function() {
         			for (var i=0;i<forum.subItems.length;i++) {
         				if (forum.subItems[i].isSelected()) {
