@@ -6,6 +6,7 @@ var ctrl = function () {
     var selTopics = {};
     var allForums = {};
     var allTopics = {};
+    var allPosts = {};
     
     var divLog;
     var divMostViews;
@@ -96,6 +97,10 @@ var ctrl = function () {
         
         newTopic: function (parent, url, title) {
             return ctrl.newItem(allTopics, new Topic(parent, url, title));
+        },
+        
+        newPost: function (parent, url, title) {
+            return ctrl.newItem(allPosts, new Post(parent, url, title));
         },
         
         newItem: function (all, item) {

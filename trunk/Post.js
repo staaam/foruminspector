@@ -7,4 +7,8 @@ Post.prototype = new ForumItem();
 
 Post.prototype.idRegEx = /[?&]p=(\d+)/;
 Post.prototype.viewer = "viewpost.php?p=";
+
+Post.prototype.parseTopicTableRow = function (tr) {
+	
+};
 /* end Post class */
