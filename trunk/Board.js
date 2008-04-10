@@ -1,13 +1,6 @@
 /* begin Board class */
 function Board(parent, url, title) {
     this.init(parent, url.replace(/\/(index\.php[^\/]*)?$/,"") + "/", title);
-    this.label = {
-        forum: "Forum",
-        topics: "Topics",
-        posts: "Posts",
-        lastPost: "Last Post",
-        whoIsOnline: "Who is Online"
-    };
 }
 
 Board.prototype = new ForumItem();
@@ -76,7 +69,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     // spans[1] -- General Info
     // spans[2] -- Users online
 
-    this.label.whoIsOnline = a.innerHTML;
+    labels.whoIsOnline = a.innerHTML;
     this.boardInfo = {
     	general: spans[1].innerHTML,
     	users: spans[2].innerHTML,
@@ -116,10 +109,10 @@ Board.prototype.tryParseForumsHeader = function (table) {
     }
     
     // assumption -- every and only forums table has row with th's
-    this.label.forum = ths[0].innerHTML;
-    this.label.topics = ths[1].innerHTML;
-    this.label.posts = ths[2].innerHTML;
-    this.label.lastPost = ths[3].innerHTML;
+    labels.forum = ths[0].textContent;
+    labels.topics = ths[1].textContent;
+    labels.posts = ths[2].textContent;
+    labels.lastPost = ths[3].textContent;
     
     return true;
 };

@@ -1,13 +1,6 @@
 /* begin Forum class */
 function Forum(parent, url, title) {
     this.init(parent, url, title);
-    this.label = {
-        topics: "Topics",
-        posts: "Posts",
-        author: "Aurhor",
-        views: "Views",
-        lastPost: "Last Post"
-    };
 }
 
 Forum.prototype = new ForumItem();
@@ -85,11 +78,11 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
     }
     
     // assumption -- every and only topics table has row with th's
-    this.label.topics = ths[0].innerHTML;
-    this.label.posts = ths[1].innerHTML;
-    this.label.author = ths[2].innerHTML;
-    this.label.views = ths[3].innerHTML;
-    this.label.lastPost = ths[4].innerHTML;
+    if (!labels.topics)   { labels.topics = ths[0].textContent; }
+    if (!labels.posts)    { labels.posts = ths[1].textContent; }
+    if (!labels.author)   { labels.author = ths[2].textContent; }
+    if (!labels.views)    { labels.views = ths[3].textContent; }
+    if (!labels.lastPost) { labels.lastPost = ths[4].textContent; }
     
     return true;
 };
