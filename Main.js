@@ -12,6 +12,7 @@ var ctrl = function () {
     var divMostPosts;
     var divForumList;
     var divNewTopics;
+    var divBoardInfo;
     
     var divStared;
     var displayGeneral = new DisplayGeneral();
@@ -44,6 +45,8 @@ var ctrl = function () {
             divStared = tabs.addDynamicTab("Stared", ctrl.resize);
             
             divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
+            
+            divBoardInfo = tabs.addDynamicTab("Board Info", ctrl.resize);
             
             tabs.alignTabs("left", 10);
         },
