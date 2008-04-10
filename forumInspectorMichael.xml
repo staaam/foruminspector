@@ -1154,7 +1154,7 @@ Topic.prototype.tryParsePostsHeader = function (table) {
     return true;
 };
 
-Forum.prototype.tryParseTopicTableRow = function (tr, idx) {
+Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     var spans = tr.getElementsByTagName('span');
     if (spans.length == 0) {
         return false;
