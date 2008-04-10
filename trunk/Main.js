@@ -15,14 +15,14 @@ var ctrl = function () {
     var divNewTopics;
     var divBoardInfo;
     
-    var divStared;
+    var divStarred;
     var displayGeneral = new DisplayGeneral();
 
     return {
         init: function () {
             ctrl.createTabs();
             
-            display.init(divStared);
+            display.init(divStarred);
             
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
@@ -45,7 +45,7 @@ var ctrl = function () {
 
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
-            divStared = tabs.addDynamicTab("Stared", ctrl.resize);
+            divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
             
             divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
@@ -57,31 +57,61 @@ var ctrl = function () {
             tabs.alignTabs("left", 10);
         },
         
+        onStarred: function () {
+        	var map = {};        	
+			for (var tid in selTopics) {
+        		var fid = selTopics[tid];
+        		if (fid) {
+	        		map[fid] = tid;
+        		}
+        	}
+        	var diTopics = [];
+        	
+        	for (var fid in map) {
+            	var forum = allForums[fid];
+            	if (!forum) {
+	                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
+            	}
+        		forum.load(function() {
+        			for (var i=0;i<forum.subItems.length;i++) {
+        				if (forum.subItems[i].isSelected()) {
+	        				diTopics.push(forum.subItems[i]);
+        				}
+        			}
+        			ctrl.displayTopics(_gel(divStarred), diTopics.sort(sorters.byId));
+        		});
+        	}
+        },
+        
         onNewTopics: function () {
-        	ctrl.displayTopics(_gel(divNewTopics), sorters.byId);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId);
         },
         
         onMostViews: function () {
-        	ctrl.displayTopics(_gel(divMostViews), sorters.byViews);
+        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews);
         },
         
         onMostPosts: function () {
-        	ctrl.displayTopics(_gel(divMostPosts), sorters.byPosts);
+        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts);
         },
         
-        displayTopics: function (el, sorter) {
+        displayForumsTopics: function (el, sorter) {
             for (var i in allForums) {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
-	        		forum.load(function(forum) {
-	        			display.clear(el);
-	        			display.topics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
+	        		forum.load(function() {
+	        			ctrl.displayTopics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
         	}
-        	ctrl.resize();
         },
         
+        displayTopics: function (el, topics) {
+			display.clear(el);
+			display.topics(el, topics);
+        	ctrl.resize();
+		},
+                
         getAllTopics: function () {
 			var r = [];
 			for (var i in allTopics) {
@@ -188,7 +218,7 @@ var ctrl = function () {
         	var name = forum.id;
             if (checked) {
                 selForums[name] = 1;
-                //allForums[name].load();
+                allForums[name].load(function(){});
             } else {
                 selForums[name] = undefined;
             }
@@ -198,7 +228,7 @@ var ctrl = function () {
         toggleTopic: function (topic, checked) {
         	var name = topic.id;
             if (checked) {
-                selTopics[name] = 1;
+                selTopics[name] = topic.parent.id;
             } else {
                 selTopics[name] = undefined;
             }
@@ -272,10 +302,21 @@ function splitKeys(str) {
     var s = str.split(";");
     for (var i in s) {
         if (s[i].length > 0) {
-            map[s[i]] = true;
+        	var a = s[i].split("=");
+            map[a[0]] = a[1];
         }
     }
     return map;
+}
+
+function joinKeys(map) {
+    var str = "";
+    for (var i in map) {
+        if (map[i]) {
+            str += i + "=" + map[i] + ";";
+        }
+    }
+    return str;
 }
 
 var sorters = {
@@ -299,16 +340,6 @@ var greps = {
 	hotTopic: function (topic) { return topic.isHot; },
 	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
 	not: function (f) { return function(t) { return !f(t); }; }
-}
-
-function joinKeys(map) {
-    var str = "";
-    for (var i in map) {
-        if (map[i]) {
-            str += i + ";";
-        }
-    }
-    return str;
 }
 
 function log(object) {
