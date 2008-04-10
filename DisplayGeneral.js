@@ -48,7 +48,13 @@ var display = function () {
         
         createBoardInfo: function ( parentElem, board )
         {
-        	parentElem.innerHTML = board.boardInfo.general + "<br>" + board.boardInfo.users;
+        	parentElem.innerHTML = "" +
+        		"<div class=\"boardInfo\">" +
+        		"<div class=\"di-divider\"></div>" + 
+        		board.boardInfo.general + 
+				"<div class=\"di-divider\"></div>" +
+				board.boardInfo.users +
+				"</div>";
         },
         
         getForumSubHeader: function ( forum ) {
