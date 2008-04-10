@@ -34,6 +34,8 @@
 	font-size:medium;
 	font-weight:bold;
 	background-color:#E5ECF9;
+	display:block;
+	padding: 2px;
 }
 
 .thinBorder {
