@@ -144,7 +144,7 @@ var ctrl = function () {
         	var name = forum.id;
             if (checked) {
                 selForums[name] = 1;
-                allForums[name].load();
+                //allForums[name].load();
             } else {
                 selForums[name] = undefined;
             }
