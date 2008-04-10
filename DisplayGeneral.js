@@ -31,7 +31,7 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		display.getForumSubHeader(forum) , selectForumFunction);
+        		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
         },
         
         getForumSubHeader: function ( forum ) {

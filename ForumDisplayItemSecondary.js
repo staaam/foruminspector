@@ -1,5 +1,5 @@
 /* begin ForumDisplayItemSecondary class */
-function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, selectFunction) {
+function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isSelected, selectFunction) {
 	this.initDisplayItem(parent)
 	this.myself.className = this.myself.className + " ForumDisplayItemSecondary";
 	
@@ -28,13 +28,14 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
 	this.select.type = "checkbox";
+	this.select.checked = isSelected;
 	var onClickSelect = function (e) {
 		
 		if (!e) var e = window.event;
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();
 		
-		selectFunction( this.select.checked );
+		selectFunction( this.checked );
         
 	}
 	this.select.addEventListener('click',onClickSelect,false);

@@ -47,7 +47,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();
 		
-		selectFunction( this.select.checked );
+		selectFunction( this.checked );
         
 	}
 	this.select.addEventListener('click',onClickSelect,false);
