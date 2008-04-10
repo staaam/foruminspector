@@ -34,7 +34,7 @@ ForumItem.prototype.init = function (parent, url, title) {
     if (title == null || title == undefined) {
         this.title = url;
     }
-    this.id = url.match(this.idRegEx)[1];
+    this.id = this.linkMatch(url)[1];
     this.subItems = [];
     this.isLoaded = false;
     //printStr("new item url=" + this.url + " title=" + this.title);
@@ -47,6 +47,10 @@ ForumItem.prototype.addItem = function (item) {
     //printStr("add item url=" + item.url + " title=" + item.title);
     this.subItems.push(item);
 };
+
+ForumItem.prototype.linkMatch = function (url) {
+	return url.match(this.idRegEx);
+}
 
 ForumItem.prototype.mkFullUrl = function (relUrl) {
     return this.boardUrl + relUrl;
@@ -114,7 +118,7 @@ Board.prototype.parse = function (content) {
 	    }
     }
 
-    this.title = e.textContent;
+    this.title = getText(e);
 };
 
 function getEl(els, attr, val) {
@@ -147,7 +151,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     	return false;
     }
     var a = table.getElementsByTagName('a')[0];
-    if (!a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
+    if (!a || !a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
     var spans = table.getElementsByTagName('span');
@@ -168,7 +172,8 @@ Board.prototype.parseForumsTable = function (table) {
     for (var i=1; i<trs.length; i++) {
         var tr = trs[i];
         var as = tr.getElementsByTagName('a');
-        if (as[0].getAttribute('class') == 'cattitle') {
+        var href = as[0].getAttribute('href');
+        if (Category.prototype.linkMatch(href)) {
             // category title row
             cat = new Category(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
             cat.index = i;
@@ -195,10 +200,10 @@ Board.prototype.tryParseForumsHeader = function (table) {
     }
     
     // assumption -- every and only forums table has row with th's
-    labels.forum = ths[0].textContent;
-    labels.topics = ths[1].textContent;
-    labels.posts = ths[2].textContent;
-    labels.lastPost = ths[3].textContent;
+    labels.forum = getText(ths[0]);
+    labels.topics = getText(ths[1]);
+    labels.posts = getText(ths[2]);
+    labels.lastPost = getText(ths[3]);
     
     return true;
 };
@@ -213,7 +218,7 @@ Category.prototype = new ForumItem();
 Category.prototype.idRegEx = /[?&]c=(\d+)/;
 Category.prototype.viewer = "index.php";
 /* end Category class *//* begin CategoryDisplayItem class */
-function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, selectFunction ) {
+function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, isSelected, selectFunction ) {
 
 	this.initDisplayItem(parent);
 	
@@ -252,21 +257,23 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.loadingSpan.innerHTML = "(Loading...)";
 	this.header.appendChild(this.loadingSpan);
 	
-	/*this.select = document.createElement("input");
-	this.select.className = "di-select";
-	this.select.type = "checkbox";
-	var onClickSelect = function (e) {
-		
-		if (!e) var e = window.event;
-		e.cancelBubble = true;
-		if (e.stopPropagation) e.stopPropagation();
-		
-		selectFunction( this.checked );
-        
+	if (selectFunction != null) {
+		this.select = document.createElement("input");
+		this.select.className = "di-select";	
+		this.select.type = "checkbox";
+		this.select.checked = isSelected;
+		var onClickSelect = function (e) {
+			
+			if (!e) var e = window.event;
+			e.cancelBubble = true;
+			if (e.stopPropagation) e.stopPropagation();
+			
+			selectFunction( this.checked );
+	        
+		}
+		this.select.addEventListener('click',onClickSelect,false);
+		this.header.appendChild(this.select);
 	}
-	this.select.addEventListener('click',onClickSelect,false);
-	
-	this.header.appendChild(this.select);*/
 	
 	if (subHeader != null)
 	{
@@ -321,7 +328,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
     
-	display.forums( this.expandedPart, forumsArr );
+	display.secondaryForums( this.expandedPart, forumsArr );
 	this.loadingSpan.style.display = "none";
 	_IG_AdjustIFrameHeight();
 }
@@ -396,20 +403,18 @@ var display = function () {
         },
         
         createCategoryItem: function (parentElem, category) {
-        	
-        	// callback( forums[] )
-        	var loadCategoryFunction = function(callback) 
-        		{ category.load( function ( o ) { callback( o.subItems ); } ); };
+        	//var loadCategoryFunction = function(callback) 
+        	//	{ category.load( function ( o ) { callback( o.subItems ); } ); };
         	
         	var selectCategoryFunction = function( status )
         		{ ctrl.toggleForum( category, status ); };
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, selectCategoryFunction);
+        			null, loadCategoryFunction, null, null);
         },
                 
-        createForumItem: function (parentElem, forum) {
+        createSecondaryForumItem: function (parentElem, forum) {
         	
         	var selectForumFunction = function( status )
         		{ ctrl.toggleForum( forum, status ); };
@@ -419,12 +424,35 @@ var display = function () {
         		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
         },
         
+        createTopicItem: function ( parentElem, topic ) {
+        	var loadTopicFunction = function(callback) 
+        		{ topic.load( function ( o ) { callback( o.subItems ); } ); };
+        	
+        	var selectTopicFunction = function( status )
+        		{ ctrl.toggleTopic( topic, status ); };
+        		
+        	var displayItem = new CategoryDisplayItem(
+        			parentElem, topic.title, topic.url, 
+        			getTopicSubHeader( topic ), loadTopicFunction,
+        			topic.isSelected(), selectTopicFunction );
+        },
+        
         getForumSubHeader: function ( forum ) {
         	return labels.topics + ": " + forum.topics + " " +
   			labels.posts + ": " + forum.posts + " " +
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\" target=\"_blank\">" +
+    		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
+        },
+        
+        getTopicSubHeader: function ( topic ) {
+        	return labels.replies + ": " + topic.replies + " " +
+  			labels.author + ": " + topic.author + " " +
+  			labels.views + ": " + topic.views + " " +
+    		labels.lastPost + ": " + topic.lastPost.date + " " +
+    		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
+    		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +
     		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
         },
         
@@ -438,14 +466,24 @@ var display = function () {
         	}
         },
         
-        forums: function ( parentElem, forums )
+        secondaryForums: function ( parentElem, forums )
         {
         	var listDisplayItem = new ListDisplayItem( parentElem );
    
         	for(var i=0; i<forums.length; i++)
         	{
-        		display.createForumItem( listDisplayItem.myself, forums[i] );
+        		display.createSecondaryForumItem( listDisplayItem.myself, forums[i] );
         	}        	
+        },
+        
+        forums: function( parentElem, forums )
+        {
+           	var listDisplayItem = new ListDisplayItem( parentElem );
+   
+        	for(var i=0; i<forums.length; i++)
+        	{
+        		display.createForumItem( listDisplayItem.myself, forums[i] );
+        	}    	
         }
 
     }
@@ -527,8 +565,8 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     this.hasNewPosts = img.title; // has/has no new posts
     
     // tds[1] forum title, link; description; moderator(s)
-    this.topics = tds[2].textContent;
-    this.posts = tds[3].textContent;
+    this.topics = getText(tds[2]);
+    this.posts = getText(tds[3]);
     // tds[4] last post date; author, link
     this.lastPost = parseLastPost(this, tds[4]);
 };
@@ -539,7 +577,7 @@ function parseLastPost(that, td) {
     var author = as[0];
     return {
     	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
-		author: author.textContent,
+		author: getText(author),
 		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
 		link: as[1] ? that.mkFullUrl(as[1].getAttribute('href')) : ""
     };
@@ -589,11 +627,11 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
     }
     
     // assumption -- every and only topics table has row with th's
-    if (!labels.topics)   { labels.topics = ths[0].textContent; }
-    if (!labels.posts)    { labels.posts = ths[1].textContent; }
-    if (!labels.author)   { labels.author = ths[2].textContent; }
-    if (!labels.views)    { labels.views = ths[3].textContent; }
-    if (!labels.lastPost) { labels.lastPost = ths[4].textContent; }
+    if (!labels.topics)   { labels.topics = getText(ths[0]); }
+    if (!labels.posts)    { labels.posts = getText(ths[1]); }
+    if (!labels.author)   { labels.author = getText(ths[2]); }
+    if (!labels.views)    { labels.views = getText(ths[3]); }
+    if (!labels.lastPost) { labels.lastPost = getText(ths[4]); }
     
     return true;
 };
@@ -669,9 +707,9 @@ Topic.prototype.parseForumTableRow = function (tr) {
    	this.isHot = img.src.match("_hot") ? true : false;
     
    // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
-    this.posts = tds[2].textContent;
-    this.author = tds[3].textContent;
-    this.views = tds[4].textContent;
+    this.posts = getText(tds[2]);
+    this.author = getText(tds[3]);
+    this.views = getText(tds[4]);
     this.lastPost = parseLastPost(this, tds[5]);
     // tds[5] last post date; author, link
 };
@@ -686,7 +724,7 @@ Topic.prototype.toHTML = function () {
 /* end Topic class */
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
-	var tabs = new _IG_Tabs(moduleID, "one", _gel("TabsDiv"));
+	var tabs = new _IG_Tabs(moduleID, "Forums", _gel("TabsDiv"));
     var board = new Board(null, prefs.getString("url"));
     var selForums = {};
     var selTopics = {};
@@ -697,6 +735,7 @@ var ctrl = function () {
     var divMostViews;
     var divMostPosts;
     var divForumList;
+    var divNewTopics;
     
     var divStared;
     var displayGeneral = new DisplayGeneral();
@@ -734,6 +773,8 @@ var ctrl = function () {
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
             divStared = tabs.addDynamicTab("Stared", ctrl.resize);
+            
+            divNewTopics = tabs.addDynamicTab("New Topics", ctrl.resize);
             
             tabs.alignTabs("left", 10);
         },
@@ -863,6 +904,46 @@ var labels = {
     author: "Aurhor",
     views: "Views"
 };
+
+function getText(node) {
+	if (!node) {
+		return undefined;
+	}
+	return node.innerText || node.text || node.textContent;
+//	return node.text || node.textContent || (function(node){
+//        var _result = "";
+//        if (node == null) {
+//            return _result;
+//        }
+//        var childrens = node.childNodes;
+//        var i = 0;
+//        while (i < childrens.length) {
+//            var child = childrens.item(i);
+//            switch (child.nodeType) {
+//                case 1: // ELEMENT_NODE
+//                case 5: // ENTITY_REFERENCE_NODE
+//                    _result += arguments.callee(child);
+//                    break;
+//                case 3: // TEXT_NODE
+//                case 2: // ATTRIBUTE_NODE
+//                case 4: // CDATA_SECTION_NODE
+//                    _result += child.nodeValue;
+//                    break;
+//                case 6: // ENTITY_NODE
+//                case 7: // PROCESSING_INSTRUCTION_NODE
+//                case 8: // COMMENT_NODE
+//                case 9: // DOCUMENT_NODE
+//                case 10: // DOCUMENT_TYPE_NODE
+//                case 11: // DOCUMENT_FRAGMENT_NODE
+//                case 12: // NOTATION_NODE
+//                // skip
+//                break;
+//            }
+//            i++;
+//        }
+//        return _result;
+//    }(node));
+}
 
 function splitKeys(str) {
     var map = new Object();
