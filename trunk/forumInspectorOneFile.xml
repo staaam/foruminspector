@@ -219,7 +219,7 @@ Category.prototype = new ForumItem();
 Category.prototype.idRegEx = /[?&]c=(\d+)/;
 Category.prototype.viewer = "index.php";
 /* end Category class *//* begin CategoryDisplayItem class */
-function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, isSelected, selectFunction ) {
+function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, isSelected, selectFunction, isForums ) {
 
 	this.initDisplayItem(parent);
 	
@@ -330,8 +330,15 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
     {
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
-    
-	display.secondaryForums( this.expandedPart, forumsArr );
+
+	if (isForums)
+	{    
+		display.secondaryForums( this.expandedPart, forumsArr );
+	}
+	else
+	{
+		display.secondaryPosts( this.expandedPart, forumsArr );
+	}
 	this.loadingSpan.style.display = "none";
 	_IG_AdjustIFrameHeight();
 }
@@ -419,7 +426,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null);
+        			null, loadCategoryFunction, null, null, true);
         },
                 
         createSecondaryForumItem: function (parentElem, forum) {
@@ -429,7 +436,8 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
+        		display.getForumSubHeader(forum) , forum.isSelected(),
+        		selectForumFunction);
         },
         
         createSecondaryPostItem: function ( parentElem, post ) {
@@ -453,7 +461,7 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction );
+        			topic.isSelected(), selectTopicFunction, false );
         },
         
         createBoardInfo: function ( parentElem, board )
