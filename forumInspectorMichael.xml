@@ -819,7 +819,7 @@ var ctrl = function () {
         		forum.load(function() {
         			for (var i=0;i<forum.subItems.length;i++) {
         				if (forum.subItems[i].isSelected()) {
-	        				diTopics.add(forum.subItems[i]);
+	        				diTopics.push(forum.subItems[i]);
         				}
         			}
         			ctrl.displayTopics(_gel(divStarred), diTopics.sort(sorters.byId));
