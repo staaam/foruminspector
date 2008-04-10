@@ -60,7 +60,6 @@ Board.prototype.parse = function (content) {
     }
 
     this.title = e.textContent;
-    alert(this.title);
 };
 
 function getEl(els, attr, val) {
@@ -387,16 +386,20 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     this.topics = tds[2].textContent;
     this.posts = tds[3].textContent;
     // tds[4] last post date; author, link
-    var lastPost = tds[4].getElementsByTagName('span')[0];
-    var as = lastPost.getElementsByTagName('a');
+    this.lastPost = parseLastPost(tds[4]);
+};
+
+function parseLastPost(td) {
+    var lastPost = td.getElementsByTagName('span')[0];
+	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
-    this.lastPost = {
+    return {
     	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
 		author: author.textContent,
 		authorProfileLink: this.mkFullUrl(author.getAttribute('href')),
 		link: as[1] ? this.mkFullUrl(as[1].getAttribute('href')) : ""
     };
-};
+}
 
 Forum.prototype.parse = function (content) {
     if (content == null) {
@@ -793,6 +796,7 @@ Topic.prototype.parseForumTableRow = function (tr) {
     this.posts = tds[2].textContent;
     this.author = tds[3].textContent;
     this.views = tds[4].textContent;
+    this.lastPost = parseLastPost(tds[5]);
     // tds[5] last post date; author, link
 };
 
