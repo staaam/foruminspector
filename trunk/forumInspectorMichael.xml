@@ -608,7 +608,8 @@ var ctrl = function () {
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(ctrl.onBoardReady);
-            for (var fid in selForums) {
+            for (var i=0;i<selForums.length;i++) {
+            	var fid = selForums[i];
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
                 forum.load(ctrl.onForumReady);
             }
