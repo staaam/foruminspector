@@ -14,13 +14,13 @@ var display = function () {
         		{ category.load( function ( o ) { callback( o.subItems ); } ); };
         	
         	var selectCategoryFunction = function( status )
-        		{ ctrl.toggleForum( cat, status ); };
+        		{ ctrl.toggleForum( category, status ); };
         		
         	var displayItem = new CategoryDisplayItem(
-        			parentElem, category.title, null, 
-        			"empty sub header", loadCategoryFunction, selectCategoryFunction);
+        			parentElem, category.title, category.url, 
+        			null, loadCategoryFunction, selectCategoryFunction);
         },
-        
+                
         createForumItem: function (parentElem, forum) {
         	
         	var loadForumFunction = function(callback)
