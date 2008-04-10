@@ -46,9 +46,14 @@ var display = function () {
         			topic.isSelected(), selectTopicFunction );
         },
         
+        createBoardInfo: function ( parentElem, board )
+        {
+        	parentElem.innerHTML = board.boardInfo.general + "<br>" + board.boardInfo.users;
+        },
+        
         getForumSubHeader: function ( forum ) {
         	return labels.topics + ": " + forum.topics + " " +
-  			labels.posts + ": " + forum.posts + " " +
+  			labels.posts + ": " + forum.posts + "<br>" +
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\" target=\"_blank\">" +
@@ -58,7 +63,7 @@ var display = function () {
         getTopicSubHeader: function ( topic ) {
         	return labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
-  			labels.views + ": " + topic.views + " " +
+  			labels.views + ": " + topic.views + "<br>" +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
     		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +
@@ -95,14 +100,34 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, topics )
-        {
+        topics: function( parentElem, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
    
         	for(var i=0; i<topics.length; i++)
         	{
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
         	}    	
+        },
+        
+        reduceSpanText: function( objSpan, widthFinal ) {
+        	// while width of dynamic span is greater than final width
+			var widthTemp = objSpan.offsetWidth;
+			var text = getText(objSpan);			
+			
+			var lengthText = text.length;
+			
+            while(widthTemp > widthFinal && lengthText > 0)
+            {
+                // reduce one character from original text
+
+                lengthText--;
+                var textTrimmed = text.substring(0, lengthText) + "...";
+
+                // get width of reduced text
+
+                objSpan.innerHTML = textTrimmed;
+                widthTemp = objSpan.offsetWidth;
+            }
         }
 
     }

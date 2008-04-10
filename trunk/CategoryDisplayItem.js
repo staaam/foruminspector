@@ -58,10 +58,10 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	if (subHeader != null)
 	{
-		var bylineDiv = document.createElement("div");
-		bylineDiv.className = "di-byline";
-		bylineDiv.innerHTML = subHeader;
-		this.header.appendChild(bylineDiv);
+		this.bylineDiv = document.createElement("div");
+		this.bylineDiv.className = "di-byline";
+		this.bylineDiv.innerHTML = subHeader;
+		this.header.appendChild(this.bylineDiv);
 	}
 	  	
    	this.myself.appendChild(this.header);
@@ -72,6 +72,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.expandedPart.className = "di-expanded";
    	this.myself.appendChild(this.expandedPart);
    	
+   	display.reduceSpanText( headerTextSpan, 300 );
+  	
    	this.isClosed = true;
    	this.loadingSpan.style.display = "none";
    	this.expandedPart.style.display = "none";
