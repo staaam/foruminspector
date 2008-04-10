@@ -186,7 +186,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	this.gotoLink.addEventListener('click',onClickLink,false);	
+	gotoLink.addEventListener('click',onClickLink,false);	
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
@@ -292,7 +292,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	this.gotoLink.addEventListener('click',onClickLink,false);
+	gotoLink.addEventListener('click',onClickLink,false);
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
