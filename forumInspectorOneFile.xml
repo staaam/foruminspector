@@ -447,7 +447,11 @@ var display = function () {
         
         createBoardInfo: function ( parentElem, board )
         {
-        	parentElem.innerHTML = board.boardInfo.general + "<br>" + board.boardInfo.users;
+        	parentElem.innerHTML = "" +
+        		"<div class=\"di-divider\"></div>" + 
+        		board.boardInfo.general + 
+				"<div class=\"di-divider\"></div>" +
+				board.boardInfo.users;
         },
         
         getForumSubHeader: function ( forum ) {
