@@ -433,7 +433,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null, true, category.dir);
+        			null, loadCategoryFunction, null, null, true);
         },
                 
         createSecondaryForumItem: function (parentElem, forum) {
@@ -474,7 +474,7 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction, false, topic.dir );
+        			topic.isSelected(), selectTopicFunction, false );
         },
         
         createBoardInfo: function ( parentElem, board )
@@ -950,6 +950,8 @@ var ctrl = function () {
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
+	        	alert(board.dir);
+	        	divForumList.dir = board.dir;
 	        });
 	        
             for (var i=0;i<selForums.length;i++) {
