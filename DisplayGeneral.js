@@ -8,11 +8,11 @@ var display = function () {
         },
         
         createCategoryItem: function (parentElem, category) {
-        	//var loadCategoryFunction = function(callback) 
-        	//	{ category.load( function ( o ) { callback( o.subItems ); } ); };
+        	var loadCategoryFunction = function(callback) 
+        		{ category.load( function ( o ) { callback( o.subItems ); } ); };
         	
-        	var selectCategoryFunction = function( status )
-        		{ ctrl.toggleForum( category, status ); };
+        	//var selectCategoryFunction = function( status )
+        	//	{ ctrl.toggleForum( category, status ); };
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
