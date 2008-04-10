@@ -106,7 +106,8 @@ Board.prototype.parseForumsTable = function (table) {
     for (var i=1; i<trs.length; i++) {
         var tr = trs[i];
         var as = tr.getElementsByTagName('a');
-        if (as[0].getAttribute('class') == 'cattitle') {
+        var cl = as[0].getAttribute('class');
+        if (cl == 'cattitle' || cl == 'cat') {
             // category title row
             cat = new Category(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
             cat.index = i;
