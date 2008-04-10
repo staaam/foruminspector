@@ -356,7 +356,7 @@ var display = function () {
         		{ forum.load( function ( o ) { callback( o.subItems ); } ); };
         		
         	var selectForumFunction = function( status )
-        		{ ctrl.toggleForum(forum, status ); };
+        		{ ctrl.toggleForum( forum, status ); };
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
