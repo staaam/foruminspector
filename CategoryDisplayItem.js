@@ -22,11 +22,17 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	var gotoLink = document.createElement("a");
 	gotoLink.target = "_blank";
 	gotoLink.href = headerUrl;
+	var onClickLink = function (e) {
+		if (!e) var e = window.event;
+		e.cancelBubble = true;
+		if (e.stopPropagation) e.stopPropagation();        
+	}
+	gotoLink.addEventListener('click',onClickLink,false);	
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow";
-	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
+	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
@@ -103,7 +109,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
     
-	display.categories( this.expandedPart, forumsArr );
+	display.forums( this.expandedPart, forumsArr );
 	this.loadingSpan.style.display = "none";
 }
 
