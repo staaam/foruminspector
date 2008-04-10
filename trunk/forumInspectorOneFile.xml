@@ -25,13 +25,6 @@
 /* begin Board class */
 function Board(parent, url, title) {
     this.init(parent, url.replace(/\/(index\.php[^\/]*)?$/,"") + "/", title);
-    this.label = {
-        forum: "Forum",
-        topics: "Topics",
-        posts: "Posts",
-        lastPost: "Last Post",
-        whoIsOnline: "Who is Online"
-    };
 }
 
 Board.prototype = new ForumItem();
@@ -100,7 +93,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     // spans[1] -- General Info
     // spans[2] -- Users online
 
-    this.label.whoIsOnline = a.innerHTML;
+    labels.whoIsOnline = a.innerHTML;
     this.boardInfo = {
     	general: spans[1].innerHTML,
     	users: spans[2].innerHTML,
@@ -140,10 +133,10 @@ Board.prototype.tryParseForumsHeader = function (table) {
     }
     
     // assumption -- every and only forums table has row with th's
-    this.label.forum = ths[0].innerHTML;
-    this.label.topics = ths[1].innerHTML;
-    this.label.posts = ths[2].innerHTML;
-    this.label.lastPost = ths[3].innerHTML;
+    labels.forum = ths[0].textContent;
+    labels.topics = ths[1].textContent;
+    labels.posts = ths[2].textContent;
+    labels.lastPost = ths[3].textContent;
     
     return true;
 };
@@ -460,13 +453,6 @@ DisplayItem.prototype.initDisplayItem = function (parent) {
 /* end DisplayItem class *//* begin Forum class */
 function Forum(parent, url, title) {
     this.init(parent, url, title);
-    this.label = {
-        topics: "Topics",
-        posts: "Posts",
-        author: "Aurhor",
-        views: "Views",
-        lastPost: "Last Post"
-    };
 }
 
 Forum.prototype = new ForumItem();
@@ -509,7 +495,7 @@ Forum.prototype.parse = function (content) {
     if (this.title == this.url) {
         // try load title from the page
         var as = dom.getElementsByTagName('a');
-        for (var i in as) {
+        for (var i=0;i<as.length;i++) {
             var cl = as[i].getAttribute('class');
             var hr = as[i].getAttribute('href');
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
@@ -544,11 +530,11 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
     }
     
     // assumption -- every and only topics table has row with th's
-    this.label.topics = ths[0].innerHTML;
-    this.label.posts = ths[1].innerHTML;
-    this.label.author = ths[2].innerHTML;
-    this.label.views = ths[3].innerHTML;
-    this.label.lastPost = ths[4].innerHTML;
+    if (!labels.topics)   { labels.topics = ths[0].textContent; }
+    if (!labels.posts)    { labels.posts = ths[1].textContent; }
+    if (!labels.author)   { labels.author = ths[2].textContent; }
+    if (!labels.views)    { labels.views = ths[3].textContent; }
+    if (!labels.lastPost) { labels.lastPost = ths[4].textContent; }
     
     return true;
 };
@@ -566,11 +552,15 @@ Forum.prototype.parseForumTableRow = function (tr, idx) {
     return true;
 };
 
-ForumItem.prototype.toHTML = function () {
+Forum.prototype.isSelected = function () {
+	return ctrl.isSelectedForum(this);
+};
+
+Forum.prototype.toHTML = function () {
     return "<span class='forum'>" + this.toHTMLlink() + "</span>";
 };
 
-ForumItem.prototype.toHTMLlink = function () {
+Forum.prototype.toHTMLlink = function () {
     return "<a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a>";
 };
 /* end Forum class *//* begin ForumItem class */
@@ -588,7 +578,6 @@ ForumItem.prototype.init = function (parent, url, title) {
     this.id = url.match(this.idRegEx)[1];
     this.subItems = [];
     this.isLoaded = false;
-    this.isSelect = false;
     //printStr("new item url=" + this.url + " title=" + this.title);
 }
 
@@ -610,6 +599,10 @@ ForumItem.prototype.load = function (callback) {
         return;
     }
     this.reload(callback);
+};
+
+ForumItem.prototype.isSelected = function () {
+	return false;
 };
 
 ForumItem.prototype.reload = function (callback) {
@@ -675,7 +668,8 @@ var ctrl = function () {
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(ctrl.onBoardReady);
-            for (var fid in selForums) {
+            for (var i=0;i<selForums.length;i++) {
+            	var fid = selForums[i];
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
                 forum.load(ctrl.onForumReady);
             }
@@ -733,13 +727,13 @@ var ctrl = function () {
         displayBoard: function (board) {
             //var frmLst_id = tabs.addDynamicTab(board.label.forum, ctrl.resize);
             var s ="<form action=\"?\">";
-            for (var i in board.subItems) {
+            for (var i=0;i<board.subItems.length;i++) {
                 var cat = board.subItems[i];
                 s += "<a href=\"" + cat.url + "\">"+cat.title+"</a><ul>";
-                for (var j in cat.subItems) {
+                for (var j=0;j<cat.subItems.length;j++) {
                     var forum=cat.subItems[j];
                     var name = forum.id;
-                    var checked = selForums[name] != undefined ? " checked=\"yes\"" : "";
+                    var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
                     s += "<li>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
                 }
                 s += "</ul>";
@@ -767,14 +761,14 @@ var ctrl = function () {
             var s ="<form action=\"?\">";
             //var topics = forum.subItems;
             var arTopics = [];
-            for (var t in topics) {
+            for (var t=0;t<topics.length;t++) {
                 arTopics.push(topics[t]);
             }
             var sortedTopics = arTopics.sort(sortFunc);
-            for (var i in sortedTopics) {
+            for (var i=0;i<sortedTopics.length;i++) {
                     var topic = sortedTopics[i];
                     var name = topic.id;
-                    var checked = selTopics[name] != undefined ? " checked=\"yes\"" : "";
+                    var checked = ctrl.isSelectedTopic(topic) ? " checked=\"yes\"" : "";
                     s += "<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleTopic(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+ topic.toHTML() +"<br>";
             }
             s += "</form>";
@@ -782,8 +776,17 @@ var ctrl = function () {
             _gel(divId).innerHTML = s;
         },
         
-        toggleForum: function (form, name) {
-            if (form["f"+name].checked) {
+        isSelectedForum: function (forum) {
+        	return selForums[forum.id] != undefined;
+        },
+        
+        isSelectedTopic: function (topic) {
+        	return selTopics[topic.id] != undefined;
+        },
+        
+        toggleForum: function (forum, checked) {
+        	var name = forum.id;
+            if (checked) {
                 selForums[name] = 1;
                 allForums[name].load();
             } else {
@@ -792,8 +795,9 @@ var ctrl = function () {
             prefs.set("selForums", joinKeys(selForums));
         },
 
-        toggleTopic: function (form, name) {
-            if (form["f"+name].checked) {
+        toggleTopic: function (topic, checked) {
+        	var name = topic.id;
+            if (checked) {
                 selTopics[name] = 1;
             } else {
                 selTopics[name] = undefined;
@@ -806,6 +810,17 @@ var ctrl = function () {
         }
     }
 }();
+
+var labels = {
+    forum: "Forum",
+    topics: "Topics",
+    posts: "Posts",
+    lastPost: "Last Post",
+    whoIsOnline: "Who is Online",
+    
+    author: "Aurhor",
+    views: "Views",
+};
 
 function splitKeys(str) {
     var map = new Object();
@@ -829,9 +844,22 @@ var sorters = {
     }
 }
 
+Array.prototype.grep = function (f){
+	var output=new Array();
+	for(var i=0;i<this.length;i++){
+	     if(f(this[i])){
+	     	output.push(this[i])
+			//output.length++
+			//output[output.length-1]=this[i];
+	     }
+	}
+	return output;
+}
+
 var greps = {
 	hotTopic: function (topic) { return topic.isHot; },
-	not: function (f) { return function(t) { return !f(t); }; }
+//	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
+//	not: function (f) { return function(t) { return !f(t); }; }
 }
 
 function joinKeys(map) {
@@ -908,8 +936,12 @@ Topic.prototype.parseForumTableRow = function (tr) {
     // tds[5] last post date; author, link
 };
 
+Topic.prototype.isSelected = function () {
+	return ctrl.isSelectedTopic(this);
+};
+
 Topic.prototype.toHTML = function () {
-    return "<span class='topic'><a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a><div class='parentForum'>"+this.parent.parent.label.forum + ":" + this.parent.toHTMLlink() +"</div><div class='views'>"+this.parent.label.views+": "+this.views+"</div><div class='posts'>"+this.parent.label.posts+": "+this.posts+"</div></span>"
+    return "<span class='topic'><a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a><div class='parentForum'>"+labels.forum + ":" + this.parent.toHTMLlink() +"</div><div class='views'>"+labels.views+": "+this.views+"</div><div class='posts'>"+labels.posts+": "+this.posts+"</div></span>"
 }
 /* end Topic class */
         </script>
