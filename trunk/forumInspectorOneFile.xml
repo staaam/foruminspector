@@ -262,7 +262,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
     
-	display.categories( this.expandedPart, forumsArr );
+	display.forums( this.expandedPart, forumsArr );
 	this.loadingSpan.style.display = "none";
 }
 
