@@ -72,7 +72,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.expandedPart.className = "di-expanded";
    	this.myself.appendChild(this.expandedPart);
    	
-   	display.reduceSpanText( headerTextSpan, 290 );
+   	display.reduceSpanText( headerTextSpan, 260 );
   	
    	this.isClosed = true;
    	this.loadingSpan.style.display = "none";

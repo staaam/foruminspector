@@ -66,7 +66,7 @@ var display = function () {
         	span.innerHTML = board.title;
         	parentElem.appendChild(span);
         	
-        	display.reduceSpanText( span, 330 );
+        	display.reduceSpanText( span, 310 );
         },
         
         getForumSubHeader: function ( forum ) {
