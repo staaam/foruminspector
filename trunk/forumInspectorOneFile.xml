@@ -279,11 +279,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 	
 	this.header = document.createElement("div");
    	this.header.className = "di-secondary-header";
-		
-	var headerTextSpan = document.createElement("span");
-	headerTextSpan.innerHTML = headerText;
-	this.header.appendChild(headerTextSpan);
-	
+   		
 	var gotoLink = document.createElement("a");
 	gotoLink.target = "_blank";
 	gotoLink.href = headerUrl;
@@ -295,10 +291,9 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 	gotoLink.addEventListener('click',onClickLink,false);
 	this.header.appendChild(gotoLink);
 	
-	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder gotoArrow";
-	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
-	gotoLink.appendChild(gotoImg);
+	var headerTextSpan = document.createElement("span");
+	headerTextSpan.innerHTML = headerText;
+	gotoLink.appendChild(headerTextSpan);
 	
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
