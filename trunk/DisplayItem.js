@@ -6,7 +6,7 @@ DisplayItem.prototype.initDisplayItem = function (parent) {
     this.parent = parent;
    
 	this.myself = document.createElement("div");
-	this.className = "display-item";
+	this.myself.className = "display-item";
    	parent.appendChild(this.myself);
 }
 
