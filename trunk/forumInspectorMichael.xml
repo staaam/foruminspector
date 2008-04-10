@@ -1188,7 +1188,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     var post = ctrl.newPost(this, this.mkFullUrl(as[0].getAttribute('href')));
     post.text = text;
     post.parseTopicTableRow(tr);
-    this.addItem(topic);    
+    this.addItem(post);    
     // title/link is is first <a> tag, so look into it
 //    var topic = ctrl.newTopic(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
 //    topic.index = idx;
