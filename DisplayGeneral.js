@@ -21,11 +21,8 @@ var display = function () {
         			null, loadCategoryFunction, selectCategoryFunction);
         },
                 
-        createForumItem: function (parentElem, forum) {
+        createSecondaryForumItem: function (parentElem, forum) {
         	
-        	var loadForumFunction = function(callback)
-        		{ forum.load( function ( o ) { callback( o.subItems ); } ); };
-        		
         	var selectForumFunction = function( status )
         		{ ctrl.toggleForum( forum, status ); };
         	
@@ -34,13 +31,25 @@ var display = function () {
         		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
         },
         
+        createForumItem: function ( parentElem, forum ) {
+        	var loadForumFunction = function(callback) 
+        		{ forum.load( function ( o ) { callback( o.subItems ); } ); };
+        	
+        	var selectForumFunction = function( status )
+        		{ ctrl.toggleForum( forum, status ); };
+        		
+        	var displayItem = new CategoryDisplayItem(
+        			parentElem, forum.title, forum.url, 
+        			getForumSubHeader( forum ), loadCategoryFunction);
+        },
+        
         getForumSubHeader: function ( forum ) {
         	return labels.topics + ": " + forum.topics + " " +
   			labels.posts + ": " + forum.posts + " " +
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
-    		forum.lastPost.author + "</a href=\"" + forum.lastPost.link + "\">" +
-    		" <img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\">";//
+    		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\" target=\"_blank\">" +
+    		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
         },
         
         categories: function ( parentElem, cats )
@@ -53,14 +62,24 @@ var display = function () {
         	}
         },
         
-        forums: function ( parentElem, forums )
+        secondaryForums: function ( parentElem, forums )
         {
         	var listDisplayItem = new ListDisplayItem( parentElem );
    
         	for(var i=0; i<forums.length; i++)
         	{
-        		display.createForumItem( listDisplayItem.myself, forums[i] );
+        		display.createSecondaryForumItem( listDisplayItem.myself, forums[i] );
         	}        	
+        },
+        
+        forums: function( parentElem, forums )
+        {
+           	var listDisplayItem = new ListDisplayItem( parentElem );
+   
+        	for(var i=0; i<forums.length; i++)
+        	{
+        		display.createForumItem( listDisplayItem.myself, forums[i] );
+        	}    	
         }
 
     }
