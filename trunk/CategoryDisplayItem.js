@@ -107,8 +107,9 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
     
-	display.forums( this.expandedPart, forumsArr );
+	display.secondaryForums( this.expandedPart, forumsArr );
 	this.loadingSpan.style.display = "none";
+	_IG_AdjustIFrameHeight();
 }
 
 /* end CategoryDisplayItem class */
