@@ -827,6 +827,9 @@ var labels = {
 };
 
 function getText(node) {
+	if (!node) {
+		return undefined;
+	}
 	return node.innerText || node.text || node.textContent;
 //	return node.text || node.textContent || (function(node){
 //        var _result = "";
