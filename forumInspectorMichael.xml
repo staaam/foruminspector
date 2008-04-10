@@ -802,7 +802,7 @@ var ctrl = function () {
         },
         
         onStarred: function () {
-        	ctrl.displayTopics(_gel(divStarred), sorters.byId, ctrl.getSelectedTopics());
+        	ctrl.displayTopics(_gel(divStarred), sorters.byId, ctrl.getSelTopics());
         },
         
         onNewTopics: function () {
@@ -833,7 +833,7 @@ var ctrl = function () {
         	ctrl.resize();
         },
 
-        getAllTopics: function () {
+        getSelTopics: function () {
 			var r = [];
 			for (var i in selTopics) {
 				r.push(allTopics[i]);
