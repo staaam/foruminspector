@@ -28,7 +28,7 @@ Board.prototype.parse = function (content) {
 	    }
     }
 
-    this.title = e.textContent;
+    this.title = e.innerText;
 };
 
 function getEl(els, attr, val) {
@@ -109,10 +109,10 @@ Board.prototype.tryParseForumsHeader = function (table) {
     }
     
     // assumption -- every and only forums table has row with th's
-    labels.forum = ths[0].textContent;
-    labels.topics = ths[1].textContent;
-    labels.posts = ths[2].textContent;
-    labels.lastPost = ths[3].textContent;
+    labels.forum = ths[0].innerText;
+    labels.topics = ths[1].innerText;
+    labels.posts = ths[2].innerText;
+    labels.lastPost = ths[3].innerText;
     
     return true;
 };
