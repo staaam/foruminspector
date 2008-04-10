@@ -230,7 +230,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.isForums = isForums;
 	
    	this.header = document.createElement("div");
-   	this.header.dir = direction;
+   	//this.header.dir = direction;
    	this.header.className = "di-header";
 	
 	this.plusImg = document.createElement("img");
