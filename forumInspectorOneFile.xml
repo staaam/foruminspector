@@ -503,12 +503,6 @@ var display = function () {
 			var widthTemp = objSpan.offsetWidth;
 			var text = getText(objSpan);			
 			
-			if (widthTemp > widthFinal)
-			{
-				text = text + "...";
-				alert(text);
-			}
-			
 			var lengthText = text.length;
 			
             while(widthTemp > widthFinal && lengthText > 0)
@@ -516,7 +510,7 @@ var display = function () {
                 // reduce one character from original text
 
                 lengthText--;
-                var textTrimmed = text.substring(0, lengthText);
+                var textTrimmed = text.substring(0, lengthText) + "...";
 
                 // get width of reduced text
 
