@@ -38,7 +38,7 @@ var display = function () {
         {
         	var listDisplayItem = new ListDisplayItem( parentElem );
         	
-        	for(var i in cats)
+        	for(var i=0; i<cats.length; i++)
         	{
         		display.createCategoryItem( listDisplayItem.myself, cats[i] );
         	}
@@ -48,7 +48,7 @@ var display = function () {
         {
         	var listDisplayItem = new ListDisplayItem( parentElem );
    
-        	for(var i in forums)
+        	for(var i=0; i<forums.length; i++)
         	{
         		display.createForumItem( listDisplayItem.myself, forums[i] );
         	}        	

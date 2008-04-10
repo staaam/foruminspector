@@ -50,7 +50,7 @@ Forum.prototype.parse = function (content) {
     if (this.title == this.url) {
         // try load title from the page
         var as = dom.getElementsByTagName('a');
-        for (var i in as) {
+        for (var i=0;i<as.length;i++) {
             var cl = as[i].getAttribute('class');
             var hr = as[i].getAttribute('href');
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {

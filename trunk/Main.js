@@ -24,7 +24,8 @@ var ctrl = function () {
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(ctrl.onBoardReady);
-            for (var fid in selForums) {
+            for (var i=0;i<selForums.length;i++) {
+            	var fid = selForums[i];
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
                 forum.load(ctrl.onForumReady);
             }
@@ -82,10 +83,10 @@ var ctrl = function () {
         displayBoard: function (board) {
             //var frmLst_id = tabs.addDynamicTab(board.label.forum, ctrl.resize);
             var s ="<form action=\"?\">";
-            for (var i in board.subItems) {
+            for (var i=0;i<board.subItems.length;i++) {
                 var cat = board.subItems[i];
                 s += "<a href=\"" + cat.url + "\">"+cat.title+"</a><ul>";
-                for (var j in cat.subItems) {
+                for (var j=0;j<cat.subItems.length;j++) {
                     var forum=cat.subItems[j];
                     var name = forum.id;
                     var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
@@ -116,11 +117,11 @@ var ctrl = function () {
             var s ="<form action=\"?\">";
             //var topics = forum.subItems;
             var arTopics = [];
-            for (var t in topics) {
+            for (var t=0;t<topics.length;t++) {
                 arTopics.push(topics[t]);
             }
             var sortedTopics = arTopics.sort(sortFunc);
-            for (var i in sortedTopics) {
+            for (var i=0;i<sortedTopics.length;i++) {
                     var topic = sortedTopics[i];
                     var name = topic.id;
                     var checked = ctrl.isSelectedTopic(topic) ? " checked=\"yes\"" : "";
@@ -139,8 +140,9 @@ var ctrl = function () {
         	return selTopics[topic.id] != undefined;
         },
         
-        toggleForum: function (form, name) {
-            if (form["f"+name].checked) {
+        toggleForum: function (forum, checked) {
+        	var name = forum.id;
+            if (checked) {
                 selForums[name] = 1;
                 allForums[name].load();
             } else {
@@ -149,8 +151,9 @@ var ctrl = function () {
             prefs.set("selForums", joinKeys(selForums));
         },
 
-        toggleTopic: function (form, name) {
-            if (form["f"+name].checked) {
+        toggleTopic: function (topic, checked) {
+        	var name = topic.id;
+            if (checked) {
                 selTopics[name] = 1;
             } else {
                 selTopics[name] = undefined;
@@ -186,9 +189,22 @@ var sorters = {
     }
 }
 
+Array.prototype.grep = function (f){
+	var output=new Array();
+	for(var i=0;i<this.length;i++){
+	     if(f(this[i])){
+	     	output.push(this[i])
+			//output.length++
+			//output[output.length-1]=this[i];
+	     }
+	}
+	return output;
+}
+
 var greps = {
 	hotTopic: function (topic) { return topic.isHot; },
-	not: function (f) { return function(t) { return !f(t); }; }
+//	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
+//	not: function (f) { return function(t) { return !f(t); }; }
 }
 
 function joinKeys(map) {
