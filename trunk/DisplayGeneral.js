@@ -27,11 +27,20 @@ var display = function () {
         		{ forum.load( function ( o ) { callback( o.subItems ); } ); };
         		
         	var selectForumFunction = function( status )
-        		{ ctrl.toggleForum(forum, status ); };
+        		{ ctrl.toggleForum( forum, status ); };
         	
-        	var displayItem = new CategoryDisplayItem(
-        		parentElem, forum.title, null, 
-        		"empty sub header", loadForumFunction, selectForumFunction);
+        	var displayItem = new ForumDisplayItemSecondary(
+        		parentElem, forum.title, forum.url,
+        		display.getForumSubHeader(forum) , selectForumFunction);
+        },
+        
+        getForumSubHeader: function ( forum ) {
+        	return forum.label.topics + ": " + forum.topics + " " +
+  			forum.label.posts + ": " + forum.posts + " " +
+    		forum.label.lastPost + ": " + forum.lastPost.date + " " +
+    		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
+    		forum.lastPost.author + "</a href=\"" + forum.lastPost.link + "\">" +
+    		" <img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\">";//
         },
         
         categories: function ( parentElem, cats )
