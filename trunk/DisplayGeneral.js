@@ -89,6 +89,16 @@ var display = function () {
         	{
         		display.createForumItem( listDisplayItem.myself, forums[i] );
         	}    	
+        },
+
+        topics: function( parentElem, topics )
+        {
+           	var listDisplayItem = new ListDisplayItem( parentElem );
+   
+        	for(var i=0; i<topics.length; i++)
+        	{
+        		display.createTopicItem( listDisplayItem.myself, topics[i] );
+        	}    	
         }
 
     }
