@@ -1128,7 +1128,7 @@ Topic.prototype.parse = function (content) {
     }
 };
 
-Topic.prototype.tryParseTopicsTable = function (table) {
+Topic.prototype.tryParsePostsTable = function (table) {
     if (table.getAttribute('class') != 'forumline' ||
         !this.tryParsePostsHeader(table)) {
         return false;
