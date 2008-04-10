@@ -24,23 +24,16 @@ var ctrl = function () {
             
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
-            board.load(ctrl.onBoardReady);
+            board.load(function (board) {
+	        	display.categories(_gel(divForumList), board.subItems);
+	        });
+	        
             for (var i=0;i<selForums.length;i++) {
             	var fid = selForums[i];
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
-                forum.load(ctrl.onForumReady);
+                forum.load(function(){});
             }
             return false;
-        },
-        
-        onBoardReady: function (board) {
-        	//display.boardInfo(divBoardInfo, board);
-        	display.categories(_gel(divForumList), board.subItems);
-        	//ctrl.displayBoard(board);
-        },
-        
-        onForumReady: function (forum) {
-        	ctrl.displayForum(forum);
         },
         
         createTabs: function () {
@@ -50,9 +43,18 @@ var ctrl = function () {
             
             divStared = tabs.addDynamicTab("Stared", ctrl.resize);
             
-            divNewTopics = tabs.addDynamicTab("New Topics", ctrl.resize);
+            divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             
             tabs.alignTabs("left", 10);
+        },
+        
+        onNewTopics: function () {
+        	for (var i=0; i<selForums.length; i++) {
+        		selForums[i].load(function(forum) {
+        			display.topics(_gel(divNewTopics), forum.subItems);
+        		});
+        	}
+        	ctrl.resize();
         },
         
         newForum: function (parent, url, title) {
