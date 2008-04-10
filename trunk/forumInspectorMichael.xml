@@ -174,11 +174,17 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	var gotoLink = document.createElement("a");
 	gotoLink.target = "_blank";
 	gotoLink.href = headerUrl;
+	var onClickLink = function (e) {
+		if (!e) var e = window.event;
+		e.cancelBubble = true;
+		if (e.stopPropagation) e.stopPropagation();        
+	}
+	gotoLink.addEventListener('click',onClickLink,false);	
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow";
-	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
+	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
 	
  	this.loadingSpan = document.createElement("span");
@@ -255,7 +261,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
     
-	display.categories( this.expandedPart, forumsArr );
+	display.forums( this.expandedPart, forumsArr );
 	this.loadingSpan.style.display = "none";
 }
 
@@ -288,11 +294,20 @@ var display = function () {
         		{ forum.load( function ( o ) { callback( o.subItems ); } ); };
         		
         	var selectForumFunction = function( status )
-        		{ ctrl.toggleForum(forum, status ); };
+        		{ ctrl.toggleForum( forum, status ); };
         	
-        	var displayItem = new CategoryDisplayItem(
-        		parentElem, forum.title, null, 
-        		"empty sub header", loadForumFunction, selectForumFunction);
+        	var displayItem = new ForumDisplayItemSecondary(
+        		parentElem, forum.title, forum.url,
+        		display.getForumSubHeader(forum) , selectForumFunction);
+        },
+        
+        getForumSubHeader: function ( forum ) {
+        	return labels.topics + ": " + forum.topics + " " +
+  			labels.posts + ": " + forum.posts + " " +
+    		labels.lastPost + ": " + forum.lastPost.date + " " +
+    		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
+    		forum.lastPost.author + "</a href=\"" + forum.lastPost.link + "\">" +
+    		" <img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\">";//
         },
         
         categories: function ( parentElem, cats )
