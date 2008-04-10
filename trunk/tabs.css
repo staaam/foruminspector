@@ -66,9 +66,8 @@
 
 .gotoArrow {
 	background-image:url(order_arrow_small.gif);
-	background-position:-5px -5px;
-	height: 14px;
-	width: 22px;
+	height: 12px;
+	width: 19px;
 }
 	
 body {
