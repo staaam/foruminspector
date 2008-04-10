@@ -167,6 +167,17 @@ var ctrl = function () {
     }
 }();
 
+var labels = {
+    forum: "Forum",
+    topics: "Topics",
+    posts: "Posts",
+    lastPost: "Last Post",
+    whoIsOnline: "Who is Online",
+    
+    author: "Aurhor",
+    views: "Views",
+};
+
 function splitKeys(str) {
     var map = new Object();
     var s = str.split(";");
