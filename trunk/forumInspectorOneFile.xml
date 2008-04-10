@@ -150,6 +150,10 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	var onClickSelect = function () {
 		
 		var lala = "2";
+		
+		if (!e) var e = window.event;
+		e.cancelBubble = true;
+		if (e.stopPropagation) e.stopPropagation();
         
 	}
 	this.select.addEventListener('click',onClickSelect,false);
