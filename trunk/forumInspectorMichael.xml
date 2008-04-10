@@ -96,7 +96,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     labels.whoIsOnline = a.innerHTML;
     this.boardInfo = {
     	general: spans[1].innerHTML,
-    	users: spans[2].innerHTML,
+    	users: spans[2].innerHTML
     };
 };
 
@@ -190,7 +190,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.loadingSpan.innerHTML = "(Loading...)";
 	this.header.appendChild(this.loadingSpan);
 	
-	this.select = document.createElement("input");
+	/*this.select = document.createElement("input");
 	this.select.className = "di-select";
 	this.select.type = "checkbox";
 	var onClickSelect = function (e) {
@@ -199,12 +199,12 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();
 		
-		selectFunction( this.select.checked );
+		selectFunction( this.checked );
         
 	}
 	this.select.addEventListener('click',onClickSelect,false);
 	
-	this.header.appendChild(this.select);
+	this.header.appendChild(this.select);*/
 	
 	if (subHeader != null)
 	{
@@ -264,7 +264,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 }
 
 /* end CategoryDisplayItem class *//* begin ForumDisplayItemSecondary class */
-function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, selectFunction) {
+function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isSelected, selectFunction) {
 	this.initDisplayItem(parent)
 	this.myself.className = this.myself.className + " ForumDisplayItemSecondary";
 	
@@ -293,13 +293,14 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
 	this.select.type = "checkbox";
+	this.select.checked = isSelected;
 	var onClickSelect = function (e) {
 		
 		if (!e) var e = window.event;
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();
 		
-		selectFunction( this.select.checked );
+		selectFunction( this.checked );
         
 	}
 	this.select.addEventListener('click',onClickSelect,false);
@@ -355,7 +356,7 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		display.getForumSubHeader(forum) , selectForumFunction);
+        		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
         },
         
         getForumSubHeader: function ( forum ) {
@@ -786,7 +787,7 @@ var ctrl = function () {
         	var name = forum.id;
             if (checked) {
                 selForums[name] = 1;
-                allForums[name].load();
+                //allForums[name].load();
             } else {
                 selForums[name] = undefined;
             }
@@ -817,7 +818,7 @@ var labels = {
     whoIsOnline: "Who is Online",
     
     author: "Aurhor",
-    views: "Views",
+    views: "Views"
 };
 
 function splitKeys(str) {
@@ -856,8 +857,8 @@ Array.prototype.grep = function (f){
 
 var greps = {
 	hotTopic: function (topic) { return topic.isHot; },
-//	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
-//	not: function (f) { return function(t) { return !f(t); }; }
+	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
+	not: function (f) { return function(t) { return !f(t); }; }
 }
 
 function joinKeys(map) {
