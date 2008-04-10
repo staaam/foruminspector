@@ -802,36 +802,37 @@ var ctrl = function () {
         },
         
         onStarred: function () {
-        	ctrl.displayTopics(_gel(divStarred), sorters.byId, ctrl.getSelTopics());
+        	ctrl.displayTopics(_gel(divStarred), ctrl.getSelTopics().sort(sorters.byId));
         },
         
         onNewTopics: function () {
-        	ctrl.displayTopics(_gel(divNewTopics), sorters.byId);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId);
         },
         
         onMostViews: function () {
-        	ctrl.displayTopics(_gel(divMostViews), sorters.byViews);
+        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews);
         },
         
         onMostPosts: function () {
-        	ctrl.displayTopics(_gel(divMostPosts), sorters.byPosts);
+        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts);
         },
         
-        displayTopics: function (el, sorter, topics) {
-        	if (!topics) {
-        		topics = ctrl.getAllTopics();
-        	}
+        displayForumsTopics: function (el, sorter) {
             for (var i in allForums) {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
-	        		forum.load(function(forum) {
-	        			display.clear(el);
-	        			display.topics(el, topics.sort(sorter).splice(0, prefs.getInt("nTopics")));
+	        		forum.load(function() {
+	        			ctrl.displayTopics(el, ctrl.getAllTopics().sort(sorter));
 	        		});
             	}
         	}
-        	ctrl.resize();
         },
+        
+        displayTopics: function (el, topics) {
+			display.clear(el);
+			display.topics(el, topics.splice(0, prefs.getInt("nTopics")));
+        	ctrl.resize();
+		},
 
         getSelTopics: function () {
 			var r = [];
