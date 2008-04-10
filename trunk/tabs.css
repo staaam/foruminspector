@@ -73,6 +73,12 @@
 	padding:0px 0px 0px 5px;
 }
 
+.di-maintitle {
+	font-size:small;
+	margin:0pt;
+	text-decoration:none;
+}
+
 body {
 	color:black;
 	font-family:Helvetica,Arial,sans-serif;
