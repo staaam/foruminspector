@@ -811,7 +811,7 @@ var ctrl = function () {
         	
         	for (var fid in map) {
             	var forum = allForums[fid];
-        		forum.load(function(forum) {
+        		forum.load(function() {
         			for (var i=0;i<forum.subItems.length;i++) {
         				if (forum.subItems[i].isSelected()) {
 	        				diTopics.add(forum.subItems[i]);
