@@ -29,7 +29,8 @@ function Board(parent, url, title) {
         forum: "Forum",
         topics: "Topics",
         posts: "Posts",
-        lastPost: "Last Post"
+        lastPost: "Last Post",
+        whoIsOnline: "Who is Online"
     };
 }
 
@@ -43,16 +44,70 @@ Board.prototype.parse = function (content) {
     var dom = toDOM(getBody(content));
     var tables = dom.getElementsByTagName('table');
     for (var i=0; i<tables.length; i++) {
-        this.tryParseForumsTable(tables[i]);
+        this.tryParseBoardTable(tables[i]);
     }
+    var spans = dom.getElementsByTagName('span');
+    var e = getEl(spans, 'class', 'maintitle');
+    if (!e) {
+	    e = getEl(spans, 'class', 'gen');
+    }
+    if (!e) {
+	    spans = dom.getElementsByTagName('div');
+	    e = getEl(spans, 'class', 'maintitle');
+	    if (!e) {
+		    e = getEl(spans, 'class', 'gen');
+	    }
+    }
+
+    this.title = e.textContent;
 };
 
-Board.prototype.tryParseForumsTable = function (table) {
-    if (table.getAttribute('class') != 'forumline' ||
-        !this.tryParseForumsHeader(table)) {
-        return false;
+function getEl(els, attr, val) {
+    for (var i=0; i<els.length; i++) {
+    	if (els[i] && els[i].getAttribute(attr) == val) {
+    		return els[i];
+    	}
     }
+}
 
+Board.prototype.tryParseBoardTable = function (table) {
+    if (table.getAttribute('class') != 'forumline') {
+    	return false;
+    }
+    
+    if (this.tryParseForumsHeader(table)) {
+    	this.parseForumsTable(table);
+    	return true;
+    }
+    
+    if (this.tryParseBoardInfo(table)) {
+    	return true;
+    }
+    
+    return false;
+};
+
+Board.prototype.tryParseBoardInfo = function (table) {
+    if (!table || !table.getElementsByTagName('a')) {
+    	return false;
+    }
+    var a = table.getElementsByTagName('a')[0];
+    if (!a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
+    	return false;
+    }
+    var spans = table.getElementsByTagName('span');
+    // spans[0] -- Who is Online
+    // spans[1] -- General Info
+    // spans[2] -- Users online
+
+    this.label.whoIsOnline = a.innerHTML;
+    this.boardInfo = {
+    	general: spans[1].innerHTML,
+    	users: spans[2].innerHTML,
+    };
+};
+
+Board.prototype.parseForumsTable = function (table) {
     var trs = table.getElementsByTagName('tr'); // all table rows, first row is headers
     var cat;
     for (var i=1; i<trs.length; i++) {
@@ -74,7 +129,7 @@ Board.prototype.tryParseForumsTable = function (table) {
         }
     }
     return true;
-}
+};
 
 Board.prototype.idRegEx = /\/(.*)/;
 
@@ -242,9 +297,18 @@ var display = function () {
         	var selectForumFunction = function( status )
         		{ ctrl.toggleForum(forum, status ); };
         	
-        	var displayItem = new CategoryDisplayItem(
-        		parentElem, forum.title, null, 
-        		"empty sub header", loadForumFunction, selectForumFunction);
+        	var displayItem = new ForumDisplayItemSecondary(
+        		parentElem, forum.title, forum.url,
+        		getForumSubHeader(forum) , selectForumFunction);
+        },
+        
+        getForumSubHeader: function ( forum ) {
+        	return forum.label.topics + ":" + forum.topics + " " +
+  			forum.label.posts + ":" + forum.posts + " " +
+    		forum.label.lastPost + ":" + forum.lastPost.date + " "
+    		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">"
+    		 + author + "</a> <img src=\"icon_latest_reply.gif\">";//
+    		//  link;
         },
         
         categories: function ( parentElem, cats )
@@ -356,7 +420,20 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     this.topics = tds[2].textContent;
     this.posts = tds[3].textContent;
     // tds[4] last post date; author, link
+    this.lastPost = parseLastPost(this, tds[4]);
 };
+
+function parseLastPost(that, td) {
+    var lastPost = td.getElementsByTagName('span')[0];
+	var as = lastPost.getElementsByTagName('a');
+    var author = as[0];
+    return {
+    	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
+		author: author.textContent,
+		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
+		link: as[1] ? that.mkFullUrl(as[1].getAttribute('href')) : ""
+    };
+}
 
 Forum.prototype.parse = function (content) {
     if (content == null) {
@@ -446,6 +523,7 @@ ForumItem.prototype.init = function (parent, url, title) {
     this.id = url.match(this.idRegEx)[1];
     this.subItems = [];
     this.isLoaded = false;
+    this.isSelect = false;
     //printStr("new item url=" + this.url + " title=" + this.title);
 }
 
@@ -686,6 +764,11 @@ var sorters = {
     }
 }
 
+var greps = {
+	hotTopic: function (topic) { return topic.isHot; },
+	not: function (f) { return function(t) { return !f(t); }; }
+}
+
 function joinKeys(map) {
     var str = "";
     for (var i in map) {
@@ -738,21 +821,25 @@ Topic.prototype.parseForumTableRow = function (tr) {
     // tds[0] img, whether has new posts?
     var img = tds[0].getElementsByTagName('img')[0];
     this.icon = img.src; // icon
-    this.hasNewPosts = img.title; // has/has no new posts
-    if (img.src.match("folder_announce")) {
+    this.hasNewPostsTitle = img.title; // has/has no new posts
+    if (img.src.match("_announce")) {
         this.type = "announce";
     }
-    else if (img.src.match("folder_sticky")) {
+    else if (img.src.match("_sticky")) {
         this.type = "sticky";
     }
     else {
         this.type = "normal";
     }
+  	this.hasNewPosts = img.src.match("_new") ? true : false;
+   	this.isLocked = img.src.match("_lock") ? true : false;
+   	this.isHot = img.src.match("_hot") ? true : false;
     
-    // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
+   // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
     this.posts = tds[2].textContent;
     this.author = tds[3].textContent;
     this.views = tds[4].textContent;
+    this.lastPost = parseLastPost(this, tds[5]);
     // tds[5] last post date; author, link
 };
 
