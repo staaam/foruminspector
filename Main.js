@@ -225,7 +225,8 @@ function getText(node) {
 	if (!node) {
 		return undefined;
 	}
-	return node.innerText || node.text || node.textContent;
+	var text = node.innerText || node.text || node.textContent;
+	return text.trim();
 //	return node.text || node.textContent || (function(node){
 //        var _result = "";
 //        if (node == null) {
@@ -261,6 +262,10 @@ function getText(node) {
 //    }(node));
 }
 
+function getHTML(node) {
+	return node.innerHTML.trim();
+}
+
 function splitKeys(str) {
     var map = new Object();
     var s = str.split(";");
@@ -285,17 +290,9 @@ var sorters = {
 }
 
 
-//Array.prototype.grep = function (f){
-//	var output=new Array();
-//	for(var i=0;i<this.length;i++){
-//	     if(f(this[i])){
-//	     	output.push(this[i])
-//			//output.length++
-//			//output[output.length-1]=this[i];
-//	     }
-//	}
-//	return output;
-//}
+String.prototype.trim = function () {
+	return this.replace(/^\s*/, "").replace(/\s*$/, "");
+};
 
 var greps = {
 	hotTopic: function (topic) { return topic.isHot; },
