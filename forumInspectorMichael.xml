@@ -1170,6 +1170,10 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     		text = text + spans[i].innerHTML;
     	}
     }
+    
+    if (text != "") {
+    	return false;
+    }
     alert(text);
     asdd;
     // title/link is is first <a> tag, so look into it
