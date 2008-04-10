@@ -942,7 +942,7 @@ var sorters = {
     byPosts: function (a,b) { return b.posts - a.posts; },
     byViews: function (a,b) { return b.views - a.views; },
     byIndex: function (a,b) { return b.index - a.index; },
-    byIndex: function (a,b) { return b.id - a.id; },
+    byId: function (a,b) { return b.id - a.id; },
     neg: function (f) {
         return function(a,b) {
             return -1 * f(a,b);
