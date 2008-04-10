@@ -759,14 +759,14 @@ var ctrl = function () {
     var divNewTopics;
     var divBoardInfo;
     
-    var divStared;
+    var divStarred;
     var displayGeneral = new DisplayGeneral();
 
     return {
         init: function () {
             ctrl.createTabs();
             
-            display.init(divStared);
+            display.init(divStarred);
             
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
@@ -789,7 +789,7 @@ var ctrl = function () {
 
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
-            divStared = tabs.addDynamicTab("Stared", ctrl.resize);
+            divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
             
             divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
@@ -799,6 +799,10 @@ var ctrl = function () {
             divBoardInfo = tabs.addDynamicTab("Board Info", ctrl.resize);
             
             tabs.alignTabs("left", 10);
+        },
+        
+        onStarred: function () {
+        	ctrl.displayTopics(_gel(divStarred), sorters.byId, ctrl.getSelectedTopics());
         },
         
         onNewTopics: function () {
@@ -813,19 +817,30 @@ var ctrl = function () {
         	ctrl.displayTopics(_gel(divMostPosts), sorters.byPosts);
         },
         
-        displayTopics: function (el, sorter) {
+        displayTopics: function (el, sorter, topics) {
+        	if (!topics) {
+        		topics = ctrl.getAllTopics();
+        	}
             for (var i in allForums) {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function(forum) {
 	        			display.clear(el);
-	        			display.topics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
+	        			display.topics(el, topics.sort(sorter).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
         	}
         	ctrl.resize();
         },
-        
+
+        getAllTopics: function () {
+			var r = [];
+			for (var i in selTopics) {
+				r.push(allTopics[i]);
+			}
+			return r;        	
+        },
+                
         getAllTopics: function () {
 			var r = [];
 			for (var i in allTopics) {
