@@ -10,7 +10,7 @@ ForumItem.prototype.init = function (parent, url, title) {
     if (title == null || title == undefined) {
         this.title = url;
     }
-    this.id = url.match(this.idRegEx)[1];
+    this.id = this.linkMatch(url)[1];
     this.subItems = [];
     this.isLoaded = false;
     //printStr("new item url=" + this.url + " title=" + this.title);
@@ -23,6 +23,10 @@ ForumItem.prototype.addItem = function (item) {
     //printStr("add item url=" + item.url + " title=" + item.title);
     this.subItems.push(item);
 };
+
+ForumItem.prototype.linkMatch = function (url) {
+	return url.match(this.idRegEx);
+}
 
 ForumItem.prototype.mkFullUrl = function (relUrl) {
     return this.boardUrl + relUrl;

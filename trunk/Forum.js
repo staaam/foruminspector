@@ -16,8 +16,8 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     this.hasNewPosts = img.title; // has/has no new posts
     
     // tds[1] forum title, link; description; moderator(s)
-    this.topics = tds[2].innerText;
-    this.posts = tds[3].innerText;
+    this.topics = getText(tds[2]);
+    this.posts = getText(tds[3]);
     // tds[4] last post date; author, link
     this.lastPost = parseLastPost(this, tds[4]);
 };
@@ -28,7 +28,7 @@ function parseLastPost(that, td) {
     var author = as[0];
     return {
     	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
-		author: author.innerText,
+		author: getText(author),
 		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
 		link: as[1] ? that.mkFullUrl(as[1].getAttribute('href')) : ""
     };
@@ -78,11 +78,11 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
     }
     
     // assumption -- every and only topics table has row with th's
-    if (!labels.topics)   { labels.topics = ths[0].innerText; }
-    if (!labels.posts)    { labels.posts = ths[1].innerText; }
-    if (!labels.author)   { labels.author = ths[2].innerText; }
-    if (!labels.views)    { labels.views = ths[3].innerText; }
-    if (!labels.lastPost) { labels.lastPost = ths[4].innerText; }
+    if (!labels.topics)   { labels.topics = getText(ths[0]); }
+    if (!labels.posts)    { labels.posts = getText(ths[1]); }
+    if (!labels.author)   { labels.author = getText(ths[2]); }
+    if (!labels.views)    { labels.views = getText(ths[3]); }
+    if (!labels.lastPost) { labels.lastPost = getText(ths[4]); }
     
     return true;
 };

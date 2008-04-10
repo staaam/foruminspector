@@ -28,7 +28,7 @@ Board.prototype.parse = function (content) {
 	    }
     }
 
-    this.title = e.innerText;
+    this.title = getText(e);
 };
 
 function getEl(els, attr, val) {
@@ -61,7 +61,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     	return false;
     }
     var a = table.getElementsByTagName('a')[0];
-    if (!a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
+    if (!a || !a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
     var spans = table.getElementsByTagName('span');
@@ -82,7 +82,8 @@ Board.prototype.parseForumsTable = function (table) {
     for (var i=1; i<trs.length; i++) {
         var tr = trs[i];
         var as = tr.getElementsByTagName('a');
-        if (as[0].getAttribute('class') == 'cattitle') {
+        var href = as[0].getAttribute('href');
+        if (Category.prototype.linkMatch(href)) {
             // category title row
             cat = new Category(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
             cat.index = i;
@@ -109,10 +110,10 @@ Board.prototype.tryParseForumsHeader = function (table) {
     }
     
     // assumption -- every and only forums table has row with th's
-    labels.forum = ths[0].innerText;
-    labels.topics = ths[1].innerText;
-    labels.posts = ths[2].innerText;
-    labels.lastPost = ths[3].innerText;
+    labels.forum = getText(ths[0]);
+    labels.topics = getText(ths[1]);
+    labels.posts = getText(ths[2]);
+    labels.lastPost = getText(ths[3]);
     
     return true;
 };
