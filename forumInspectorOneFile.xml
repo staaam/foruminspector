@@ -372,7 +372,7 @@ var display = function () {
   			forum.label.posts + ": " + forum.posts + " " +
     		forum.label.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">"
-    		 + forum.lastPost.author + "</a> <img src=\"icon_latest_reply.gif\">";//
+    		 + forum.lastPost.author + "</a> <img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\">";//
     		//  link;
         },
         
