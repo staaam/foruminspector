@@ -371,9 +371,9 @@ var display = function () {
         	return forum.label.topics + ": " + forum.topics + " " +
   			forum.label.posts + ": " + forum.posts + " " +
     		forum.label.lastPost + ": " + forum.lastPost.date + " " +
-    		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">"
-    		 + forum.lastPost.author + "</a> <img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\">";//
-    		//  link;
+    		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
+    		forum.lastPost.author + "</a href=\"" + forum.lastPost.link + "\">" +
+    		" <img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\">";//
         },
         
         categories: function ( parentElem, cats )
