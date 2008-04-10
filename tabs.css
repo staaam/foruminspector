@@ -34,6 +34,13 @@
 	font-size:medium;
 	font-weight:bold;
 	background-color:#E5ECF9;
+	margin: 3px;
+}
+
+.thinBorder {
+	border-top: 1px solid #C5D7EF;
+	border-left: 1px solid #C5D7EF;
+	border-right: 1px solid #C5D7EF;
 }
 
 .di-select {

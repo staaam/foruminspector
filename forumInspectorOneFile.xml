@@ -460,7 +460,7 @@ var display = function () {
         
         createBoardTitle: function ( parentElem, board ){
         	
-        	parentElem.className = "boardTitle";
+        	parentElem.className = "boardTitle thinBorder";
         	var h2 = document.createElement("h2");
         	var span = document.createElement("span");
         	span.innerHTML = board.title;
