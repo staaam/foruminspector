@@ -85,7 +85,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
     	return false;
     }
     var a = table.getElementsByTagName('a')[0];
-    if (!a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
+    if (!a || !a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
     var spans = table.getElementsByTagName('span');
