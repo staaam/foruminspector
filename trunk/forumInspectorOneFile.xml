@@ -883,7 +883,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     		var imgs = spans[i].getElementsByTagName('img');
     		for (var j=0;j<imgs.length;j++) {
     			j.src = this.mkFullUrl(j.src);
-    			j.className = "outerImage";
+    			j.width = 20;
     		}
     		text = text + spans[i].innerHTML;
     	}
