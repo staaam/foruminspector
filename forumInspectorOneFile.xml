@@ -424,8 +424,8 @@ var display = function () {
   			labels.posts + ": " + forum.posts + " " +
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
-    		forum.lastPost.author + "</a href=\"" + forum.lastPost.link + "\">" +
-    		"<img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";//
+    		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\">" +
+    		"<img src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
         },
         
         categories: function ( parentElem, cats )
