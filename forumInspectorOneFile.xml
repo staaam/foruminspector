@@ -147,14 +147,13 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
 	this.select.type = "checkbox";
-	this.select.onclick = function () {
+	var onClickSelect = function () {
 		
-        var e = window.event;
-    	e.cancelBubble = true; /* Microsoft */
-    	if (e.stopPropagation)
-       		e.stopPropagation(); /* W3C */
+		var lala = "2";
         
 	}
+	this.select.addEventListener('click',onClickSelect,false);
+	
 	header.appendChild(this.select);
 	
 	var bylineDiv = document.createElement("div");
