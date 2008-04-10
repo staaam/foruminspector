@@ -322,8 +322,13 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 		bylineDiv.innerHTML = subHeader;
 		this.header.appendChild(bylineDiv);
 	}
-	
-   	this.myself.appendChild(this.header);
+
+  	this.myself.appendChild(this.header);
+  	
+  	var divider = document.createElement("div");
+   	divider.className = "di-divider";
+   	this.myself.appendChild(divider);
+  	
 }
 
 ForumDisplayItemSecondary.prototype = new DisplayItem();
