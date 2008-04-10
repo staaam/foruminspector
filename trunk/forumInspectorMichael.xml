@@ -52,7 +52,7 @@ Board.prototype.parse = function (content) {
 	    }
     }
 
-    this.title = e.innerText;
+    this.title = getText(e);
 };
 
 function getEl(els, attr, val) {
@@ -133,10 +133,10 @@ Board.prototype.tryParseForumsHeader = function (table) {
     }
     
     // assumption -- every and only forums table has row with th's
-    labels.forum = ths[0].innerText;
-    labels.topics = ths[1].innerText;
-    labels.posts = ths[2].innerText;
-    labels.lastPost = ths[3].innerText;
+    labels.forum = getText(ths[0]);
+    labels.topics = getText(ths[1]);
+    labels.posts = getText(ths[2]);
+    labels.lastPost = getText(ths[3]);
     
     return true;
 };
@@ -467,8 +467,8 @@ Forum.prototype.parseBoardTableRow = function(tr) {
     this.hasNewPosts = img.title; // has/has no new posts
     
     // tds[1] forum title, link; description; moderator(s)
-    this.topics = tds[2].innerText;
-    this.posts = tds[3].innerText;
+    this.topics = getText(tds[2]);
+    this.posts = getText(tds[3]);
     // tds[4] last post date; author, link
     this.lastPost = parseLastPost(this, tds[4]);
 };
@@ -479,7 +479,7 @@ function parseLastPost(that, td) {
     var author = as[0];
     return {
     	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
-		author: author.innerText,
+		author: getText(author),
 		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
 		link: as[1] ? that.mkFullUrl(as[1].getAttribute('href')) : ""
     };
@@ -529,11 +529,11 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
     }
     
     // assumption -- every and only topics table has row with th's
-    if (!labels.topics)   { labels.topics = ths[0].innerText; }
-    if (!labels.posts)    { labels.posts = ths[1].innerText; }
-    if (!labels.author)   { labels.author = ths[2].innerText; }
-    if (!labels.views)    { labels.views = ths[3].innerText; }
-    if (!labels.lastPost) { labels.lastPost = ths[4].innerText; }
+    if (!labels.topics)   { labels.topics = getText(ths[0]); }
+    if (!labels.posts)    { labels.posts = getText(ths[1]); }
+    if (!labels.author)   { labels.author = getText(ths[2]); }
+    if (!labels.views)    { labels.views = getText(ths[3]); }
+    if (!labels.lastPost) { labels.lastPost = getText(ths[4]); }
     
     return true;
 };
@@ -821,6 +821,42 @@ var labels = {
     views: "Views"
 };
 
+function getText(el) {
+	return node.text || node.textContent || (function(node){
+        var _result = "";
+        if (node == null) {
+            return _result;
+        }
+        var childrens = node.childNodes;
+        var i = 0;
+        while (i < childrens.length) {
+            var child = childrens.item(i);
+            switch (child.nodeType) {
+                case 1: // ELEMENT_NODE
+                case 5: // ENTITY_REFERENCE_NODE
+                    _result += arguments.callee(child);
+                    break;
+                case 3: // TEXT_NODE
+                case 2: // ATTRIBUTE_NODE
+                case 4: // CDATA_SECTION_NODE
+                    _result += child.nodeValue;
+                    break;
+                case 6: // ENTITY_NODE
+                case 7: // PROCESSING_INSTRUCTION_NODE
+                case 8: // COMMENT_NODE
+                case 9: // DOCUMENT_NODE
+                case 10: // DOCUMENT_TYPE_NODE
+                case 11: // DOCUMENT_FRAGMENT_NODE
+                case 12: // NOTATION_NODE
+                // skip
+                break;
+            }
+            i++;
+        }
+        return _result;
+    }(node));
+}
+
 function splitKeys(str) {
     var map = new Object();
     var s = str.split(";");
@@ -928,9 +964,9 @@ Topic.prototype.parseForumTableRow = function (tr) {
    	this.isHot = img.src.match("_hot") ? true : false;
     
    // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
-    this.posts = tds[2].innerText;
-    this.author = tds[3].innerText;
-    this.views = tds[4].innerText;
+    this.posts = getText(tds[2]);
+    this.author = getText(tds[3]);
+    this.views = getText(tds[4]);
     this.lastPost = parseLastPost(this, tds[5]);
     // tds[5] last post date; author, link
 };
