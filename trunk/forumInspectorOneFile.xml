@@ -354,7 +354,7 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		getForumSubHeader(forum) , selectForumFunction);
+        		display.getForumSubHeader(forum) , selectForumFunction);
         },
         
         getForumSubHeader: function ( forum ) {
