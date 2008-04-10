@@ -739,9 +739,12 @@ var ctrl = function () {
         
         onNewTopics: function () {
             for (var i in allForums) {
-        		allForums[i].load(function(forum) {
-        			display.topics(_gel(divNewTopics), forum.subItems);
-        		});
+            	var forum = allForums[i];
+            	if (forum.isSelected()) {
+	        		forum.load(function(forum) {
+	        			display.topics(_gel(divNewTopics), forum.subItems);
+	        		});
+            	}
         	}
         	ctrl.resize();
         },
