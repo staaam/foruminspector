@@ -279,6 +279,8 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 	
 	this.header = document.createElement("div");
    	this.header.className = "di-secondary-header";
+
+	var headerTextSpanH3 = document.createElement("h3");
    		
 	var gotoLink = document.createElement("a");
 	gotoLink.target = "_blank";
@@ -289,14 +291,13 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 		if (e.stopPropagation) e.stopPropagation();        
 	}
 	gotoLink.addEventListener('click',onClickLink,false);
-	this.header.appendChild(gotoLink);
+	headerTextSpanH3.appendChild(gotoLink);
+	this.header.appendChild(headerTextSpanH3);
 	
-	var headerTextSpanH3 = document.createElement("h3");
 	var headerTextSpan = document.createElement("span");
 	headerTextSpan.className = "di-maintitle";
 	headerTextSpan.innerHTML = headerText;
-	headerTextSpanH3.appendChild(headerTextSpan);
-	gotoLink.appendChild(headerTextSpanH3);
+	gotoLink.appendChild(headerTextSpan);
 	
 	this.select = document.createElement("input");
 	this.select.className = "di-select";	
