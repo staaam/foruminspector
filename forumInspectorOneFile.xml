@@ -459,10 +459,13 @@ var display = function () {
         },
         
         createBoardTitle: function ( parentElem, board ){
-        	parentElem.className = "boardTitle";
-        	parentElem.innerHTML = board.title;
         	
-        	display.reduceSpanText( parentElem, 300 );
+        	var span = document.createElement("span");
+        	span.className = "boardTitle";
+        	span.innerHTML = board.title;
+        	parentElem.appentChild(span);
+        	
+        	display.reduceSpanText( span, 300 );
         },
         
         getForumSubHeader: function ( forum ) {
