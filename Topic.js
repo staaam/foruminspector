@@ -35,6 +35,10 @@ Topic.prototype.parseForumTableRow = function (tr) {
     // tds[5] last post date; author, link
 };
 
+Topic.prototype.isSelected = function () {
+	return ctrl.isSelectedTopic(this);
+};
+
 Topic.prototype.toHTML = function () {
     return "<span class='topic'><a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a><div class='parentForum'>"+this.parent.parent.label.forum + ":" + this.parent.toHTMLlink() +"</div><div class='views'>"+this.parent.label.views+": "+this.views+"</div><div class='posts'>"+this.parent.label.posts+": "+this.posts+"</div></span>"
 }

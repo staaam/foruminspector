@@ -88,7 +88,7 @@ var ctrl = function () {
                 for (var j in cat.subItems) {
                     var forum=cat.subItems[j];
                     var name = forum.id;
-                    var checked = selForums[name] != undefined ? " checked=\"yes\"" : "";
+                    var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
                     s += "<li>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
                 }
                 s += "</ul>";
@@ -123,12 +123,20 @@ var ctrl = function () {
             for (var i in sortedTopics) {
                     var topic = sortedTopics[i];
                     var name = topic.id;
-                    var checked = selTopics[name] != undefined ? " checked=\"yes\"" : "";
+                    var checked = ctrl.isSelectedTopic(topic) ? " checked=\"yes\"" : "";
                     s += "<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleTopic(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+ topic.toHTML() +"<br>";
             }
             s += "</form>";
             _gel(divId).dir = dir;
             _gel(divId).innerHTML = s;
+        },
+        
+        isSelectedForum: function (forum) {
+        	return selForums[forum.id] != undefined;
+        },
+        
+        isSelectedTopic: function (topic) {
+        	return selTopics[topic.id] != undefined;
         },
         
         toggleForum: function (form, name) {
