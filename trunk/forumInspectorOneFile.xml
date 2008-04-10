@@ -317,7 +317,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
 	if (subHeader != null)
 	{
 		var bylineDiv = document.createElement("div");
-		bylineDiv.className = "di-byline";
+		bylineDiv.className = "di-byline-secondary";
 		bylineDiv.innerHTML = subHeader;
 		this.header.appendChild(bylineDiv);
 	}
