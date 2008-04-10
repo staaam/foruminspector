@@ -38,7 +38,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
-        			getTopicSubHeader( topic ), loadTopicFunction,
+        			display.getTopicSubHeader( topic ), loadTopicFunction,
         			topic.isSelected(), selectTopicFunction );
         },
         
@@ -52,7 +52,7 @@ var display = function () {
         },
         
         getTopicSubHeader: function ( topic ) {
-        	return labels.replies + ": " + topic.replies + " " +
+        	return labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
   			labels.views + ": " + topic.views + " " +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
