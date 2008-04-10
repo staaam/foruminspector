@@ -442,7 +442,7 @@ var display = function () {
         
         getForumSubHeader: function ( forum ) {
         	return labels.topics + ": " + forum.topics + " " +
-  			labels.posts + ": " + forum.posts + " " +
+  			labels.posts + ": " + forum.posts + "<br>" +
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\" target=\"_blank\">" +
@@ -452,7 +452,7 @@ var display = function () {
         getTopicSubHeader: function ( topic ) {
         	return labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
-  			labels.views + ": " + topic.views + " " +
+  			labels.views + ": " + topic.views + "<br>" +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
     		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +
