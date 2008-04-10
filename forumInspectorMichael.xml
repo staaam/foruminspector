@@ -212,10 +212,10 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	
 	if (subHeader != null)
 	{
-		var bylineDiv = document.createElement("div");
-		bylineDiv.className = "di-byline";
-		bylineDiv.innerHTML = subHeader;
-		this.header.appendChild(bylineDiv);
+		this.bylineDiv = document.createElement("div");
+		this.bylineDiv.className = "di-byline";
+		this.bylineDiv.innerHTML = subHeader;
+		this.header.appendChild(this.bylineDiv);
 	}
 	  	
    	this.myself.appendChild(this.header);
@@ -226,6 +226,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.expandedPart.className = "di-expanded";
    	this.myself.appendChild(this.expandedPart);
    	
+   	display.reduceSpanText( headerTextSpan, 300 );
+  	
    	this.isClosed = true;
    	this.loadingSpan.style.display = "none";
    	this.expandedPart.style.display = "none";
@@ -325,6 +327,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
    	divider.className = "di-divider";
    	this.myself.appendChild(divider);
   	
+  	display.reduceSpanText( headerTextSpan, 300 );
 }
 
 ForumDisplayItemSecondary.prototype = new DisplayItem();
@@ -376,9 +379,20 @@ var display = function () {
         			topic.isSelected(), selectTopicFunction );
         },
         
+        createBoardInfo: function ( parentElem, board )
+        {
+        	parentElem.innerHTML = "" +
+        		"<div class=\"boardInfo\">" +
+        		"<div class=\"di-divider\"></div>" + 
+        		board.boardInfo.general + 
+				"<div class=\"di-divider\"></div>" +
+				board.boardInfo.users +
+				"</div>";
+        },
+        
         getForumSubHeader: function ( forum ) {
         	return labels.topics + ": " + forum.topics + " " +
-  			labels.posts + ": " + forum.posts + " " +
+  			labels.posts + ": " + forum.posts + "<br>" +
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\" target=\"_blank\">" +
@@ -388,7 +402,7 @@ var display = function () {
         getTopicSubHeader: function ( topic ) {
         	return labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
-  			labels.views + ": " + topic.views + " " +
+  			labels.views + ": " + topic.views + "<br>" +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
     		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
     		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +
@@ -425,14 +439,34 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, topics )
-        {
+        topics: function( parentElem, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
    
         	for(var i=0; i<topics.length; i++)
         	{
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
         	}    	
+        },
+        
+        reduceSpanText: function( objSpan, widthFinal ) {
+        	// while width of dynamic span is greater than final width
+			var widthTemp = objSpan.offsetWidth;
+			var text = getText(objSpan);			
+			
+			var lengthText = text.length;
+			
+            while(widthTemp > widthFinal && lengthText > 0)
+            {
+                // reduce one character from original text
+
+                lengthText--;
+                var textTrimmed = text.substring(0, lengthText) + "...";
+
+                // get width of reduced text
+
+                objSpan.innerHTML = textTrimmed;
+                widthTemp = objSpan.offsetWidth;
+            }
         }
 
     }
@@ -720,7 +754,7 @@ var ctrl = function () {
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
-            	//display.createBoardInfo(_gel(divBoardInfo), board);
+            	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
 	        });
 	        
