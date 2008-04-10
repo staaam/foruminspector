@@ -812,7 +812,7 @@ var ctrl = function () {
         	var diTopics = [];
         	
         	for (var fid in map) {
-            	var frum = allForums[fid];
+            	var forum = allForums[fid];
             	if (!forum) {
 	                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
             	}
