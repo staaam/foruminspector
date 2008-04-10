@@ -1171,7 +1171,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     	}
     }
     
-    if (text != "") {
+    if (text.length == 0) {
     	return false;
     }
     alert(text);
