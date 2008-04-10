@@ -124,6 +124,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
 	header.appendChild(headerTextSpan);
 	
 	var gotoLink = document.createElement("a");
+	gotoLink.target = "_blank";
 	gotoLink.href = headerUrl;
 	header.appendChild(gotoLink);
 	
