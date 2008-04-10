@@ -281,7 +281,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, sel
    	this.header.className = "di-secondary-header";
 		
 	var headerTextSpan = document.createElement("span");
-	headerTextSpan.innerHTML = "<li>" + headerText;
+	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
 	
 	var gotoLink = document.createElement("a");
