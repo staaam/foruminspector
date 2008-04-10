@@ -885,6 +885,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     	if (spans[i].getAttribute('class') == 'postbody') {
     		var imgs = spans[i].getElementsByTagName('img');
     		for (var j=0;j<imgs.length;j++) {
+    			alert(imgs[j].src);
     			imgs[j].src = this.mkFullUrl(imgs[j].src);
     			imgs[j].className="outerImage";
     		}
