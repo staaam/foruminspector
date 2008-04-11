@@ -327,8 +327,12 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    	display.reduceSpanText( headerTextSpan, 260 );
   	
    	this.isClosed = true;
-   	this.loadingSpan.style.display = "none";
-   	this.expandedPart.style.display = "none";
+
+   	this.loadingSpan.style.visibility = "false";
+   	this.expandedPart.style.visibility = "false";
+
+   	//this.loadingSpan.style.display = "none";
+   	//this.expandedPart.style.display = "none";
    	
    	var that = this;
    	
