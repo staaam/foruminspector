@@ -49,7 +49,7 @@ ForumItem.prototype.init = function (parent, url, title) {
     this.url = url;
     this.boardUrl = url.replace(/\/[^\/]*$/, "") + "/";
     this.title = title;
-    if (title == null || title == undefined) {
+    if (title == null) {
         this.title = url;
     }
     this.id = this.linkMatch(url)[1];
@@ -127,31 +127,31 @@ Board.prototype.parse = function (content) {
         this.tryParseBoardTable(tables[i]);
     }
     var spans = dom.getElementsByTagName('span');
-    var e = getEl(spans, 'class', 'maintitle');
+    var e = getElClass(spans, 'maintitle');
     if (!e) {
-	    e = getEl(spans, 'class', 'gen');
+	    e = getElClass(spans, 'gen');
     }
     if (!e) {
 	    spans = dom.getElementsByTagName('div');
-	    e = getEl(spans, 'class', 'maintitle');
+	    e = getElClass(spans, 'maintitle');
 	    if (!e) {
-		    e = getEl(spans, 'class', 'gen');
+		    e = getElClass(spans, 'gen');
 	    }
     }
 
     this.title = getText(e);
 };
 
-function getEl(els, attr, val) {
+function getElClass(els, val) {
     for (var i=0; i<els.length; i++) {
-    	if (els[i] && els[i].getAttribute(attr) == val) {
+    	if (els[i] && els[i].className == val) {
     		return els[i];
     	}
     }
 }
 
 Board.prototype.tryParseBoardTable = function (table) {
-    if (table.getAttribute('class') != 'forumline') {
+    if (table.className != 'forumline') {
     	return false;
     }
     
@@ -275,7 +275,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	gotoLink.addEventListener('click',onClickLink,false);	
+	addEventListener(gotoLink, 'click',onClickLink);	
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
@@ -302,7 +302,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 			selectFunction( this.checked );
 	        
 		}
-		this.select.addEventListener('click',onClickSelect,false);
+		addEventListener(this.select,'click',onClickSelect);
 		this.header.appendChild(this.select);
 	}
 	
@@ -349,8 +349,17 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    			that.isClosed = true;
    		}
    	}
-   	this.header.addEventListener('click',onClickHeader,false);
+   	addEventListener(this.header, 'click',onClickHeader);
 }
+
+function addEventListener(o, t, f) {
+	if (o.addEventListener) {
+		o.addEventListener(t,f,false);
+	} else {
+		o.attachEvent("on"+t,f);
+	}
+}
+
 
 CategoryDisplayItem.prototype = new DisplayItem();
 
@@ -399,7 +408,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	gotoLink.addEventListener('click',onClickLink,false);
+	addEventListener(gotoLink, 'click',onClickLink);
 	headerTextSpanH3.appendChild(gotoLink);
 	headerTextSpanH3.className = "di-maintitle";
 	this.header.appendChild(headerTextSpanH3);
@@ -421,7 +430,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 		selectFunction( this.checked );
         
 	}
-	this.select.addEventListener('click',onClickSelect,false);
+	addEventListener(this.select, 'click',onClickSelect);
 	this.header.appendChild(this.select);
 	
 	if (subHeader != null)
@@ -715,8 +724,13 @@ function parseLastPost(that, td) {
     var lastPost = td.getElementsByTagName('span')[0];
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
+    var date = lastPost.innerHTML;
+    var ds = date.match(/^(.*?)<br/);
+    if (ds && ds.length > 1) {
+    	ds = ds[1];
+    }
     var post = {
-    	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
+    	date: ds,
 		author: getText(author),
 		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
 		link: "",
@@ -742,7 +756,7 @@ Forum.prototype.parse = function (content) {
         // try load title from the page
         var as = dom.getElementsByTagName('a');
         for (var i=0;i<as.length;i++) {
-            var cl = as[i].getAttribute('class');
+            var cl = as[i].className;
             var hr = as[i].getAttribute('href');
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
                 this.title = as[i].innerHTML;
@@ -757,7 +771,7 @@ Forum.prototype.parse = function (content) {
 };
 
 Forum.prototype.tryParseTopicsTable = function (table) {
-    if (table.getAttribute('class') != 'forumline' ||
+    if (table.className != 'forumline' ||
         !this.tryParseTopicsHeader(table)) {
         return false;
     }
@@ -881,7 +895,7 @@ Topic.prototype.parse = function (content) {
         // try load title from the page
         var as = dom.getElementsByTagName('a');
         for (var i=0;i<as.length;i++) {
-            var cl = as[i].getAttribute('class');
+            var cl = as[i].className;
             var hr = as[i].getAttribute('href');
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
                 this.title = as[i].innerHTML;
@@ -896,7 +910,7 @@ Topic.prototype.parse = function (content) {
 };
 
 Topic.prototype.tryParsePostsTable = function (table) {
-    if (table.getAttribute('class') != 'forumline' ||
+    if (table.className != 'forumline' ||
         !this.tryParsePostsHeader(table)) {
         return false;
     }
@@ -929,7 +943,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     
     var text = "";
     for (var i=0; i<spans.length;i++) {
-    	if (spans[i].getAttribute('class') == 'postbody') {
+    	if (spans[i].className == 'postbody') {
     		var imgs = spans[i].getElementsByTagName('img');
     		for (var j=0;j<imgs.length;j++) {
     			imgs[j].src = this.mkFullUrl(imgs[j].getAttribute("src"));
@@ -997,7 +1011,7 @@ var ctrl = function () {
             board.load(function (board) {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
-
+//    alert(board.boardInfo.general);
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
@@ -1120,73 +1134,12 @@ var ctrl = function () {
             return all[id];
         },
         
-//        display: function (forumItem) {
-//            if (forumItem instanceof Board) {
-//                ctrl.displayBoard(forumItem);
-//            } else
-//            if (forumItem instanceof Forum) {
-//                ctrl.displayForum(forumItem);
-//            }
-//        },
-        
-        displayBoard: function (board) {
-            //var frmLst_id = tabs.addDynamicTab(board.label.forum, ctrl.resize);
-            var s ="<form action=\"?\">";
-            for (var i=0;i<board.subItems.length;i++) {
-                var cat = board.subItems[i];
-                s += "<a href=\"" + cat.url + "\">"+cat.title+"</a><ul>";
-                for (var j=0;j<cat.subItems.length;j++) {
-                    var forum=cat.subItems[j];
-                    var name = forum.id;
-                    var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
-                    s += "<getValuesli>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
-                }
-                s += "</ul>";
-            }
-            s += "</form>";
-            _gel(divForumList).dir = board.dir;
-            _gel(divForumList).innerHTML = s;
-        },
-        
-        displayForum: function (forum) {
-            if (!divMostPosts) {
-                divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.resize);
-            }
-            if (!divMostViews) {            
-                divMostViews = tabs.addDynamicTab("Most Views", ctrl.resize);
-            }
-            
-            var frmLst_id = tabs.addDynamicTab(forum.title, ctrl.resize);
-            ctrl.updateTopics(frmLst_id, forum.subItems, forum.dir, sorters.neg(sorters.byIndex));
-            ctrl.updateTopics(divMostPosts, allTopics, forum.dir, sorters.byPosts);
-            ctrl.updateTopics(divMostViews, allTopics, forum.dir, sorters.byViews);
-        },
-        
-        updateTopics: function (divId, topics, dir, sortFunc) {
-            var s ="<form action=\"?\">";
-            //var topics = forum.subItems;
-            var arTopics = [];
-            for (var t=0;t<topics.length;t++) {
-                arTopics.push(topics[t]);
-            }
-            var sortedTopics = arTopics.sort(sortFunc);
-            for (var i=0;i<sortedTopics.length;i++) {
-                    var topic = sortedTopics[i];
-                    var name = topic.id;
-                    var checked = ctrl.isSelectedTopic(topic) ? " checked=\"yes\"" : "";
-                    s += "<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleTopic(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+ topic.toHTML() +"<br>";
-            }
-            s += "</form>";
-            _gel(divId).dir = dir;
-            _gel(divId).innerHTML = s;
-        },
-        
         isSelectedForum: function (forum) {
-        	return selForums[forum.id] != undefined;
+        	return selForums[forum.id] != null;
         },
         
         isSelectedTopic: function (topic) {
-        	return selTopics[topic.id] != undefined;
+        	return selTopics[topic.id] != null;
         },
         
         toggleForum: function (forum, checked) {
@@ -1195,7 +1148,7 @@ var ctrl = function () {
                 selForums[name] = 1;
                 allForums[name].load(function(){});
             } else {
-                selForums[name] = undefined;
+                selForums[name] = null;
             }
             prefs.set("selForums", joinKeys(selForums));
         },
@@ -1205,7 +1158,7 @@ var ctrl = function () {
             if (checked) {
                 selTopics[name] = topic.parent.id;
             } else {
-                selTopics[name] = undefined;
+                selTopics[name] = null;
             }
             prefs.set("selTopics", joinKeys(selTopics));
         },
@@ -1229,10 +1182,13 @@ var labels = {
 
 function getText(node) {
 	if (!node) {
-		return undefined;
+		return null;
 	}
 	var text = node.innerText || node.text || node.textContent;
-	return text.trim();
+	if (!text) {
+		text = "blya";
+	}
+	return text.replace(/^\s*/, "").replace(/\s*$/, "");
 //	return node.text || node.textContent || (function(node){
 //        var _result = "";
 //        if (node == null) {
@@ -1269,7 +1225,7 @@ function getText(node) {
 }
 
 function getHTML(node) {
-	return node.innerHTML.trim();
+	return node.innerHTML.replace(/^\s*/, "").replace(/\s*$/, "");
 }
 
 function splitKeys(str) {
@@ -1305,17 +1261,6 @@ var sorters = {
             return -1 * f(a,b);
         };
     }
-}
-
-
-String.prototype.trim = function () {
-	return this.replace(/^\s*/, "").replace(/\s*$/, "");
-};
-
-var greps = {
-	hotTopic: function (topic) { return topic.isHot; },
-	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
-	not: function (f) { return function(t) { return !f(t); }; }
 }
 
 function log(object) {
