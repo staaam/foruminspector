@@ -13,7 +13,7 @@
 	    <EnumValue value="0" display_value="Forums"/>
 	    <EnumValue value="1" display_value="Starred"/>
 	    <EnumValue value="2" display_value="Latest Topics"/>
-	    <EnumValue value="3" display_value="Recently Upd"/>
+	    <EnumValue value="3" display_value="Recently Updated"/>
 	    <EnumValue value="4" display_value="Most Views"/>
 	    <EnumValue value="5" display_value="Most Posts"/>
 	    <EnumValue value="6" display_value="Board Info"/>
@@ -853,7 +853,7 @@ var ctrl = function () {
             divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
             
             divNewTopics = tabs.addDynamicTab("Latest Topics", ctrl.onNewTopics);
-            divRecTopics = tabs.addDynamicTab("Recently Upd", ctrl.onLRUTopics);
+            divRecTopics = tabs.addDynamicTab("Recently Updated", ctrl.onLRUTopics);
             divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
             divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.onMostPosts);
             //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
