@@ -279,8 +279,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	addEventListener(gotoLink, 'click',onClickLink);
 	
 	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder gotoArrow-" + display.dir;
-	gotoImg.src = "";//http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
+	gotoImg.className = "gotoArrow-" + display.dir;
+	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
 		
 	this.header.appendChild(gotoLink);
