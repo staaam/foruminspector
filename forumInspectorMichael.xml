@@ -724,11 +724,11 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
     }
     
     // assumption -- every and only topics table has row with th's
-    if (!labels.topics)   { labels.topics = getText(ths[0]); }
-    if (!labels.posts)    { labels.posts = getText(ths[1]); }
-    if (!labels.author)   { labels.author = getText(ths[2]); }
-    if (!labels.views)    { labels.views = getText(ths[3]); }
-    if (!labels.lastPost) { labels.lastPost = getText(ths[4]); }
+    labels.topics = getText(ths[0]);
+    labels.posts = getText(ths[1]);
+    labels.author = getText(ths[2]);
+    labels.views = getText(ths[3]);
+    labels.lastPost = getText(ths[4]);
     
     return true;
 };
@@ -1242,8 +1242,8 @@ Topic.prototype.tryParsePostsHeader = function (table) {
     }
     
     // assumption -- every and only posts table has row with th's
-    if (!labels.author) { labels.author = getText(ths[0]); }
-    if (!labels.post)   { labels.post = getText(ths[1]); }
+    labels.author = getText(ths[0]);
+    labels.post = getText(ths[1]);
     
     return true;
 };
