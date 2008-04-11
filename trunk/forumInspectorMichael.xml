@@ -540,7 +540,7 @@ var display = function () {
 
         topics: function( parentElem, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
-   
+           	alert(topics.length);
         	for(var i=0; i<topics.length; i++)
         	{
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
@@ -955,7 +955,6 @@ var ctrl = function () {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function() {
-	            		alert(forum.id);
 	        			ctrl.displayTopics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
