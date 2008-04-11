@@ -329,6 +329,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    	this.loadingSpan.style.display = "none";
    	this.expandedPart.style.display = "none";
    	
+   	alert(this.loadingSpan.style.display);
+   	
    	var that = this;
    	
    	var onClickHeader = function() {
