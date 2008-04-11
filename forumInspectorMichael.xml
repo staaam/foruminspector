@@ -9,6 +9,15 @@
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
     <UserPref name="nTopics" display_name="# Topics to show" default_value="10" />
+    <UserPref name="defTab" display_name="Default tab" datatype="enum">
+	    <EnumValue value="1" display_value="Forums"/>
+	    <EnumValue value="2" display_value="Starred"/>
+	    <EnumValue value="3" display_value="New Topics"/>
+	    <EnumValue value="4" display_value="Most Views"/>
+	    <EnumValue value="5" display_value="Most Posts"/>
+	    <EnumValue value="6" display_value="Board Info"/>
+    </UserPref>
+   
     <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
@@ -153,9 +162,12 @@ Category.prototype = new ForumItem();
 Category.prototype.idRegEx = /[?&]c=(\d+)/;
 Category.prototype.viewer = "index.php";
 /* end Category class *//* begin CategoryDisplayItem class */
-function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expandingFunction, isSelected, selectFunction ) {
+function CategoryDisplayItem(parent, headerText, headerUrl,
+	subHeader, expandingFunction, isSelected, selectFunction, isForums ) {
 
 	this.initDisplayItem(parent);
+	
+	this.isForums = isForums;
 	
    	this.header = document.createElement("div");
    	this.header.className = "di-header";
@@ -226,7 +238,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl, subHeader, expanding
    	this.expandedPart.className = "di-expanded";
    	this.myself.appendChild(this.expandedPart);
    	
-   	display.reduceSpanText( headerTextSpan, 290 );
+   	display.reduceSpanText( headerTextSpan, 260 );
   	
    	this.isClosed = true;
    	this.loadingSpan.style.display = "none";
@@ -264,8 +276,15 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
     {
         this.expandedPart.removeChild( this.expandedPart.firstChild );       
     } 
-    
-	display.secondaryForums( this.expandedPart, forumsArr );
+
+	if (this.isForums)
+	{    
+		display.secondaryForums( this.expandedPart, forumsArr );
+	}
+	else
+	{
+		display.secondaryPosts( this.expandedPart, forumsArr );
+	}
 	this.loadingSpan.style.display = "none";
 	_IG_AdjustIFrameHeight();
 }
@@ -327,7 +346,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
    	divider.className = "di-divider";
    	this.myself.appendChild(divider);
   	
-  	display.reduceSpanText( headerTextSpan, 290 );
+  	display.reduceSpanText( headerTextSpan, 280 );
 }
 
 ForumDisplayItemSecondary.prototype = new DisplayItem();
@@ -353,7 +372,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null);
+        			null, loadCategoryFunction, null, null, true);
         },
                 
         createSecondaryForumItem: function (parentElem, forum) {
@@ -363,7 +382,25 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		display.getForumSubHeader(forum) , forum.isSelected(), selectForumFunction);
+        		display.getForumSubHeader(forum) , forum.isSelected(),
+        		selectForumFunction);
+        },
+        
+        createSecondaryPostItem: function ( parentElem, post ) {
+        	
+        	var postItem = document.createElement("div");
+        	postItem.className = "di-secondary-header";
+        	
+        	var span = document.createElement("span");
+        	//aDiv.className
+        	span.innerHTML = post.text;
+        	postItem.appendChild(span);
+        	parentElem.appendChild(postItem);
+        	
+        	var divider = document.createElement("div");
+        	divider.className = "di-divider";
+        	parentElem.appendChild(divider);
+        	
         },
         
         createTopicItem: function ( parentElem, topic ) {
@@ -376,7 +413,7 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction );
+        			topic.isSelected(), selectTopicFunction, false );
         },
         
         createBoardInfo: function ( parentElem, board )
@@ -399,7 +436,7 @@ var display = function () {
         	span.innerHTML = board.title;
         	parentElem.appendChild(span);
         	
-        	display.reduceSpanText( span, 330 );
+        	display.reduceSpanText( span, 310 );
         },
         
         getForumSubHeader: function ( forum ) {
@@ -439,6 +476,16 @@ var display = function () {
         	{
         		display.createSecondaryForumItem( listDisplayItem.myself, forums[i] );
         	}        	
+        },
+        
+        secondaryPosts: function ( parentElem, posts )
+        {
+        	var listDisplayItem = new ListDisplayItem( parentElem );
+   
+        	for(var i=0; i<posts.length; i++)
+        	{
+        		display.createSecondaryPostItem( listDisplayItem.myself, posts[i] );
+        	} 
         },
         
         forums: function( parentElem, forums )
@@ -686,7 +733,10 @@ ForumItem.prototype.linkMatch = function (url) {
 }
 
 ForumItem.prototype.mkFullUrl = function (relUrl) {
-    return this.boardUrl + relUrl;
+	if (relUrl.substr(0, 4) == "http")
+		return relUrl;
+	else
+    	return this.boardUrl + relUrl;
 };
 
 ForumItem.prototype.load = function (callback) {
@@ -786,7 +836,6 @@ var ctrl = function () {
         
         createTabs: function () {
             divForumList = tabs.addDynamicTab("Forums", ctrl.resize);
-
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
             divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
@@ -1215,7 +1264,8 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     	if (spans[i].getAttribute('class') == 'postbody') {
     		var imgs = spans[i].getElementsByTagName('img');
     		for (var j=0;j<imgs.length;j++) {
-    			j.src = this.mkFullUrl(j.src);
+    			imgs[j].src = this.mkFullUrl(imgs[j].getAttribute("src"));
+    			imgs[j].className="outerImage";
     		}
     		text = text + spans[i].innerHTML;
     	}
