@@ -1166,9 +1166,7 @@ function getHref(a) {
 	return getAttr(a, 'href');
 }
 function getSrc(i) {
-	var a = getAttr(i, 'src');
-	alert(a);
-	return a;
+	return getAttr(i, 'src');
 }
 function getAttr(a, attr) {
 	if (!a || !a.getAttribute) return null;
