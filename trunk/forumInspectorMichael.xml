@@ -1154,7 +1154,8 @@ function toDOM(HTMLstring) {
 }
 
 function getBody(html) {
-    return html.replace(/\n/g," ").replace(/.*<body.*?>/,"").replace(/<\/body>.*/, "");
+	return html;
+//    return html.replace(/\n/g," ").replace(/.*<body.*?>/,"").replace(/<\/body>.*/, "");
 }
 
 function getHref(a) {
