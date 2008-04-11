@@ -1146,7 +1146,7 @@ function getObjectProperties (object) {
 }
 
 
-var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>").getElementByTagName('a').replace("bbbbbaaaaassssseeee.gif","");
+var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>").getElementByTagName('a').href.replace("bbbbbaaaaassssseeee.gif","");
 alert(myBase);
 function toDOM(HTMLstring) {
     var d = document.createElement('div');
