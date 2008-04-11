@@ -1148,7 +1148,7 @@ function getObjectProperties (object) {
 
 var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>");
 alert(myBase);
-myBase= myBase.getElementByTagName('a')[0];
+myBase= myBase.getElementsByTagName('a')[0];
 alert(myBase);
 myBase=myBase.getAttribute('href');
 alert(myBase);
