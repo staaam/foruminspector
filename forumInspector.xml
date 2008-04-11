@@ -1280,7 +1280,7 @@ function getObjectProperties (object) {
 }
 
 function toDOM(HTMLstring) {
-    var d = document.createElement('div');
+    var d = document.createElement('div'); 
     d.innerHTML = HTMLstring;
     return d;
 }
