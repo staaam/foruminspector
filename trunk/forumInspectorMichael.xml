@@ -540,7 +540,7 @@ var display = function () {
 
         topics: function( parentElem, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
-           	alert(topics.length);
+
         	for(var i=0; i<topics.length; i++)
         	{
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
@@ -974,6 +974,7 @@ var ctrl = function () {
 					r.push(allTopics[i]);
 				}
 			}
+			alert(r.length);
 			return r;        	
         },
         
