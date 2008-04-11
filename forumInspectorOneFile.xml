@@ -323,7 +323,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    	this.expandedPart.className = "di-expanded";
    	this.myself.appendChild(this.expandedPart);
    	
-   	//display.reduceSpanText( headerTextSpan, 260 );
+   	display.reduceSpanText( headerTextSpan, 260 );
   	
    	this.isClosed = true;
    	this.loadingSpan.style.display = "none";
@@ -467,6 +467,7 @@ var display = function () {
         
        	setDirection: function ( dir ) {
         	display.dir = dir;
+        	_gel("TabsDiv").dir = dir;
         },
         
         createCategoryItem: function (parentElem, category) {
