@@ -40,76 +40,7 @@
 		</div>
 		
 		<script>
-/* begin ForumItem class */
-function ForumItem() {
-}
-
-ForumItem.prototype.init = function (parent, url, title) {
-    this.parent = parent;
-    this.url = url;
-    this.boardUrl = url.replace(/\/[^\/]*$/, "") + "/";
-    this.title = title;
-    if (title == null) {
-        this.title = url;
-    }
-    this.id = this.linkMatch(url)[1];
-    this.subItems = [];
-    this.isLoaded = false;
-    //printStr("new item url=" + this.url + " title=" + this.title);
-}
-
-ForumItem.prototype.idRegEx = /\?(.*)/;
-ForumItem.prototype.viewer = "";
-
-ForumItem.prototype.addItem = function (item) {
-    //printStr("add item url=" + item.url + " title=" + item.title);
-    this.subItems.push(item);
-};
-
-ForumItem.prototype.linkMatch = function (url) {
-	return url.match(this.idRegEx);
-}
-
-ForumItem.prototype.mkFullUrl = function (relUrl) {
-	if (relUrl.substr(0, 4) == "http")
-		return relUrl;
-	else
-    	return this.boardUrl + relUrl;
-};
-
-ForumItem.prototype.load = function (callback) {
-    if (this.isLoaded) {
-    	callback(this);
-        return;
-    }
-    this.reload(callback);
-};
-
-ForumItem.prototype.isSelected = function () {
-	return false;
-};
-
-ForumItem.prototype.reload = function (callback) {
-    this.isLoaded = true;
-    var that = this;
-    _IG_FetchContent(this.url, function (content) {
-        that.onLoad(content);
-        callback(that);
-    });
-};
-
-ForumItem.prototype.onLoad = function (content) {
-    this.parse(content);
-};
-
-ForumItem.prototype.parse = function (content) {
-};
-
-//ForumItem.prototype.display = function () {
-//    ctrl.display(this);
-//};
-
-/* end ForumItem class *//* begin Board class */
+/* begin Board class */
 function Board(parent, url, title) {
     this.init(parent, url.replace(/\/(index\.php[^\/]*)?$/,"") + "/", title);
 }
@@ -172,7 +103,8 @@ Board.prototype.tryParseBoardInfo = function (table) {
     	return false;
     }
     var a = table.getElementsByTagName('a')[0];
-    if (!a || !a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
+    var href = getHref(a);
+    if (!href || !href.match(/viewonline.php/)) {
     	return false;
     }
     var spans = table.getElementsByTagName('span');
@@ -193,17 +125,17 @@ Board.prototype.parseForumsTable = function (table) {
     for (var i=1; i<trs.length; i++) {
         var tr = trs[i];
         var as = tr.getElementsByTagName('a');
-        var href = as[0].getAttribute('href');
+        var href = getHref(as[0]);
         if (Category.prototype.linkMatch(href)) {
             // category title row
-            cat = new Category(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
+            cat = new Category(this, this.mkFullUrl(href), as[0].innerHTML);
             cat.index = i;
             //cat.parseBoardTableRow(tr);
             this.addItem(cat);
         }
         else {
             // title/link is is first <a> tag, so look into it
-            var forum = ctrl.newForum(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
+            var forum = ctrl.newForum(this, this.mkFullUrl(href), as[0].innerHTML);
             forum.index = i;
             forum.parseBoardTableRow(tr);
             cat.addItem(forum);
@@ -293,13 +225,14 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		this.select.className = "di-select-" + display.dir;	
 		this.select.type = "checkbox";
 		this.select.checked = isSelected;
+		var that = this;
 		var onClickSelect = function (e) {
 			
 			if (!e) var e = window.event;
 			e.cancelBubble = true;
 			if (e.stopPropagation) e.stopPropagation();
 			
-			selectFunction( this.checked );
+			selectFunction( that.select.checked );
 	        
 		}
 		addEventListener(this.select,'click',onClickSelect);
@@ -421,13 +354,14 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	this.select.className = "di-select-" + display.dir;;	
 	this.select.type = "checkbox";
 	this.select.checked = isSelected;
+	var that = this;
 	var onClickSelect = function (e) {
 		
 		if (!e) var e = window.event;
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();
 		
-		selectFunction( this.checked );
+		selectFunction( that.select.checked );
         
 	}
 	addEventListener(this.select, 'click',onClickSelect);
@@ -607,7 +541,7 @@ var display = function () {
 
         topics: function( parentElem, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
-   
+
         	for(var i=0; i<topics.length; i++)
         	{
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
@@ -670,7 +604,7 @@ DisplayGeneral.prototype.init = function (divStared) {
 		"			<a href=\"http://www.kuku.com?user=dan\" class=\"lastPostUser\">Dan</a>" +
 		"		</div>" +
 		"	</div>" +
-		"	<span class=\"fg-loading\">ï¿½(Loading...)</span>" +
+		"	<span class=\"fg-loading\"> (Loading...)</span>" +
 		"</div>";
 	
 	//alert(divStared);
@@ -732,12 +666,12 @@ function parseLastPost(that, td) {
     var post = {
     	date: ds,
 		author: getText(author),
-		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
+		authorProfileLink: that.mkFullUrl(getHref(author)),
 		link: "",
 		id: 0
     };
     if (as[1]) {
-    	post.link = that.mkFullUrl(as[1].getAttribute('href'));
+    	post.link = that.mkFullUrl(getHref(as[1]));
     	var m = Post.prototype.linkMatch(post.link);
     	if (m) {
     		post.id = m[1];
@@ -757,7 +691,7 @@ Forum.prototype.parse = function (content) {
         var as = dom.getElementsByTagName('a');
         for (var i=0;i<as.length;i++) {
             var cl = as[i].className;
-            var hr = as[i].getAttribute('href');
+            var hr = getHref(as[i]);
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
                 this.title = as[i].innerHTML;
                 break;
@@ -805,7 +739,7 @@ Forum.prototype.parseForumTableRow = function (tr, idx) {
         return false;
     }
     // title/link is is first <a> tag, so look into it
-    var topic = ctrl.newTopic(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
+    var topic = ctrl.newTopic(this, this.mkFullUrl(getHref(as[0])), as[0].innerHTML);
     topic.index = idx;
     topic.parseForumTableRow(tr);
     this.addItem(topic);
@@ -823,7 +757,74 @@ Forum.prototype.toHTML = function () {
 Forum.prototype.toHTMLlink = function () {
     return "<a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a>";
 };
-/* end Forum class *//* begin ListDisplayItem class */
+/* end Forum class *//* begin ForumItem class */
+function ForumItem() {
+}
+
+ForumItem.prototype.init = function (parent, url, title) {
+    this.parent = parent;
+    this.url = url;
+    this.boardUrl = url.replace(/\/[^\/]*$/, "") + "/";
+    this.title = title;
+    if (title == null) {
+        this.title = url;
+    }
+    this.id = this.linkMatch(url)[1];
+    this.subItems = [];
+    this.isLoaded = false;
+    //printStr("new item url=" + this.url + " title=" + this.title);
+}
+
+ForumItem.prototype.idRegEx = /\?(.*)/;
+ForumItem.prototype.viewer = "";
+
+ForumItem.prototype.addItem = function (item) {
+    //printStr("add item url=" + item.url + " title=" + item.title);
+    this.subItems.push(item);
+};
+
+ForumItem.prototype.linkMatch = function (url) {
+	return url.match(this.idRegEx);
+}
+
+ForumItem.prototype.mkFullUrl = function (relUrl) {
+	var url = (relUrl.substr(0, 4) != "http") ? this.boardUrl + relUrl : relUrl;
+	return url;
+};
+
+ForumItem.prototype.load = function (callback) {
+    if (this.isLoaded) {
+    	callback(this);
+        return;
+    }
+    this.reload(callback);
+};
+
+ForumItem.prototype.isSelected = function () {
+	return false;
+};
+
+ForumItem.prototype.reload = function (callback) {
+    this.isLoaded = true;
+    var that = this;
+    _IG_FetchContent(this.url, function (content) {
+        that.onLoad(content);
+        callback(that);
+    });
+};
+
+ForumItem.prototype.onLoad = function (content) {
+    this.parse(content);
+};
+
+ForumItem.prototype.parse = function (content) {
+};
+
+//ForumItem.prototype.display = function () {
+//    ctrl.display(this);
+//};
+
+/* end ForumItem class *//* begin ListDisplayItem class */
 function ListDisplayItem(parent) {
 	this.initDisplayItem(parent)
 	this.myself.className = this.myself.className + " listDisplayItem";
@@ -844,142 +845,6 @@ Post.prototype.parseTopicTableRow = function (tr) {
 	
 };
 /* end Post class */
-/* begin Topic class */
-function Topic(parent, url, title) {
-    this.init(parent, url, title);
-}
-
-Topic.prototype = new ForumItem();
-
-Topic.prototype.idRegEx = /[?&]t=(\d+)/;
-Topic.prototype.viewer = "viewtopic.php?t=";
-
-Topic.prototype.parseForumTableRow = function (tr) {
-    var tds = tr.getElementsByTagName('td');
-    // tds[0] img, whether has new posts?
-    var img = tds[0].getElementsByTagName('img')[0];
-    this.icon = img.src; // icon
-    this.hasNewPostsTitle = img.title; // has/has no new posts
-    if (img.src.match("_announce")) {
-        this.type = "announce";
-    }
-    else if (img.src.match("_sticky")) {
-        this.type = "sticky";
-    }
-    else {
-        this.type = "normal";
-    }
-  	this.hasNewPosts = img.src.match("_new") ? true : false;
-   	this.isLocked = img.src.match("_lock") ? true : false;
-   	this.isHot = img.src.match("_hot") ? true : false;
-    
-   // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
-    this.posts = getText(tds[2]);
-    this.author = getText(tds[3]);
-    this.views = getText(tds[4]);
-    this.lastPost = parseLastPost(this, tds[5]);
-    // tds[5] last post date; author, link
-};
-
-Topic.prototype.isSelected = function () {
-	return ctrl.isSelectedTopic(this);
-};
-
-Topic.prototype.parse = function (content) {
-    if (content == null) {
-        return;
-    }
-    this.dir = content.match(/<html dir="rtl">/i) ? "rtl" : "ltr";
-    var dom = toDOM(getBody(content));
-    if (this.title == this.url) {
-        // try load title from the page
-        var as = dom.getElementsByTagName('a');
-        for (var i=0;i<as.length;i++) {
-            var cl = as[i].className;
-            var hr = as[i].getAttribute('href');
-            if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
-                this.title = as[i].innerHTML;
-                break;
-            }
-        }
-    }
-    var tables = dom.getElementsByTagName('table');
-    for (var i=0; i<tables.length; i++) {
-        this.tryParsePostsTable(tables[i]);
-    }
-};
-
-Topic.prototype.tryParsePostsTable = function (table) {
-    if (table.className != 'forumline' ||
-        !this.tryParsePostsHeader(table)) {
-        return false;
-    }
-    
-    var trs = table.getElementsByTagName('tr'); // all table rows, first row is nav, second row is headers
-    for (var i=0; i<trs.length; i++) {
-        this.tryParseTopicTableRow(trs[i], i);
-    }
-    return true;
-};
-
-Topic.prototype.tryParsePostsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
-    if (ths == null || ths.length < 2) {
-        return false;
-    }
-    
-    // assumption -- every and only posts table has row with th's
-    if (!labels.author) { labels.author = getText(ths[0]); }
-    if (!labels.post)   { labels.post = getText(ths[1]); }
-    
-    return true;
-};
-
-Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
-    var spans = tr.getElementsByTagName('span');
-    if (spans.length == 0) {
-        return false;
-    }
-    
-    var text = "";
-    for (var i=0; i<spans.length;i++) {
-    	if (spans[i].className == 'postbody') {
-    		var imgs = spans[i].getElementsByTagName('img');
-    		for (var j=0;j<imgs.length;j++) {
-    			imgs[j].src = this.mkFullUrl(imgs[j].getAttribute("src"));
-    			imgs[j].className="outerImage";
-    		}
-    		text = text + spans[i].innerHTML;
-    	}
-    }
-    
-    if (text.length == 0) {
-    	return false;
-    }
-    var tb = tr.getElementsByTagName('table')[0];
-    if (!tb) {
-    	return false;
-    }
-    var a = tb.getElementsByTagName('a')[0];
-    if (!a) {
-    	return false;
-    }
-    var post = ctrl.newPost(this, this.mkFullUrl(a.getAttribute('href')));
-    post.text = text;
-    post.parseTopicTableRow(tr);
-    this.addItem(post);    
-    // title/link is is first <a> tag, so look into it
-//    var topic = ctrl.newTopic(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
-//    topic.index = idx;
-//    topic.parseForumTableRow(tr);
-//    this.addItem(topic);
-    return true;
-};
-
-Topic.prototype.toHTML = function () {
-    return "<span class='topic'><a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a><div class='parentForum'>"+labels.forum + ":" + this.parent.toHTMLlink() +"</div><div class='views'>"+labels.views+": "+this.views+"</div><div class='posts'>"+labels.posts+": "+this.posts+"</div></span>"
-}
-/* end Topic class */
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
 	var tabs = new _IG_Tabs(moduleID, "Forums", _gel("TabsDiv"));
@@ -1263,24 +1128,8 @@ var sorters = {
     }
 }
 
-function log(object) {
-    if (typeof object == "string") {
-        _gel('log').innerHTML += str + "<br>";
-    } else {
-        _gel('log').innerHTML += "<pre>" + getObjectProperties(object) + "</pre>";
-    }
-}
-
-function getObjectProperties (object) {
-    var result = '';
-    for (var property in object) {
-        result += property + ': ' + object[property] + '\r\n';
-    }
-    return result;
-}
-
 function toDOM(HTMLstring) {
-    var d = document.createElement('div'); 
+    var d = document.createElement('div');
     d.innerHTML = HTMLstring;
     return d;
 }
@@ -1289,7 +1138,161 @@ function getBody(html) {
     return html.replace(/\n/g," ").replace(/.*<body.*?>/,"").replace(/<\/body>.*/, "");
 }
 
+var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>");
+myBase= myBase.getElementsByTagName('a')[0];
+myBase=myBase.getAttribute('href');
+myBase=myBase.replace("bbbbbaaaaassssseeee.gif","");
+
+function getHref(a) {
+	return getAttr(a, 'href');
+}
+function getSrc(i) {
+	return getAttr(i, 'src');
+}
+function getAttr(a, attr) {
+	if (!a || !a.getAttribute) return null;
+	var hr = a.getAttribute(attr);
+	if (!hr) return hr;
+	return hr.replace(myBase,"");
+}
+
 _IG_RegisterOnloadHandler(ctrl.init);
+/* begin Topic class */
+function Topic(parent, url, title) {
+    this.init(parent, url, title);
+}
+
+Topic.prototype = new ForumItem();
+
+Topic.prototype.idRegEx = /[?&]t=(\d+)/;
+Topic.prototype.viewer = "viewtopic.php?t=";
+
+Topic.prototype.parseForumTableRow = function (tr) {
+    var tds = tr.getElementsByTagName('td');
+    // tds[0] img, whether has new posts?
+    var img = tds[0].getElementsByTagName('img')[0];
+    this.icon = img.src; // icon
+    this.hasNewPostsTitle = img.title; // has/has no new posts
+    if (img.src.match("_announce")) {
+        this.type = "announce";
+    }
+    else if (img.src.match("_sticky")) {
+        this.type = "sticky";
+    }
+    else {
+        this.type = "normal";
+    }
+  	this.hasNewPosts = img.src.match("_new") ? true : false;
+   	this.isLocked = img.src.match("_lock") ? true : false;
+   	this.isHot = img.src.match("_hot") ? true : false;
+    
+   // tds[1] topic title, link; type (announce/sticky/norm in lang); pages
+    this.posts = getText(tds[2]);
+    this.author = getText(tds[3]);
+    this.views = getText(tds[4]);
+    this.lastPost = parseLastPost(this, tds[5]);
+    // tds[5] last post date; author, link
+};
+
+Topic.prototype.isSelected = function () {
+	return ctrl.isSelectedTopic(this);
+};
+
+Topic.prototype.parse = function (content) {
+    if (content == null) {
+        return;
+    }
+    this.dir = content.match(/<html dir="rtl">/i) ? "rtl" : "ltr";
+    var dom = toDOM(getBody(content));
+    if (this.title == this.url) {
+        // try load title from the page
+        var as = dom.getElementsByTagName('a');
+        for (var i=0;i<as.length;i++) {
+            var cl = as[i].className;
+            var hr = getHref(as[i]);
+            if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
+                this.title = as[i].innerHTML;
+                break;
+            }
+        }
+    }
+    var tables = dom.getElementsByTagName('table');
+    for (var i=0; i<tables.length; i++) {
+        this.tryParsePostsTable(tables[i]);
+    }
+};
+
+Topic.prototype.tryParsePostsTable = function (table) {
+    if (table.className != 'forumline' ||
+        !this.tryParsePostsHeader(table)) {
+        return false;
+    }
+    
+    var trs = table.getElementsByTagName('tr'); // all table rows, first row is nav, second row is headers
+    for (var i=0; i<trs.length; i++) {
+        this.tryParseTopicTableRow(trs[i], i);
+    }
+    return true;
+};
+
+Topic.prototype.tryParsePostsHeader = function (table) {
+    var ths = table.getElementsByTagName('th');
+    if (ths == null || ths.length < 2) {
+        return false;
+    }
+    
+    // assumption -- every and only posts table has row with th's
+    if (!labels.author) { labels.author = getText(ths[0]); }
+    if (!labels.post)   { labels.post = getText(ths[1]); }
+    
+    return true;
+};
+
+Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
+    var spans = tr.getElementsByTagName('span');
+    if (spans.length == 0) {
+        return false;
+    }
+    
+    var text = "";
+    for (var i=0; i<spans.length;i++) {
+    	if (spans[i].className == 'postbody') {
+    		var imgs = spans[i].getElementsByTagName('img');
+    		for (var j=0;j<imgs.length;j++) {
+    			imgs[j].src = this.mkFullUrl(getSrc(imgs[j]));
+    			imgs[j].className="outerImage";
+    		}
+    		text = text + spans[i].innerHTML;
+    	}
+    }
+    
+    if (text.length == 0) {
+    	return false;
+    }
+    var tb = tr.getElementsByTagName('table')[0];
+    if (!tb) {
+    	return false;
+    }
+    var a = tb.getElementsByTagName('a')[0];
+    if (!a) {
+    	return false;
+    }
+    var post = ctrl.newPost(this, this.mkFullUrl(getHref(a)));
+    post.text = text;
+    post.parseTopicTableRow(tr);
+    this.addItem(post);    
+    // title/link is is first <a> tag, so look into it
+//    var topic = ctrl.newTopic(this, this.mkFullUrl(getHref(as[0])), as[0].innerHTML);
+//    topic.index = idx;
+//    topic.parseForumTableRow(tr);
+//    this.addItem(topic);
+    return true;
+};
+
+Topic.prototype.toHTML = function () {
+    return "<span class='topic'><a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a><div class='parentForum'>"+labels.forum + ":" + this.parent.toHTMLlink() +"</div><div class='views'>"+labels.views+": "+this.views+"</div><div class='posts'>"+labels.posts+": "+this.posts+"</div></span>"
+}
+/* end Topic class */
         </script>
         ]]>
     </Content>
