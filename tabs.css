@@ -91,6 +91,10 @@
 	width: 19px;
 }
 
+.di-header {
+	z-index: 4;
+}
+
 .di-header-span {
 	z-index: 5;
 }
