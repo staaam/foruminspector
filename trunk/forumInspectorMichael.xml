@@ -9,7 +9,7 @@
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
     <UserPref name="nTopics" display_name="# Topics to show" default_value="10" />
-    <UserPref name="defTab" display_name="Default tab" datatype="enum">
+    <UserPref name="defTab" display_name="Default tab" datatype="enum" default_value="0">
 	    <EnumValue value="0" display_value="Forums"/>
 	    <EnumValue value="1" display_value="Starred"/>
 	    <EnumValue value="2" display_value="New Topics"/>
@@ -816,11 +816,13 @@ var ctrl = function () {
         init: function () {
             ctrl.createTabs();
             
-            display.init(divStarred);
+            //display.init(divStarred);
             
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
+            	tabs.setSelectedTab(prefs.getInt("defTab"));
+            	
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
@@ -848,7 +850,6 @@ var ctrl = function () {
             divBoardInfo = tabs.addDynamicTab("Board Info", ctrl.resize);
             
             tabs.alignTabs("left", 10);
-            tabs.setSelectedTab(prefs.getInt("defTab"));
         },
         
         onStarred: function () {
