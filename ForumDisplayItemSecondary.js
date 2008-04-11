@@ -6,6 +6,14 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	this.header = document.createElement("div");
    	this.header.className = "di-secondary-header";
 
+   	this.header.dir = display.dir;	
+   	if(display.dir == "rtl")
+   		this.header.style.textAlign = "right";
+   	else
+   		this.header.style.textAlign = "left";
+   	
+   	this.header.className = "di-header";
+   	
 	var headerTextSpanH3 = document.createElement("h3");
    		
 	var gotoLink = document.createElement("a");
@@ -26,7 +34,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	gotoLink.appendChild(headerTextSpan);
 	
 	this.select = document.createElement("input");
-	this.select.className = "di-select";	
+	this.select.className = "di-select" + display.dir;;	
 	this.select.type = "checkbox";
 	this.select.checked = isSelected;
 	var onClickSelect = function (e) {

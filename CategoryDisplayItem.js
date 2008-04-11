@@ -1,12 +1,19 @@
 /* begin CategoryDisplayItem class */
 function CategoryDisplayItem(parent, headerText, headerUrl,
-	subHeader, expandingFunction, isSelected, selectFunction, isForums ) {
+	subHeader, expandingFunction, isSelected, selectFunction, isForums, direction ) {
 
 	this.initDisplayItem(parent);
 	
 	this.isForums = isForums;
 	
    	this.header = document.createElement("div");
+   	
+   	this.header.dir = display.dir;	
+   	if(display.dir == "rtl")
+   		this.header.style.textAlign = "right";
+   	else
+   		this.header.style.textAlign = "left";
+   	
    	this.header.className = "di-header";
 	
 	this.plusImg = document.createElement("img");
@@ -32,7 +39,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder gotoArrow";
+	gotoImg.className = "noborder gotoArrow-" + display.dir;
 	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
 	
@@ -43,7 +50,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
 	if (selectFunction != null) {
 		this.select = document.createElement("input");
-		this.select.className = "di-select";	
+		this.select.className = "di-select-" + display.dir;	
 		this.select.type = "checkbox";
 		this.select.checked = isSelected;
 		var onClickSelect = function (e) {
