@@ -1095,6 +1095,9 @@ function getText(node) {
 		return null;
 	}
 	var text = node.innerText || node.text || node.textContent;
+	if (!text) {
+		text = "blya";
+	}
 	return text.trim();
 //	return node.text || node.textContent || (function(node){
 //        var _result = "";
