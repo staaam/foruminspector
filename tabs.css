@@ -16,7 +16,6 @@
 	max-height: 300px;
 	padding: 0px;
 	background-color: #fff;
-	text-align: left;
 }
 
 .tablib_main_container {
@@ -130,7 +129,6 @@ body {
 .di-byline {
 	color:#7E7E7E;
 	font-size:x-small;
-	text-align:left;
 	position:relative;
 	left: 10px;
 	width: 295px;
@@ -143,7 +141,6 @@ body {
 .di-byline-secondary {
 	color:#7E7E7E;
 	font-size:x-small;
-	text-align:left;
 	width: 295px;
 }
 
