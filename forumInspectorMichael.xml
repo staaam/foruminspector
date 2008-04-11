@@ -1049,6 +1049,7 @@ var labels = {
 function getHref(a) {
 	if (!a || !a.getAttribute) return a;
 	alert("a="+a.getAttribute('href'));
+	alert("ht"+a.outerHTML);
 	var hr = a.outerHTML.match(/href=["'](.*?)["']/)[1];
 	alert("hr="+hr);
 	return hr;
