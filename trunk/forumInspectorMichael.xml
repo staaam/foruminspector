@@ -51,24 +51,24 @@ Board.prototype.parse = function (content) {
         this.tryParseBoardTable(tables[i]);
     }
     var spans = dom.getElementsByTagName('span');
-    var e = getEl(spans, 'class', 'maintitle');
+    var e = getElClass(spans, 'maintitle');
     if (!e) {
-	    e = getEl(spans, 'class', 'gen');
+	    e = getElClass(spans, 'gen');
     }
     if (!e) {
 	    spans = dom.getElementsByTagName('div');
-	    e = getEl(spans, 'class', 'maintitle');
+	    e = getElClass(spans, 'maintitle');
 	    if (!e) {
-		    e = getEl(spans, 'class', 'gen');
+		    e = getElClass(spans, 'gen');
 	    }
     }
 
     this.title = getText(e);
 };
 
-function getEl(els, attr, val) {
+function getElClass(els, val) {
     for (var i=0; i<els.length; i++) {
-    	if (els[i] && els[i].getAttribute(attr) == val) {
+    	if (els[i] && els[i].className == val) {
     		return els[i];
     	}
     }
@@ -860,7 +860,6 @@ var ctrl = function () {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
 //    alert(board.boardInfo.general);
-alert(board.title);
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
