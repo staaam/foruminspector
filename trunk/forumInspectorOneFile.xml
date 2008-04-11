@@ -339,8 +339,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    	var onClickHeader = function() {
    		if (that.isClosed)
    		{
-		   	this.loadingSpan.style.visibility = "visible";
-		   	this.expandedPart.style.visibility = "visible";
+		   	that.loadingSpan.style.visibility = "visible";
+		   	that.expandedPart.style.visibility = "visible";
    			that.plusImg.className = "di-sign-minus";
    			that.header.className = "di-header di-expanded";
    			that.isClosed = false;
@@ -348,8 +348,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    		}
    		else
    		{
-		   	this.loadingSpan.style.visibility = "hidden";
-		   	this.expandedPart.style.visibility = "hidden";
+		   	that.loadingSpan.style.visibility = "hidden";
+		   	that.expandedPart.style.visibility = "hidden";
    			that.plusImg.className = "di-sign-plus";
    			that.header.className = "di-header";
    			that.isClosed = true;
