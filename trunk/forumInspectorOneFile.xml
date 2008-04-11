@@ -497,6 +497,8 @@ var display = function () {
         
         createBoardInfo: function ( parentElem, board )
         {
+        	parentElem.dir = display.dir;
+        	parentElem.style.textAlign = (display.dir == "rtl")? "right" : "left";
         	parentElem.innerHTML = "" +
         		"<div class=\"di-divider\"></div>" + 
         		"<div class=\"boardInfo\">" +
