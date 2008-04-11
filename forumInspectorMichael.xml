@@ -1146,7 +1146,7 @@ function getObjectProperties (object) {
 }
 
 
-var myBase = toDOM("<a href=\"\"></a>");
+var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>");
 function toDOM(HTMLstring) {
     var d = document.createElement('div');
 //	alert("="+d.innerHTML.match(/href=["'](.*?)[	"']/)[1]);
