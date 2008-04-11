@@ -1,0 +1,12 @@
+<messagebundle>
+  <msg name="boardURL">כתובת הלוח</msg> 
+  <msg name="numTopics">מספר נושאים להצגה</msg> 
+  <msg name="defTabs">טאב בררת מחדל</msg> 
+  <msg name="forums">פורומים</msg> 
+  <msg name="starred">מועדפים</msg> 
+  <msg name="latestT">נושאים אחרונים</msg> 
+  <msg name="recentlyUpdatesd">מעודכנים לאחרונה</msg>
+  <msg name="mostViews">הכי הרבה צפיות</msg>
+  <msg name="mostPosts">הכי הרבה הודעות</msg>
+  <msg name="boardInfo">מידע על הלוח</msg>
+</messagebundle>

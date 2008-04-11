@@ -1,0 +1,12 @@
+<messagebundle>
+  <msg name="boardURL">Board URL</msg> 
+  <msg name="numTopics"># Topic to show</msg> 
+  <msg name="defTabs">Default tab</msg> 
+  <msg name="forums">Forums</msg> 
+  <msg name="starred">Starred</msg> 
+  <msg name="latestT">Latest Topic</msg> 
+  <msg name="recentlyUpdatesd">Recently Updated</msg>
+  <msg name="mostViews">Most Views</msg>
+  <msg name="mostPosts">Most Posts</msg>
+  <msg name="boardInfo">Board Info</msg>
+</messagebundle>

@@ -1,0 +1,12 @@
+<messagebundle>
+  <msg name="boardURL">Адрес доски</msg> 
+  <msg name="numTopics">Kоличество тем на показ</msg> 
+  <msg name="defTabs">Таб по умолчанию</msg> 
+  <msg name="forums">Форумы</msg> 
+  <msg name="starred">Избранные</msg> 
+  <msg name="latestT">Последние темы</msg> 
+  <msg name="recentlyUpdatesd">Недавно отвеченны</msg>
+  <msg name="mostViews">Больше всего просмотров</msg>
+  <msg name="mostPosts">Больше всего ответов</msg>
+  <msg name="boardInfo">Информация о даске</msg>
+</messagebundle>
