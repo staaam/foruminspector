@@ -92,13 +92,16 @@ Board.prototype.tryParseBoardTable = function (table) {
 };
 
 Board.prototype.tryParseBoardInfo = function (table) {
+    alert("1");
     if (!table || !table.getElementsByTagName('a')) {
     	return false;
     }
+    alert("2");
     var a = table.getElementsByTagName('a')[0];
     if (!a || !a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
+    alert("3");
     var spans = table.getElementsByTagName('span');
     // spans[0] -- Who is Online
     // spans[1] -- General Info
@@ -856,7 +859,7 @@ var ctrl = function () {
             board.load(function (board) {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
-    alert(board.boardInfo.general);
+//    alert(board.boardInfo.general);
 
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
