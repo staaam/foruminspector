@@ -973,7 +973,6 @@ var ctrl = function () {
 					r.push(allTopics[i]);
 				}
 			}
-			alert(r.length);
 			return r;        	
         },
         
