@@ -49,7 +49,7 @@ Topic.prototype.parse = function (content) {
         // try load title from the page
         var as = dom.getElementsByTagName('a');
         for (var i=0;i<as.length;i++) {
-            var cl = as[i].getAttribute('class');
+            var cl = as[i].className;
             var hr = as[i].getAttribute('href');
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
                 this.title = as[i].innerHTML;
@@ -64,7 +64,7 @@ Topic.prototype.parse = function (content) {
 };
 
 Topic.prototype.tryParsePostsTable = function (table) {
-    if (table.getAttribute('class') != 'forumline' ||
+    if (table.className != 'forumline' ||
         !this.tryParsePostsHeader(table)) {
         return false;
     }
@@ -97,7 +97,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     
     var text = "";
     for (var i=0; i<spans.length;i++) {
-    	if (spans[i].getAttribute('class') == 'postbody') {
+    	if (spans[i].className == 'postbody') {
     		var imgs = spans[i].getElementsByTagName('img');
     		for (var j=0;j<imgs.length;j++) {
     			imgs[j].src = this.mkFullUrl(imgs[j].getAttribute("src"));

@@ -16,31 +16,31 @@ Board.prototype.parse = function (content) {
         this.tryParseBoardTable(tables[i]);
     }
     var spans = dom.getElementsByTagName('span');
-    var e = getEl(spans, 'class', 'maintitle');
+    var e = getElClass(spans, 'maintitle');
     if (!e) {
-	    e = getEl(spans, 'class', 'gen');
+	    e = getElClass(spans, 'gen');
     }
     if (!e) {
 	    spans = dom.getElementsByTagName('div');
-	    e = getEl(spans, 'class', 'maintitle');
+	    e = getElClass(spans, 'maintitle');
 	    if (!e) {
-		    e = getEl(spans, 'class', 'gen');
+		    e = getElClass(spans, 'gen');
 	    }
     }
 
     this.title = getText(e);
 };
 
-function getEl(els, attr, val) {
+function getElClass(els, val) {
     for (var i=0; i<els.length; i++) {
-    	if (els[i] && els[i].getAttribute(attr) == val) {
+    	if (els[i] && els[i].className == val) {
     		return els[i];
     	}
     }
 }
 
 Board.prototype.tryParseBoardTable = function (table) {
-    if (table.getAttribute('class') != 'forumline') {
+    if (table.className != 'forumline') {
     	return false;
     }
     
