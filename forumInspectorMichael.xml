@@ -1147,13 +1147,10 @@ function getObjectProperties (object) {
 
 
 var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>");
-alert(myBase);
 myBase= myBase.getElementsByTagName('a')[0];
-alert(myBase);
 myBase=myBase.getAttribute('href');
-alert(myBase);
 myBase=myBase.replace("bbbbbaaaaassssseeee.gif","");
-alert(myBase);
+
 function toDOM(HTMLstring) {
     var d = document.createElement('div');
 //	alert("="+d.innerHTML.match(/href=["'](.*?)[	"']/)[1]);
@@ -1167,13 +1164,8 @@ function getBody(html) {
 }
 
 function getHref(a) {
-	if (!a || !a.getAttribute) return a;
-	
-	alert("a="+a.getAttribute('href'));
-	alert("ht"+a.outerHTML);
-	var hr = a.outerHTML.match(/href=["'](.*?)["']/)[1];
-	alert("hr="+hr);
-	return hr;
+	if (!a || !a.getAttribute) return null;
+	return a.getAttribute('href').replace(myBase,"");
 }
 
 _IG_RegisterOnloadHandler(ctrl.init);
