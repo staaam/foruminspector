@@ -747,7 +747,7 @@ ForumItem.prototype.init = function (parent, url, title) {
     this.url = url;
     this.boardUrl = url.replace(/\/[^\/]*$/, "") + "/";
     this.title = title;
-    if (title == null || title == undefined) {
+    if (title == null) {
         this.title = url;
     }
     this.id = this.linkMatch(url)[1];
@@ -1045,11 +1045,11 @@ var ctrl = function () {
         },
         
         isSelectedForum: function (forum) {
-        	return selForums[forum.id] != undefined;
+        	return selForums[forum.id] != null;
         },
         
         isSelectedTopic: function (topic) {
-        	return selTopics[topic.id] != undefined;
+        	return selTopics[topic.id] != null;
         },
         
         toggleForum: function (forum, checked) {
@@ -1058,7 +1058,7 @@ var ctrl = function () {
                 selForums[name] = 1;
                 allForums[name].load(function(){});
             } else {
-                selForums[name] = undefined;
+                selForums[name] = null;
             }
             prefs.set("selForums", joinKeys(selForums));
         },
@@ -1068,7 +1068,7 @@ var ctrl = function () {
             if (checked) {
                 selTopics[name] = topic.parent.id;
             } else {
-                selTopics[name] = undefined;
+                selTopics[name] = null;
             }
             prefs.set("selTopics", joinKeys(selTopics));
         },
@@ -1092,7 +1092,7 @@ var labels = {
 
 function getText(node) {
 	if (!node) {
-		return undefined;
+		return null;
 	}
 	var text = node.innerText || node.text || node.textContent;
 	return text.trim();
