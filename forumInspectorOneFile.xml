@@ -276,13 +276,14 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	addEventListener(gotoLink, 'click',onClickLink);	
-	//this.header.appendChild(gotoLink);
+	addEventListener(gotoLink, 'click',onClickLink);
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow-" + display.dir;
 	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
+		
+	this.header.appendChild(gotoLink);
 	
  	this.loadingSpan = document.createElement("span");
  	this.loadingSpan.className = "di-loading";
