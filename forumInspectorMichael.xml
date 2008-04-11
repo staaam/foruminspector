@@ -1025,7 +1025,6 @@ var ctrl = function () {
         toggleTopic: function (topic, checked) {
         	var name = topic.id;
             if (checked) {
-	        	alert(allForums[name]);
                 selTopics[name] = topic.parent.id;
             } else {
                 selTopics[name] = null;
