@@ -658,11 +658,15 @@ function parseLastPost(that, td) {
     var lastPost = td.getElementsByTagName('span')[0];
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
+    alert(lastPost);
     var date = lastPost.innerHTML;
+    alert(date);
     var ds = date.match(/^(.*?)<br/);
+    alert(ds);
     if (ds && ds.length > 1) {
     	ds = ds[1];
     }
+    alert(ds);
     var post = {
     	date: ds,
 		author: getText(author),
