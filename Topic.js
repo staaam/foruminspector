@@ -83,8 +83,8 @@ Topic.prototype.tryParsePostsHeader = function (table) {
     }
     
     // assumption -- every and only posts table has row with th's
-    if (!labels.author) { labels.author = getText(ths[0]); }
-    if (!labels.post)   { labels.post = getText(ths[1]); }
+    labels.author = getText(ths[0]);
+    labels.post = getText(ths[1]);
     
     return true;
 };
