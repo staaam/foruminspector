@@ -75,17 +75,14 @@ function getEl(els, attr, val) {
 }
 
 Board.prototype.tryParseBoardTable = function (table) {
-    alert(table.className);
     if (table.className != 'forumline') {
     	return false;
     }
-        alert("01");
     
     if (this.tryParseForumsHeader(table)) {
     	this.parseForumsTable(table);
     	return true;
     }
-        alert("01");
     
     if (this.tryParseBoardInfo(table)) {
     	return true;
@@ -95,28 +92,23 @@ Board.prototype.tryParseBoardTable = function (table) {
 };
 
 Board.prototype.tryParseBoardInfo = function (table) {
-    alert("1");
     if (!table || !table.getElementsByTagName('a')) {
     	return false;
     }
-    alert("2");
     var a = table.getElementsByTagName('a')[0];
     if (!a || !a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
     	return false;
     }
-    alert("3");
     var spans = table.getElementsByTagName('span');
     // spans[0] -- Who is Online
     // spans[1] -- General Info
     // spans[2] -- Users online
-    alert("hjere");
 
     labels.whoIsOnline = getHTML(a);
     this.boardInfo = {
     	general: getHTML(spans[1]),
     	users: getHTML(spans[2])
     };
-    alert(this.boardInfo.general);
 };
 
 Board.prototype.parseForumsTable = function (table) {
