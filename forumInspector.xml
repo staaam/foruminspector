@@ -196,6 +196,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.header.appendChild(this.plusImg);
 	
 	var headerTextSpan = document.createElement("span");
+	headerTextSpan.className = "di-header-span";
 	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
 	
@@ -207,13 +208,14 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	addEventListener(gotoLink, 'click',onClickLink);	
-	this.header.appendChild(gotoLink);
+	addEventListener(gotoLink, 'click',onClickLink);
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow-" + display.dir;
 	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
+		
+	this.header.appendChild(gotoLink);
 	
  	this.loadingSpan = document.createElement("span");
  	this.loadingSpan.className = "di-loading";
@@ -258,15 +260,19 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    	display.reduceSpanText( headerTextSpan, 260 );
   	
    	this.isClosed = true;
-   	this.loadingSpan.style.display = "none";
+
+   	this.loadingSpan.style.visibility = "hidden";
    	this.expandedPart.style.display = "none";
+
+   	//this.loadingSpan.style.display = "none";
+   	//this.expandedPart.style.display = "none";
    	
    	var that = this;
    	
    	var onClickHeader = function() {
    		if (that.isClosed)
    		{
-   			that.loadingSpan.style.display = "inline";
+   			that.loadingSpan.style.visibility = "visible";
    			that.expandedPart.style.display = "block";
    			that.plusImg.className = "di-sign-minus";
    			that.header.className = "di-header di-expanded";
@@ -275,7 +281,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    		}
    		else
    		{
-   			that.loadingSpan.style.display = "none";
+   			that.loadingSpan.style.visibility = "hidden";
    			that.expandedPart.style.display = "none";
    			that.plusImg.className = "di-sign-plus";
    			that.header.className = "di-header";
@@ -311,7 +317,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 	{
 		display.secondaryPosts( this.expandedPart, forumsArr );
 	}
-	this.loadingSpan.style.display = "none";
+	this.loadingSpan.style.visibility = "hidden";
 	_IG_AdjustIFrameHeight();
 }
 
@@ -428,6 +434,8 @@ var display = function () {
         createSecondaryPostItem: function ( parentElem, post ) {
         	
         	var postItem = document.createElement("div");
+        	postItem.dir = display.dir;	
+        	postItem.style.textAlign = (display.dir == "rtl")? "right" : "left";
         	postItem.className = "di-secondary-header";
         	
         	var span = document.createElement("span");
@@ -659,7 +667,7 @@ function parseLastPost(that, td) {
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
     var date = lastPost.innerHTML;
-    var ds = date.match(/^(.*?)<br/);
+    var ds = date.match(/^(.*?)<br/i);
     if (ds && ds.length > 1) {
     	ds = ds[1];
     }
@@ -724,11 +732,11 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
     }
     
     // assumption -- every and only topics table has row with th's
-    if (!labels.topics)   { labels.topics = getText(ths[0]); }
-    if (!labels.posts)    { labels.posts = getText(ths[1]); }
-    if (!labels.author)   { labels.author = getText(ths[2]); }
-    if (!labels.views)    { labels.views = getText(ths[3]); }
-    if (!labels.lastPost) { labels.lastPost = getText(ths[4]); }
+    labels.topics = getText(ths[0]);
+    labels.posts = getText(ths[1]);
+    labels.author = getText(ths[2]);
+    labels.views = getText(ths[3]);
+    labels.lastPost = getText(ths[4]);
     
     return true;
 };
@@ -1242,8 +1250,8 @@ Topic.prototype.tryParsePostsHeader = function (table) {
     }
     
     // assumption -- every and only posts table has row with th's
-    if (!labels.author) { labels.author = getText(ths[0]); }
-    if (!labels.post)   { labels.post = getText(ths[1]); }
+    labels.author = getText(ths[0]);
+    labels.post = getText(ths[1]);
     
     return true;
 };
