@@ -103,12 +103,14 @@ Board.prototype.tryParseBoardInfo = function (table) {
     // spans[0] -- Who is Online
     // spans[1] -- General Info
     // spans[2] -- Users online
+    alert("hjere");
 
     labels.whoIsOnline = getHTML(a);
     this.boardInfo = {
     	general: getHTML(spans[1]),
     	users: getHTML(spans[2])
     };
+    alert(this.boardInfo.general);
 };
 
 Board.prototype.parseForumsTable = function (table) {
@@ -854,6 +856,7 @@ var ctrl = function () {
             board.load(function (board) {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
+    alert(board.boardInfo.general);
 
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
