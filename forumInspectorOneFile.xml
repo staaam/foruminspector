@@ -9,6 +9,16 @@
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
     <UserPref name="nTopics" display_name="# Topics to show" default_value="10" />
+    <UserPref name="defTab" display_name="Default tab" datatype="enum" default_value="0">
+	    <EnumValue value="0" display_value="Forums"/>
+	    <EnumValue value="1" display_value="Starred"/>
+	    <EnumValue value="2" display_value="Latest Topics"/>
+	    <EnumValue value="3" display_value="Recently Updated"/>
+	    <EnumValue value="4" display_value="Most Views"/>
+	    <EnumValue value="5" display_value="Most Posts"/>
+	    <EnumValue value="6" display_value="Board Info"/>
+    </UserPref>
+   
     <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
@@ -698,12 +708,21 @@ function parseLastPost(that, td) {
     var lastPost = td.getElementsByTagName('span')[0];
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
-    return {
+    var post = {
     	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
 		author: getText(author),
 		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
-		link: as[1] ? that.mkFullUrl(as[1].getAttribute('href')) : ""
+		link: "",
+		id: 0
     };
+    if (as[1]) {
+    	post.link = that.mkFullUrl(as[1].getAttribute('href'));
+    	var m = Post.prototype.linkMatch(post.link);
+    	if (m) {
+    		post.id = m[1];
+    	}
+    }
+    return post;
 }
 
 Forum.prototype.parse = function (content) {
@@ -920,9 +939,11 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     if (!tb) {
     	return false;
     }
-    var as = tb.getElementsByTagName('a');
-    
-    var post = ctrl.newPost(this, this.mkFullUrl(as[0].getAttribute('href')));
+    var a = tb.getElementsByTagName('a')[0];
+    if (!a) {
+    	return false;
+    }
+    var post = ctrl.newPost(this, this.mkFullUrl(a.getAttribute('href')));
     post.text = text;
     post.parseTopicTableRow(tr);
     this.addItem(post);    
@@ -948,12 +969,12 @@ var ctrl = function () {
     var allTopics = {};
     var allPosts = {};
     
-    var divLog;
     var divMostViews;
     var divMostPosts;
     var divForumList;
     var divNewTopics;
     var divBoardInfo;
+    var divRecTopics;
     
     var divStarred;
     var displayGeneral = new DisplayGeneral();
@@ -962,12 +983,14 @@ var ctrl = function () {
         init: function () {
             ctrl.createTabs();
             
-            display.init(divStarred);
+            //display.init(divStarred);
             
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
             	display.setDirection(board.dir);
+            	tabs.setSelectedTab(prefs.getInt("defTab"));
+
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
@@ -983,12 +1006,12 @@ var ctrl = function () {
         
         createTabs: function () {
             divForumList = tabs.addDynamicTab("Forums", ctrl.resize);
-
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
             divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
             
-            divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
+            divNewTopics = tabs.addDynamicTab("Latest Topics", ctrl.onNewTopics);
+            divRecTopics = tabs.addDynamicTab("Recently Updated", ctrl.onLRUTopics);
             divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
             divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.onMostPosts);
             //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
@@ -1026,6 +1049,10 @@ var ctrl = function () {
         
         onNewTopics: function () {
         	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId);
+        },
+        
+        onLRUTopics: function () {
+        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId);
         },
         
         onMostViews: function () {
@@ -1265,6 +1292,7 @@ var sorters = {
     byViews: function (a,b) { return b.views - a.views; },
     byIndex: function (a,b) { return b.index - a.index; },
     byId: function (a,b) { return b.id - a.id; },
+    byLastPostId: function (a,b) { return b.lastPost.id - a.lastPost.id; },
     neg: function (f) {
         return function(a,b) {
             return -1 * f(a,b);
