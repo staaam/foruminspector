@@ -954,6 +954,7 @@ var ctrl = function () {
             for (var i in allForums) {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
+            		alert(forum.id);
 	        		forum.load(function() {
 	        			ctrl.displayTopics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
 	        		});
@@ -1010,7 +1011,6 @@ var ctrl = function () {
         
         toggleForum: function (forum, checked) {
         	var name = forum.id;
-        	alert("f " + name + " " + checked);
             if (checked) {
                 selForums[name] = 1;
                 allForums[name].load(function(){});
@@ -1022,7 +1022,6 @@ var ctrl = function () {
 
         toggleTopic: function (topic, checked) {
         	var name = topic.id;
-        	alert("t " + name + " " + checked);
             if (checked) {
                 selTopics[name] = topic.parent.id;
             } else {
