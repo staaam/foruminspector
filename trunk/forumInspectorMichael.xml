@@ -128,7 +128,6 @@ Board.prototype.parseForumsTable = function (table) {
         var href = getHref(as[0]);
         if (Category.prototype.linkMatch(href)) {
             // category title row
-            alert(href);
             cat = new Category(this, this.mkFullUrl(href), as[0].innerHTML);
             cat.index = i;
             //cat.parseBoardTableRow(tr);
@@ -1050,7 +1049,9 @@ var labels = {
 
 function getHref(a) {
 	if (!a || !a.getAttribute) return a;
+	alert(a);
 	var hr = a.outerHTML.match(/href=["'](.*?)["']/)[1];
+	alert(hr);
 	return hr;
 }
 
