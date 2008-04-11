@@ -75,7 +75,7 @@ function getEl(els, attr, val) {
 }
 
 Board.prototype.tryParseBoardTable = function (table) {
-    alert("00	");
+    alert(table.getAttribute('class'));
     if (table.getAttribute('class') != 'forumline') {
     	return false;
     }
