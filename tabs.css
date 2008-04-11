@@ -81,14 +81,14 @@
 
 .gotoArrow-ltr {
 	background-image:url(order_arrow_small.gif);
-	vertical-align:bottom;
+
 	height: 12px;
 	width: 19px;
 }
 
 .gotoArrow-rtl {
 	background-image:url(order_arrow_small_rtl.gif);
-	vertical-align:bottom;
+
 	height: 12px;
 	width: 19px;
 }
