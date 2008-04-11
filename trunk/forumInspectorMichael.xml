@@ -639,8 +639,10 @@ function parseLastPost(that, td) {
     var lastPost = td.getElementsByTagName('span')[0];
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
+    var date = lastPost.innerHTML;
+    var ds = date.match(/^(.*?)<br/);
     var post = {
-    	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
+    	date: ds[1],
 		author: getText(author),
 		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
 		link: "",
