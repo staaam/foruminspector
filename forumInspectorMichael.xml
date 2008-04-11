@@ -1148,8 +1148,8 @@ function getObjectProperties (object) {
 function toDOM(HTMLstring) {
     var d = document.createElement('iframe');
 	alert("b="+HTMLstring.match(/href=["'](.*?)["']/)[1]);
-    d.innerHTML = HTMLstring;
-	alert("c="+d.innerHTML.match(/href=["'](.*?)["']/)[1]);
+    d.contentWindow.document.write(HTMLstring);
+	alert("c="+d.document.body.innerHTML.match(/href=["'](.*?)["']/)[1]);
     return d;
 }
 
