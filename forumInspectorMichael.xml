@@ -1012,6 +1012,7 @@ var ctrl = function () {
         
         toggleForum: function (forum, checked) {
         	var name = forum.id;
+        	alert(name);
             if (checked) {
                 selForums[name] = 1;
                 allForums[name].load(function(){});
@@ -1023,6 +1024,7 @@ var ctrl = function () {
 
         toggleTopic: function (topic, checked) {
         	var name = topic.id;
+        	alert(name);
             if (checked) {
                 selTopics[name] = topic.parent.id;
             } else {
