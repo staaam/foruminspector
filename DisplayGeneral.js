@@ -41,6 +41,7 @@ var display = function () {
         createSecondaryPostItem: function ( parentElem, post ) {
         	
         	var postItem = document.createElement("div");
+        	postItem.dir = display.dir;	
         	postItem.className = "di-secondary-header";
         	
         	var span = document.createElement("span");
