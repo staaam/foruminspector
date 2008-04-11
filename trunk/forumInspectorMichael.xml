@@ -1146,7 +1146,7 @@ function getObjectProperties (object) {
 }
 
 function toDOM(HTMLstring) {
-    var d = document.createElement('div');
+    var d = document.createElement('iframe');
 	alert("b="+HTMLstring.match(/href=["'](.*?)["']/)[1]);
     d.innerHTML = HTMLstring;
 	alert("c="+d.innerHTML.match(/href=["'](.*?)["']/)[1]);
