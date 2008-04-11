@@ -5,7 +5,7 @@
   <msg name="forums">Форумы</msg> 
   <msg name="starred">Избранные</msg> 
   <msg name="latestT">Последние темы</msg> 
-  <msg name="recentlyUpdatesd">Недавно отвеченны</msg>
+  <msg name="recentlyUpdated">Недавно отвеченны</msg>
   <msg name="mostViews">Больше всего просмотров</msg>
   <msg name="mostPosts">Больше всего ответов</msg>
   <msg name="boardInfo">Информация о даске</msg>

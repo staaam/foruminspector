@@ -44,18 +44,18 @@ var ctrl = function () {
         },
         
         createTabs: function () {
-            divForumList = tabs.addDynamicTab("Forums", ctrl.resize);
+            divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), ctrl.resize);
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
-            divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
+            divStarred = tabs.addDynamicTab(prefs.getMsg("starred"), ctrl.onStarred);
             
-            divNewTopics = tabs.addDynamicTab("Latest Topics", ctrl.onNewTopics);
-            divRecTopics = tabs.addDynamicTab("Recently Updated", ctrl.onLRUTopics);
-            divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
-            divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.onMostPosts);
+            divNewTopics = tabs.addDynamicTab(prefs.getMsg("latestT"), ctrl.onNewTopics);
+            divRecTopics = tabs.addDynamicTab(prefs.getMsg("recentlyUpdated"), ctrl.onLRUTopics);
+            divMostViews = tabs.addDynamicTab(prefs.getMsg("mostViews"), ctrl.onMostViews);
+            divMostPosts = tabs.addDynamicTab(prefs.getMsg("mostPosts"), ctrl.onMostPosts);
             //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             
-            divBoardInfo = tabs.addDynamicTab("Board Info", ctrl.resize);
+            divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
             
             tabs.alignTabs("left", 10);
         },
