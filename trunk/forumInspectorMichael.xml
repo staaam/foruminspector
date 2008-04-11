@@ -127,6 +127,7 @@ Board.prototype.parseForumsTable = function (table) {
         var href = as[0].getAttribute('href');
         if (Category.prototype.linkMatch(href)) {
             // category title row
+            alert(as[0].getAttribute('href'));
             cat = new Category(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
             cat.index = i;
             //cat.parseBoardTableRow(tr);
@@ -787,9 +788,7 @@ ForumItem.prototype.linkMatch = function (url) {
 }
 
 ForumItem.prototype.mkFullUrl = function (relUrl) {
-	alert(relUrl);
 	var url = (relUrl.substr(0, 4) != "http") ? this.boardUrl + relUrl : relUrl;
-	alert(relUrl);
 	return url;
 };
 
