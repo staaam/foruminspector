@@ -230,7 +230,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.isForums = isForums;
 	
    	this.header = document.createElement("div");
-   	//this.header.dir = direction;
+   	this.header.dir = display.dir;
    	this.header.className = "di-header";
 	
 	this.plusImg = document.createElement("img");
@@ -422,6 +422,10 @@ var display = function () {
         
         clear: function (el) {
         	el.innerHTML = "";
+        },
+        
+       	setDirection: function ( dir ) {
+        	display.dir = dir;
         },
         
         createCategoryItem: function (parentElem, category) {
@@ -947,11 +951,10 @@ var ctrl = function () {
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
+            	display.setDirection(board.dir);
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
-	        	alert(board.dir);
-	        	divForumList.dir = board.dir;
 	        });
 	        
             for (var i=0;i<selForums.length;i++) {
