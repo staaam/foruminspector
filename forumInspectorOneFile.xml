@@ -277,7 +277,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		if (e.stopPropagation) e.stopPropagation();        
 	}
 	addEventListener(gotoLink, 'click',onClickLink);	
-	this.header.appendChild(gotoLink);
+	//this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow-" + display.dir;
