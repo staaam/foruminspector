@@ -12,10 +12,11 @@
     <UserPref name="defTab" display_name="Default tab" datatype="enum" default_value="0">
 	    <EnumValue value="0" display_value="Forums"/>
 	    <EnumValue value="1" display_value="Starred"/>
-	    <EnumValue value="2" display_value="New Topics"/>
-	    <EnumValue value="3" display_value="Most Views"/>
-	    <EnumValue value="4" display_value="Most Posts"/>
-	    <EnumValue value="5" display_value="Board Info"/>
+	    <EnumValue value="2" display_value="Latest Topics"/>
+	    <EnumValue value="3" display_value="Recently Upd"/>
+	    <EnumValue value="4" display_value="Most Views"/>
+	    <EnumValue value="5" display_value="Most Posts"/>
+	    <EnumValue value="6" display_value="Board Info"/>
     </UserPref>
    
     <Content type="html"><![CDATA[
@@ -802,12 +803,12 @@ var ctrl = function () {
     var allTopics = {};
     var allPosts = {};
     
-    var divLog;
     var divMostViews;
     var divMostPosts;
     var divForumList;
     var divNewTopics;
     var divBoardInfo;
+    var divRecTopics;
     
     var divStarred;
     var displayGeneral = new DisplayGeneral();
@@ -842,7 +843,8 @@ var ctrl = function () {
             
             divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
             
-            divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
+            divNewTopics = tabs.addDynamicTab("Latest Topics", ctrl.onNewTopics);
+            divRecTopics = tabs.addDynamicTab("Recently Upd", ctrl.onLRUTopics);
             divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
             divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.onMostPosts);
             //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
@@ -880,6 +882,10 @@ var ctrl = function () {
         
         onNewTopics: function () {
         	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId);
+        },
+        
+        onLRUTopics: function () {
+        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.neg(sorters.byIndex));
         },
         
         onMostViews: function () {
