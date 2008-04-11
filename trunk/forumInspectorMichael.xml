@@ -1013,7 +1013,7 @@ var ctrl = function () {
         toggleForum: function (forum, checked) {
         	var name = forum.id;
             if (checked) {
-    	    	alert(name);
+    	    	alert(allForums[name]);
                 selForums[name] = 1;
                 allForums[name].load(function(){});
             } else {
