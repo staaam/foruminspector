@@ -969,6 +969,7 @@ var ctrl = function () {
                 
         getAllTopics: function () {
 			var r = [];
+			alert(allTopics.length);
 			for (var i in allTopics) {
 				if (allTopics[i].parent.isSelected()) {
 					r.push(allTopics[i]);
