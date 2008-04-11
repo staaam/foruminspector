@@ -329,7 +329,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    	this.isClosed = true;
 
    	this.loadingSpan.style.visibility = "hidden";
-   	this.expandedPart.style.visibility = "hidden";
+   	this.expandedPart.style.display = "none";
 
    	//this.loadingSpan.style.display = "none";
    	//this.expandedPart.style.display = "none";
@@ -340,7 +340,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    		if (that.isClosed)
    		{
    			that.loadingSpan.style.visibility = "visible";
-   			that.expandedPart.style.visibility = "visible";
+   			that.expandedPart.style.display = "block";
    			that.plusImg.className = "di-sign-minus";
    			that.header.className = "di-header di-expanded";
    			that.isClosed = false;
@@ -349,7 +349,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    		else
    		{
    			that.loadingSpan.style.visibility = "hidden";
-   			that.expandedPart.style.visibility = "hidden";
+   			that.expandedPart.style.display = "none";
    			that.plusImg.className = "di-sign-plus";
    			that.header.className = "di-header";
    			that.isClosed = true;
