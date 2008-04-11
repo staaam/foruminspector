@@ -26,12 +26,21 @@ function parseLastPost(that, td) {
     var lastPost = td.getElementsByTagName('span')[0];
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
-    return {
+    var post = {
     	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
 		author: getText(author),
 		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
-		link: as[1] ? that.mkFullUrl(as[1].getAttribute('href')) : ""
+		link: "",
+		id: 0
     };
+    if (as[1]) {
+    	post.link = that.mkFullUrl(as[1].getAttribute('href'));
+    	var m = Post.prototype.linkMatch(post.link);
+    	if (m) {
+    		post.id = m[1];
+    	}
+    }
+    return post;
 }
 
 Forum.prototype.parse = function (content) {
