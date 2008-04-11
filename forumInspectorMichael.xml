@@ -954,8 +954,8 @@ var ctrl = function () {
             for (var i in allForums) {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
-            		alert(forum.id);
 	        		forum.load(function() {
+	            		alert(forum.id);
 	        			ctrl.displayTopics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
 	        		});
             	}
