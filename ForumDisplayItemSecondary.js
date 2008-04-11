@@ -37,13 +37,14 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	this.select.className = "di-select-" + display.dir;;	
 	this.select.type = "checkbox";
 	this.select.checked = isSelected;
+	var that = this;
 	var onClickSelect = function (e) {
 		
 		if (!e) var e = window.event;
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();
 		
-		selectFunction( this.checked );
+		selectFunction( that.select.checked );
         
 	}
 	addEventListener(this.select, 'click',onClickSelect);

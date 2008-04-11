@@ -34,12 +34,12 @@ function parseLastPost(that, td) {
     var post = {
     	date: ds,
 		author: getText(author),
-		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
+		authorProfileLink: that.mkFullUrl(getHref(author)),
 		link: "",
 		id: 0
     };
     if (as[1]) {
-    	post.link = that.mkFullUrl(as[1].getAttribute('href'));
+    	post.link = that.mkFullUrl(getHref(as[1]));
     	var m = Post.prototype.linkMatch(post.link);
     	if (m) {
     		post.id = m[1];
@@ -59,7 +59,7 @@ Forum.prototype.parse = function (content) {
         var as = dom.getElementsByTagName('a');
         for (var i=0;i<as.length;i++) {
             var cl = as[i].className;
-            var hr = as[i].getAttribute('href');
+            var hr = getHref(as[i]);
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
                 this.title = as[i].innerHTML;
                 break;
@@ -107,7 +107,7 @@ Forum.prototype.parseForumTableRow = function (tr, idx) {
         return false;
     }
     // title/link is is first <a> tag, so look into it
-    var topic = ctrl.newTopic(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
+    var topic = ctrl.newTopic(this, this.mkFullUrl(getHref(as[0])), as[0].innerHTML);
     topic.index = idx;
     topic.parseForumTableRow(tr);
     this.addItem(topic);
