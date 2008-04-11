@@ -810,7 +810,7 @@ ForumItem.prototype.reload = function (callback) {
     var that = this;
   	alert(this.url);
     _IG_FetchContent(this.url, function (content) {
-        tha.onLoad(content);
+        that.onLoad(content);
         callback(that);
     });
 };
