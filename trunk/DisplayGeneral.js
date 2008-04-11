@@ -11,6 +11,10 @@ var display = function () {
         	el.innerHTML = "";
         },
         
+       	setDirection: function ( dir ) {
+        	display.dir = dir;
+        },
+        
         createCategoryItem: function (parentElem, category) {
         	var loadCategoryFunction = function(callback) 
         		{ category.load( function ( o ) { callback( o.subItems ); } ); };
@@ -66,6 +70,8 @@ var display = function () {
         
         createBoardInfo: function ( parentElem, board )
         {
+        	parentElem.dir = display.dir;
+        	parentElem.style.textAlign = (display.dir == "rtl")? "right" : "left";
         	parentElem.innerHTML = "" +
         		"<div class=\"di-divider\"></div>" + 
         		"<div class=\"boardInfo\">" +
