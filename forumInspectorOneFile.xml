@@ -9,14 +9,19 @@
     <UserPref name="selForums" datatype="hidden" default_value="" />
     <UserPref name="selTopics" datatype="hidden" default_value="" />
     <UserPref name="nTopics" display_name="# Topics to show" default_value="10" />
+    
+    <Locale lang="en" messages="http://foruminspector.googlecode.com/svn/trunk/en_ALL.xml"/>
+    <Locale lang="he" messages="http://foruminspector.googlecode.com/svn/trunk/he_ALL.xml"/>
+    <Locale lang="ru" messages="http://foruminspector.googlecode.com/svn/trunk/ru_ALL.xml"/>
+    
     <UserPref name="defTab" display_name="Default tab" datatype="enum" default_value="0">
-	    <EnumValue value="0" display_value="Forums"/>
-	    <EnumValue value="1" display_value="Starred"/>
-	    <EnumValue value="2" display_value="Latest Topics"/>
-	    <EnumValue value="3" display_value="Recently Updated"/>
-	    <EnumValue value="4" display_value="Most Views"/>
-	    <EnumValue value="5" display_value="Most Posts"/>
-	    <EnumValue value="6" display_value="Board Info"/>
+	    <EnumValue value="0" display_value="__MSG_forums__"/>
+	    <EnumValue value="1" display_value="__MSG_starred__"/>
+	    <EnumValue value="2" display_value="__MSG_latestT__"/>
+	    <EnumValue value="3" display_value="__MSG_recentlyUpdated__"/>
+	    <EnumValue value="4" display_value="__MSG_mostViews__"/>
+	    <EnumValue value="5" display_value="__MSG_mostPosts__"/>
+	    <EnumValue value="6" display_value="__MSG_boardInfo__"/>
     </UserPref>
    
     <Content type="html"><![CDATA[
@@ -1005,18 +1010,18 @@ var ctrl = function () {
         },
         
         createTabs: function () {
-            divForumList = tabs.addDynamicTab("Forums", ctrl.resize);
+            divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), ctrl.resize);
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
-            divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
+            divStarred = tabs.addDynamicTab(prefs.getMsg("starred"), ctrl.onStarred);
             
-            divNewTopics = tabs.addDynamicTab("Latest Topics", ctrl.onNewTopics);
-            divRecTopics = tabs.addDynamicTab("Recently Updated", ctrl.onLRUTopics);
-            divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
-            divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.onMostPosts);
+            divNewTopics = tabs.addDynamicTab(prefs.getMsg("latestT"), ctrl.onNewTopics);
+            divRecTopics = tabs.addDynamicTab(prefs.getMsg("recentlyUpdated"), ctrl.onLRUTopics);
+            divMostViews = tabs.addDynamicTab(prefs.getMsg("mostViews"), ctrl.onMostViews);
+            divMostPosts = tabs.addDynamicTab(prefs.getMsg("mostPosts"), ctrl.onMostPosts);
             //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             
-            divBoardInfo = tabs.addDynamicTab("Board Info", ctrl.resize);
+            divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
             
             tabs.alignTabs("left", 10);
         },
