@@ -287,7 +287,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
  	this.loadingSpan = document.createElement("span");
  	this.loadingSpan.className = "di-loading";
 	this.loadingSpan.innerHTML = "(Loading...)";
-	this.header.appendChild(this.loadingSpan);
+	//this.header.appendChild(this.loadingSpan);
 	
 	if (selectFunction != null) {
 		this.select = document.createElement("input");
