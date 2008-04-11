@@ -266,6 +266,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
 	var headerTextSpan = document.createElement("span");
 	
+	this.headerTextSpan.style.border = "12px solid black";
+	
 	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
 	
