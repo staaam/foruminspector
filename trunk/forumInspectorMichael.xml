@@ -75,14 +75,17 @@ function getEl(els, attr, val) {
 }
 
 Board.prototype.tryParseBoardTable = function (table) {
+    alert("00	");
     if (table.getAttribute('class') != 'forumline') {
     	return false;
     }
+        alert("01");
     
     if (this.tryParseForumsHeader(table)) {
     	this.parseForumsTable(table);
     	return true;
     }
+        alert("01");
     
     if (this.tryParseBoardInfo(table)) {
     	return true;
