@@ -1145,21 +1145,23 @@ function getObjectProperties (object) {
     return result;
 }
 
+
+var myBase = toDOM("<a href=\"\"></a>");
 function toDOM(HTMLstring) {
-//    var d = new Document(HTMLstring);
-	alert("b="+HTMLstring.match(/href=["'](.*?)["']/)[1]);
-    var d = new Document(HTMLstring);
-	alert("c="+d.body.innerHTML.match(/href=["'](.*?)["']/)[1]);
+    var d = document.createElement('div');
+//	alert("="+d.innerHTML.match(/href=["'](.*?)[	"']/)[1]);
+    d.innerHTML = HTMLstring;
+	alert("c="+d.innerHTML.match(/href=["'](.*?)["']/)[1]);
     return d;
 }
 
 function getBody(html) {
-	return html;
-//    return html.replace(/\n/g," ").replace(/.*<body.*?>/,"").replace(/<\/body>.*/, "");
+    return html.replace(/\n/g," ").replace(/.*<body.*?>/,"").replace(/<\/body>.*/, "");
 }
 
 function getHref(a) {
 	if (!a || !a.getAttribute) return a;
+	
 	alert("a="+a.getAttribute('href'));
 	alert("ht"+a.outerHTML);
 	var hr = a.outerHTML.match(/href=["'](.*?)["']/)[1];
