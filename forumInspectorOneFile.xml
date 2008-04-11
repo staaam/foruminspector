@@ -264,7 +264,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.header.appendChild(this.plusImg);
 	
 	var headerTextSpan = document.createElement("span");
-	
+	headerTextSpan.className = "di-header-span";
 	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
 	

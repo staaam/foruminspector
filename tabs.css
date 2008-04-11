@@ -91,6 +91,10 @@
 	width: 19px;
 }
 
+.di-header-span {
+	z-index: 5;
+}
+
 .di-secondary-header {
 	background-repeat:no-repeat;
 	font-family:Arial,sans-serif;
