@@ -253,9 +253,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    		this.header.style.textAlign = "right";
    	else
    		this.header.style.textAlign = "left";
-   	
-   	this.header.className = "di-header";
-	
+   		
 	this.plusImg = document.createElement("img");
 	this.plusImg.className = "di-sign-plus";
 	this.plusImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
@@ -352,6 +350,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    		}
    	}
    	addEventListener(this.header, 'click',onClickHeader);
+   	
+   	this.header.className = "di-header";
+   	
 }
 
 function addEventListener(o, t, f) {
