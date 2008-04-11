@@ -467,7 +467,6 @@ var display = function () {
         
        	setDirection: function ( dir ) {
         	display.dir = dir;
-        	_gel("TabsDiv").dir = dir;
         },
         
         createCategoryItem: function (parentElem, category) {
