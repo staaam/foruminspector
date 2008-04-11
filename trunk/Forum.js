@@ -26,8 +26,13 @@ function parseLastPost(that, td) {
     var lastPost = td.getElementsByTagName('span')[0];
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
+    var date = lastPost.innerHTML;
+    var ds = date.match(/^(.*?)<br/);
+    if (ds && ds.length > 1) {
+    	ds = ds[1];
+    }
     var post = {
-    	date: lastPost.innerHTML.match(/^(.*?)<br/)[1],
+    	date: ds,
 		author: getText(author),
 		authorProfileLink: that.mkFullUrl(author.getAttribute('href')),
 		link: "",
@@ -53,7 +58,7 @@ Forum.prototype.parse = function (content) {
         // try load title from the page
         var as = dom.getElementsByTagName('a');
         for (var i=0;i<as.length;i++) {
-            var cl = as[i].getAttribute('class');
+            var cl = as[i].className;
             var hr = as[i].getAttribute('href');
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
                 this.title = as[i].innerHTML;
@@ -68,7 +73,7 @@ Forum.prototype.parse = function (content) {
 };
 
 Forum.prototype.tryParseTopicsTable = function (table) {
-    if (table.getAttribute('class') != 'forumline' ||
+    if (table.className != 'forumline' ||
         !this.tryParseTopicsHeader(table)) {
         return false;
     }

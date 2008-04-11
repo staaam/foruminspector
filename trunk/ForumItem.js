@@ -7,7 +7,7 @@ ForumItem.prototype.init = function (parent, url, title) {
     this.url = url;
     this.boardUrl = url.replace(/\/[^\/]*$/, "") + "/";
     this.title = title;
-    if (title == null || title == undefined) {
+    if (title == null) {
         this.title = url;
     }
     this.id = this.linkMatch(url)[1];

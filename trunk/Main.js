@@ -29,7 +29,7 @@ var ctrl = function () {
             board.load(function (board) {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
-
+//    alert(board.boardInfo.general);
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
@@ -152,73 +152,12 @@ var ctrl = function () {
             return all[id];
         },
         
-//        display: function (forumItem) {
-//            if (forumItem instanceof Board) {
-//                ctrl.displayBoard(forumItem);
-//            } else
-//            if (forumItem instanceof Forum) {
-//                ctrl.displayForum(forumItem);
-//            }
-//        },
-        
-        displayBoard: function (board) {
-            //var frmLst_id = tabs.addDynamicTab(board.label.forum, ctrl.resize);
-            var s ="<form action=\"?\">";
-            for (var i=0;i<board.subItems.length;i++) {
-                var cat = board.subItems[i];
-                s += "<a href=\"" + cat.url + "\">"+cat.title+"</a><ul>";
-                for (var j=0;j<cat.subItems.length;j++) {
-                    var forum=cat.subItems[j];
-                    var name = forum.id;
-                    var checked = ctrl.isSelectedForum(forum) ? " checked=\"yes\"" : "";
-                    s += "<getValuesli>"+"<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleForum(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+forum.toHTML()+"</li>";
-                }
-                s += "</ul>";
-            }
-            s += "</form>";
-            _gel(divForumList).dir = board.dir;
-            _gel(divForumList).innerHTML = s;
-        },
-        
-        displayForum: function (forum) {
-            if (!divMostPosts) {
-                divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.resize);
-            }
-            if (!divMostViews) {            
-                divMostViews = tabs.addDynamicTab("Most Views", ctrl.resize);
-            }
-            
-            var frmLst_id = tabs.addDynamicTab(forum.title, ctrl.resize);
-            ctrl.updateTopics(frmLst_id, forum.subItems, forum.dir, sorters.neg(sorters.byIndex));
-            ctrl.updateTopics(divMostPosts, allTopics, forum.dir, sorters.byPosts);
-            ctrl.updateTopics(divMostViews, allTopics, forum.dir, sorters.byViews);
-        },
-        
-        updateTopics: function (divId, topics, dir, sortFunc) {
-            var s ="<form action=\"?\">";
-            //var topics = forum.subItems;
-            var arTopics = [];
-            for (var t=0;t<topics.length;t++) {
-                arTopics.push(topics[t]);
-            }
-            var sortedTopics = arTopics.sort(sortFunc);
-            for (var i=0;i<sortedTopics.length;i++) {
-                    var topic = sortedTopics[i];
-                    var name = topic.id;
-                    var checked = ctrl.isSelectedTopic(topic) ? " checked=\"yes\"" : "";
-                    s += "<input type=\"checkbox\" name=\"f"+name+"\" onClick=\"ctrl.toggleTopic(this.form, '"+name+"');\"" + checked + "\">"+"&nbsp;"+ topic.toHTML() +"<br>";
-            }
-            s += "</form>";
-            _gel(divId).dir = dir;
-            _gel(divId).innerHTML = s;
-        },
-        
         isSelectedForum: function (forum) {
-        	return selForums[forum.id] != undefined;
+        	return selForums[forum.id] != null;
         },
         
         isSelectedTopic: function (topic) {
-        	return selTopics[topic.id] != undefined;
+        	return selTopics[topic.id] != null;
         },
         
         toggleForum: function (forum, checked) {
@@ -227,7 +166,7 @@ var ctrl = function () {
                 selForums[name] = 1;
                 allForums[name].load(function(){});
             } else {
-                selForums[name] = undefined;
+                selForums[name] = null;
             }
             prefs.set("selForums", joinKeys(selForums));
         },
@@ -237,7 +176,7 @@ var ctrl = function () {
             if (checked) {
                 selTopics[name] = topic.parent.id;
             } else {
-                selTopics[name] = undefined;
+                selTopics[name] = null;
             }
             prefs.set("selTopics", joinKeys(selTopics));
         },
@@ -261,10 +200,13 @@ var labels = {
 
 function getText(node) {
 	if (!node) {
-		return undefined;
+		return null;
 	}
 	var text = node.innerText || node.text || node.textContent;
-	return text.trim();
+	if (!text) {
+		text = "blya";
+	}
+	return text.replace(/^\s*/, "").replace(/\s*$/, "");
 //	return node.text || node.textContent || (function(node){
 //        var _result = "";
 //        if (node == null) {
@@ -301,7 +243,7 @@ function getText(node) {
 }
 
 function getHTML(node) {
-	return node.innerHTML.trim();
+	return node.innerHTML.replace(/^\s*/, "").replace(/\s*$/, "");
 }
 
 function splitKeys(str) {
@@ -337,17 +279,6 @@ var sorters = {
             return -1 * f(a,b);
         };
     }
-}
-
-
-String.prototype.trim = function () {
-	return this.replace(/^\s*/, "").replace(/\s*$/, "");
-};
-
-var greps = {
-	hotTopic: function (topic) { return topic.isHot; },
-	and: function (f,g) { return function(t) { return f(t) && g(t); }; },
-	not: function (f) { return function(t) { return !f(t); }; }
 }
 
 function log(object) {

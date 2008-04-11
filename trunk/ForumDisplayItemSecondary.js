@@ -24,7 +24,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	gotoLink.addEventListener('click',onClickLink,false);
+	addEventListener(gotoLink, 'click',onClickLink);
 	headerTextSpanH3.appendChild(gotoLink);
 	headerTextSpanH3.className = "di-maintitle";
 	this.header.appendChild(headerTextSpanH3);
@@ -46,7 +46,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 		selectFunction( this.checked );
         
 	}
-	this.select.addEventListener('click',onClickSelect,false);
+	addEventListener(this.select, 'click',onClickSelect);
 	this.header.appendChild(this.select);
 	
 	if (subHeader != null)

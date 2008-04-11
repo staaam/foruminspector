@@ -35,7 +35,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	gotoLink.addEventListener('click',onClickLink,false);	
+	addEventListener(gotoLink, 'click',onClickLink);	
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
@@ -62,7 +62,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 			selectFunction( this.checked );
 	        
 		}
-		this.select.addEventListener('click',onClickSelect,false);
+		addEventListener(this.select,'click',onClickSelect);
 		this.header.appendChild(this.select);
 	}
 	
@@ -109,8 +109,17 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    			that.isClosed = true;
    		}
    	}
-   	this.header.addEventListener('click',onClickHeader,false);
+   	addEventListener(this.header, 'click',onClickHeader);
 }
+
+function addEventListener(o, t, f) {
+	if (o.addEventListener) {
+		o.addEventListener(t,f,false);
+	} else {
+		o.attachEvent("on"+t,f);
+	}
+}
+
 
 CategoryDisplayItem.prototype = new DisplayItem();
 
