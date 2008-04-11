@@ -807,7 +807,6 @@ ForumItem.prototype.isSelected = function () {
 ForumItem.prototype.reload = function (callback) {
     this.isLoaded = true;
     var that = this;
-  	alert(this.url);
     _IG_FetchContent(this.url, function (content) {
         that.onLoad(content);
         callback(that);
@@ -1049,9 +1048,9 @@ var labels = {
 
 function getHref(a) {
 	if (!a || !a.getAttribute) return a;
-	alert(a);
+	alert("a="+a);
 	var hr = a.outerHTML.match(/href=["'](.*?)["']/)[1];
-	alert(hr);
+	alert("hr="+hr);
 	return hr;
 }
 
