@@ -248,7 +248,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	
-   	//this.header.dir = display.dir;	
+   	this.header.style.border = "12px solid #C5D7EF;";
+   	this.header.dir = display.dir;	
    	if(display.dir == "rtl")
    		this.header.style.textAlign = "right";
    	else
@@ -467,7 +468,6 @@ var display = function () {
         
        	setDirection: function ( dir ) {
         	display.dir = dir;
-        	document.body.dir = dir;
         },
         
         createCategoryItem: function (parentElem, category) {
