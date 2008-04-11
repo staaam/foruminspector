@@ -242,6 +242,8 @@ Category.prototype.viewer = "index.php";
 function CategoryDisplayItem(parent, headerText, headerUrl,
 	subHeader, expandingFunction, isSelected, selectFunction, isForums, direction ) {
 
+	alert(headerText);
+
 	this.initDisplayItem(parent);
 	
 	this.isForums = isForums;
