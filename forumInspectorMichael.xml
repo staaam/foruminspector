@@ -10,12 +10,12 @@
     <UserPref name="selTopics" datatype="hidden" default_value="" />
     <UserPref name="nTopics" display_name="# Topics to show" default_value="10" />
     <UserPref name="defTab" display_name="Default tab" datatype="enum">
-	    <EnumValue value="1" display_value="Forums"/>
-	    <EnumValue value="2" display_value="Starred"/>
-	    <EnumValue value="3" display_value="New Topics"/>
-	    <EnumValue value="4" display_value="Most Views"/>
-	    <EnumValue value="5" display_value="Most Posts"/>
-	    <EnumValue value="6" display_value="Board Info"/>
+	    <EnumValue value="0" display_value="Forums"/>
+	    <EnumValue value="1" display_value="Starred"/>
+	    <EnumValue value="2" display_value="New Topics"/>
+	    <EnumValue value="3" display_value="Most Views"/>
+	    <EnumValue value="4" display_value="Most Posts"/>
+	    <EnumValue value="5" display_value="Board Info"/>
     </UserPref>
    
     <Content type="html"><![CDATA[
@@ -848,6 +848,7 @@ var ctrl = function () {
             divBoardInfo = tabs.addDynamicTab("Board Info", ctrl.resize);
             
             tabs.alignTabs("left", 10);
+            tabs.setSelectedTab(prefs.getInt("defTab"));
         },
         
         onStarred: function () {
