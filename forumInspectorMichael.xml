@@ -1046,15 +1046,6 @@ var labels = {
     views: "Views"
 };
 
-function getHref(a) {
-	if (!a || !a.getAttribute) return a;
-	alert("a="+a.getAttribute('href'));
-	alert("ht"+a.outerHTML);
-	var hr = a.outerHTML.match(/href=["'](.*?)["']/)[1];
-	alert("hr="+hr);
-	return hr;
-}
-
 function getText(node) {
 	if (!node) {
 		return null;
@@ -1161,7 +1152,17 @@ function toDOM(HTMLstring) {
 }
 
 function getBody(html) {
+	alert("b="+html.match(/href=["'](.*?)["']/)[1]);
     return html.replace(/\n/g," ").replace(/.*<body.*?>/,"").replace(/<\/body>.*/, "");
+}
+
+function getHref(a) {
+	if (!a || !a.getAttribute) return a;
+	alert("a="+a.getAttribute('href'));
+	alert("ht"+a.outerHTML);
+	var hr = a.outerHTML.match(/href=["'](.*?)["']/)[1];
+	alert("hr="+hr);
+	return hr;
 }
 
 _IG_RegisterOnloadHandler(ctrl.init);
