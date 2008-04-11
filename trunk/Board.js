@@ -61,7 +61,8 @@ Board.prototype.tryParseBoardInfo = function (table) {
     	return false;
     }
     var a = table.getElementsByTagName('a')[0];
-    if (!a || !a.getAttribute('href') || !a.getAttribute('href').match(/viewonline.php/)) {
+    var href = getHref(a);
+    if (!href || !href.match(/viewonline.php/)) {
     	return false;
     }
     var spans = table.getElementsByTagName('span');
@@ -82,17 +83,17 @@ Board.prototype.parseForumsTable = function (table) {
     for (var i=1; i<trs.length; i++) {
         var tr = trs[i];
         var as = tr.getElementsByTagName('a');
-        var href = as[0].getAttribute('href');
+        var href = getHref(as[0]);
         if (Category.prototype.linkMatch(href)) {
             // category title row
-            cat = new Category(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
+            cat = new Category(this, this.mkFullUrl(href), as[0].innerHTML);
             cat.index = i;
             //cat.parseBoardTableRow(tr);
             this.addItem(cat);
         }
         else {
             // title/link is is first <a> tag, so look into it
-            var forum = ctrl.newForum(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
+            var forum = ctrl.newForum(this, this.mkFullUrl(href), as[0].innerHTML);
             forum.index = i;
             forum.parseBoardTableRow(tr);
             cat.addItem(forum);

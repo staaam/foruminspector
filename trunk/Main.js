@@ -297,14 +297,29 @@ function getObjectProperties (object) {
     return result;
 }
 
+
 function toDOM(HTMLstring) {
     var d = document.createElement('div');
+//	alert("="+d.innerHTML.match(/href=["'](.*?)[	"']/)[1]);
     d.innerHTML = HTMLstring;
+//	alert("c="+d.innerHTML.match(/href=["'](.*?)["']/)[1]);
     return d;
 }
 
 function getBody(html) {
     return html.replace(/\n/g," ").replace(/.*<body.*?>/,"").replace(/<\/body>.*/, "");
+}
+
+var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>");
+myBase= myBase.getElementsByTagName('a')[0];
+myBase=myBase.getAttribute('href');
+myBase=myBase.replace("bbbbbaaaaassssseeee.gif","");
+
+function getHref(a) {
+	if (!a || !a.getAttribute) return null;
+	var hr = a.getAttribute('href');
+	if (!hr) return hr;
+	return hr.replace(myBase,"");
 }
 
 _IG_RegisterOnloadHandler(ctrl.init);

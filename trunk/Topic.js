@@ -50,7 +50,7 @@ Topic.prototype.parse = function (content) {
         var as = dom.getElementsByTagName('a');
         for (var i=0;i<as.length;i++) {
             var cl = as[i].className;
-            var hr = as[i].getAttribute('href');
+            var hr = getHref(as[i]);
             if (cl && cl == "maintitle" && hr && hr.indexOf(this.viewer) == 0) {
                 this.title = as[i].innerHTML;
                 break;
@@ -118,12 +118,12 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     if (!a) {
     	return false;
     }
-    var post = ctrl.newPost(this, this.mkFullUrl(a.getAttribute('href')));
+    var post = ctrl.newPost(this, this.mkFullUrl(getHref(a)));
     post.text = text;
     post.parseTopicTableRow(tr);
     this.addItem(post);    
     // title/link is is first <a> tag, so look into it
-//    var topic = ctrl.newTopic(this, this.mkFullUrl(as[0].getAttribute('href')), as[0].innerHTML);
+//    var topic = ctrl.newTopic(this, this.mkFullUrl(getHref(as[0])), as[0].innerHTML);
 //    topic.index = idx;
 //    topic.parseForumTableRow(tr);
 //    this.addItem(topic);
