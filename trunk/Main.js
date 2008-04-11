@@ -8,12 +8,12 @@ var ctrl = function () {
     var allTopics = {};
     var allPosts = {};
     
-    var divLog;
     var divMostViews;
     var divMostPosts;
     var divForumList;
     var divNewTopics;
     var divBoardInfo;
+    var divRecTopics;
     
     var divStarred;
     var displayGeneral = new DisplayGeneral();
@@ -22,12 +22,14 @@ var ctrl = function () {
         init: function () {
             ctrl.createTabs();
             
-            display.init(divStarred);
+            //display.init(divStarred);
             
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
             	display.setDirection(board.dir);
+            	tabs.setSelectedTab(prefs.getInt("defTab"));
+
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
@@ -43,12 +45,12 @@ var ctrl = function () {
         
         createTabs: function () {
             divForumList = tabs.addDynamicTab("Forums", ctrl.resize);
-
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
             divStarred = tabs.addDynamicTab("Starred", ctrl.onStarred);
             
-            divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
+            divNewTopics = tabs.addDynamicTab("Latest Topics", ctrl.onNewTopics);
+            divRecTopics = tabs.addDynamicTab("Recently Updated", ctrl.onLRUTopics);
             divMostViews = tabs.addDynamicTab("Most Views", ctrl.onMostViews);
             divMostPosts = tabs.addDynamicTab("Most Posts", ctrl.onMostPosts);
             //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
@@ -86,6 +88,10 @@ var ctrl = function () {
         
         onNewTopics: function () {
         	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId);
+        },
+        
+        onLRUTopics: function () {
+        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId);
         },
         
         onMostViews: function () {
@@ -325,6 +331,7 @@ var sorters = {
     byViews: function (a,b) { return b.views - a.views; },
     byIndex: function (a,b) { return b.index - a.index; },
     byId: function (a,b) { return b.id - a.id; },
+    byLastPostId: function (a,b) { return b.lastPost.id - a.lastPost.id; },
     neg: function (f) {
         return function(a,b) {
             return -1 * f(a,b);

@@ -114,9 +114,11 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     if (!tb) {
     	return false;
     }
-    var as = tb.getElementsByTagName('a');
-    
-    var post = ctrl.newPost(this, this.mkFullUrl(as[0].getAttribute('href')));
+    var a = tb.getElementsByTagName('a')[0];
+    if (!a) {
+    	return false;
+    }
+    var post = ctrl.newPost(this, this.mkFullUrl(a.getAttribute('href')));
     post.text = text;
     post.parseTopicTableRow(tr);
     this.addItem(post);    
