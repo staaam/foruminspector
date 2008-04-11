@@ -43,9 +43,14 @@
 	border-right: 1px solid #C5D7EF;
 }
 
-.di-select {
+.di-select-ltr {
 	position:absolute;
 	left:93%;
+}
+
+.di-select-rtl {
+	position:absolute;
+	right:93%;
 }
 
 .di-header {
@@ -130,7 +135,6 @@ body {
 	color:#7E7E7E;
 	font-size:x-small;
 	position:relative;
-	left: 10px;
 	width: 295px;
 }
 
