@@ -1146,12 +1146,13 @@ function getObjectProperties (object) {
 }
 
 
-var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>");
+var myBase = toDOM("<a href=\"bbbbbaaaaassssseeee.gif\"></a>").getElementByTagName('a').replace("bbbbbaaaaassssseeee.gif","");
+alert(myBase);
 function toDOM(HTMLstring) {
     var d = document.createElement('div');
 //	alert("="+d.innerHTML.match(/href=["'](.*?)[	"']/)[1]);
     d.innerHTML = HTMLstring;
-	alert("c="+d.innerHTML.match(/href=["'](.*?)["']/)[1]);
+//	alert("c="+d.innerHTML.match(/href=["'](.*?)["']/)[1]);
     return d;
 }
 
