@@ -389,7 +389,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
    	
    	this.header.className = "di-header";
    	
-	var headerTextSpanH3 = document.createElement("h3");
+	var headerTextSpanH3 = document.createElement("span");
    		
 	var gotoLink = document.createElement("a");
 	gotoLink.target = "_blank";
