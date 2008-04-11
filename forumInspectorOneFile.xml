@@ -467,6 +467,7 @@ var display = function () {
         
        	setDirection: function ( dir ) {
         	display.dir = dir;
+        	document.body.dir = dir;
         },
         
         createCategoryItem: function (parentElem, category) {
