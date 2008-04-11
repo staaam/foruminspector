@@ -278,9 +278,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	}
 	addEventListener(gotoLink, 'click',onClickLink);
 	
-	 var gotoImg = document.createElement("img");
+	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow-" + display.dir;
-	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
+	gotoImg.src = "";//http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
 		
 	this.header.appendChild(gotoLink);
@@ -288,7 +288,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
  	this.loadingSpan = document.createElement("span");
  	this.loadingSpan.className = "di-loading";
 	this.loadingSpan.innerHTML = "(Loading...)";
-	//this.header.appendChild(this.loadingSpan);
+	this.header.appendChild(this.loadingSpan);
 	
 	if (selectFunction != null) {
 		this.select = document.createElement("input");
