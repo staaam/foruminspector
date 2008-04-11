@@ -328,8 +328,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
   	
    	this.isClosed = true;
 
-   	this.loadingSpan.style.visibility = "false";
-   	this.expandedPart.style.visibility = "false";
+   	this.loadingSpan.style.visibility = "hidden";
+   	this.expandedPart.style.visibility = "hidden";
 
    	//this.loadingSpan.style.display = "none";
    	//this.expandedPart.style.display = "none";
