@@ -661,7 +661,7 @@ function parseLastPost(that, td) {
     alert(lastPost);
     var date = lastPost.innerHTML;
     alert(date);
-    var ds = date.match(/^(.*?)<br/);
+    var ds = date.match(/^(.*?)<br/i);
     alert(ds);
     if (ds && ds.length > 1) {
     	ds = ds[1];
