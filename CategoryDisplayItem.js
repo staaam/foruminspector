@@ -24,6 +24,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.header.appendChild(this.plusImg);
 	
 	var headerTextSpan = document.createElement("span");
+	headerTextSpan.className = "di-header-span";
 	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
 	
@@ -35,13 +36,14 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	addEventListener(gotoLink, 'click',onClickLink);	
-	this.header.appendChild(gotoLink);
+	addEventListener(gotoLink, 'click',onClickLink);
 	
 	var gotoImg = document.createElement("img");
 	gotoImg.className = "noborder gotoArrow-" + display.dir;
 	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
+		
+	this.header.appendChild(gotoLink);
 	
  	this.loadingSpan = document.createElement("span");
  	this.loadingSpan.className = "di-loading";
@@ -86,15 +88,19 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    	display.reduceSpanText( headerTextSpan, 260 );
   	
    	this.isClosed = true;
-   	this.loadingSpan.style.display = "none";
+
+   	this.loadingSpan.style.visibility = "hidden";
    	this.expandedPart.style.display = "none";
+
+   	//this.loadingSpan.style.display = "none";
+   	//this.expandedPart.style.display = "none";
    	
    	var that = this;
    	
    	var onClickHeader = function() {
    		if (that.isClosed)
    		{
-   			that.loadingSpan.style.display = "inline";
+   			that.loadingSpan.style.visibility = "visible";
    			that.expandedPart.style.display = "block";
    			that.plusImg.className = "di-sign-minus";
    			that.header.className = "di-header di-expanded";
@@ -103,7 +109,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    		}
    		else
    		{
-   			that.loadingSpan.style.display = "none";
+   			that.loadingSpan.style.visibility = "hidden";
    			that.expandedPart.style.display = "none";
    			that.plusImg.className = "di-sign-plus";
    			that.header.className = "di-header";
@@ -139,7 +145,7 @@ CategoryDisplayItem.prototype.loadItemsCallback = function( forumsArr )
 	{
 		display.secondaryPosts( this.expandedPart, forumsArr );
 	}
-	this.loadingSpan.style.display = "none";
+	this.loadingSpan.style.visibility = "hidden";
 	_IG_AdjustIFrameHeight();
 }
 
