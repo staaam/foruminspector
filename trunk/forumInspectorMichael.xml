@@ -199,7 +199,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		e.cancelBubble = true;
 		if (e.stopPropagation) e.stopPropagation();        
 	}
-	gotoLink.addEventListener('click',onClickLink,false);	
+	addEventListener(gotoLink, 'click',onClickLink,false);	
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
@@ -226,7 +226,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 			selectFunction( this.checked );
 	        
 		}
-		this.select.addEventListener('click',onClickSelect,false);
+		addEventListener(this.select,'click',onClickSelect,false);
 		this.header.appendChild(this.select);
 	}
 	
@@ -273,8 +273,17 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    			that.isClosed = true;
    		}
    	}
-   	this.header.addEventListener('click',onClickHeader,false);
+   	addEventListener(this.header, 'click',onClickHeader,false);
 }
+
+function addEventListener(o, t, f, b) {
+	if (o.addEventListener) {
+		o.addEventListener(t,f,b);
+	} else {
+		o.attachEvent(t,f,b);
+	}
+}
+
 
 CategoryDisplayItem.prototype = new DisplayItem();
 
