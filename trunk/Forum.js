@@ -27,7 +27,7 @@ function parseLastPost(that, td) {
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
     var date = lastPost.innerHTML;
-    var ds = date.match(/^(.*?)<br/);
+    var ds = date.match(/^(.*?)<br/i);
     if (ds && ds.length > 1) {
     	ds = ds[1];
     }
