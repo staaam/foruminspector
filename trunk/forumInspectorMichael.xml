@@ -894,7 +894,7 @@ var ctrl = function () {
         },
         
         onLRUTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.neg(sorters.byLastPostId));
+        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId);
         },
         
         onMostViews: function () {
