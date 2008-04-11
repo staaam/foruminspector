@@ -1163,8 +1163,16 @@ myBase=myBase.getAttribute('href');
 myBase=myBase.replace("bbbbbaaaaassssseeee.gif","");
 
 function getHref(a) {
+	return getAttr(a, 'href');
+}
+function getSrc(i) {
+	var a = getAttr(i, 'src');
+	alert(a);
+	return a;
+}
+function getAttr(a, attr) {
 	if (!a || !a.getAttribute) return null;
-	var hr = a.getAttribute('href');
+	var hr = a.getAttribute(attr);
 	if (!hr) return hr;
 	return hr.replace(myBase,"");
 }
@@ -1272,7 +1280,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     	if (spans[i].className == 'postbody') {
     		var imgs = spans[i].getElementsByTagName('img');
     		for (var j=0;j<imgs.length;j++) {
-    			imgs[j].src = this.mkFullUrl(imgs[j].getAttribute("src"));
+    			imgs[j].src = this.mkFullUrl(getSrc(imgs[j]));
     			imgs[j].className="outerImage";
     		}
     		text = text + spans[i].innerHTML;
