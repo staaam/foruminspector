@@ -1050,7 +1050,8 @@ var labels = {
 
 function getHref(a) {
 	if (!a || !a.getAttribute) return a;
-	return a.getAttribute('href', 2);
+	var hr = a.outerHTML.match(/href=["'](.*?)["']/)[1];
+	return hr;
 }
 
 function getText(node) {
