@@ -6,7 +6,7 @@
         <Require feature='tabs'/>
 
     	<Locale lang="en" messages="http://foruminspector.googlecode.com/svn/trunk/en_ALL.xml"/>
-    	<Locale lang="he" messages="http://foruminspector.googlecode.com/svn/trunk/he_ALL.xml"/>
+    	<Locale lang="iw" messages="http://foruminspector.googlecode.com/svn/trunk/he_ALL.xml"/>
 	    <Locale lang="ru" messages="http://foruminspector.googlecode.com/svn/trunk/ru_ALL.xml"/>
 
     </ModulePrefs>
