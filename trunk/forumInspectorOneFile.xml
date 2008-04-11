@@ -248,12 +248,11 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	
-   	this.header.style.border = "12px solid #C5D7EF";
    	this.header.dir = display.dir;	
-   	if(display.dir == "rtl")
-   		this.header.style.textAlign = "right";
-   	else
-   		this.header.style.textAlign = "left";
+   	//if(display.dir == "rtl")
+   	//	this.header.style.textAlign = "right";
+   	//else
+   	//	this.header.style.textAlign = "left";
    	
    	this.header.className = "di-header";
 	
@@ -265,8 +264,6 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.header.appendChild(this.plusImg);
 	
 	var headerTextSpan = document.createElement("span");
-	
-	headerTextSpan.style.border = "12px solid black";
 	
 	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
