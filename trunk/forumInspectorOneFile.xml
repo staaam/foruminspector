@@ -232,7 +232,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
    	this.header = document.createElement("div");
    	this.header.dir = display.dir;
    	
-   	if(dir == "rtl")
+   	if(display.dir == "rtl")
    		this.header.style.textAlign = "right";
    	else
    		this.header.style.textAlign = "left";
