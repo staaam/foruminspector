@@ -42,6 +42,7 @@ var display = function () {
         	
         	var postItem = document.createElement("div");
         	postItem.dir = display.dir;	
+        	postItem.style.textAlign = (display.dir == "rtl")? "right" : "left";
         	postItem.className = "di-secondary-header";
         	
         	var span = document.createElement("span");
