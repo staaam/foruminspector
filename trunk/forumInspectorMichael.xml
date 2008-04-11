@@ -788,7 +788,7 @@ ForumItem.prototype.linkMatch = function (url) {
 
 ForumItem.prototype.mkFullUrl = function (relUrl) {
 	alert(relUrl);
-	var url = (relUrl.substr(0, 4) == "http") ? relUrl : this.boardUrl + relUrl;
+	var url = (relUrl.substr(0, 4) != "http") ? this.boardUrl + relUrl : relUrl;
 	alert(relUrl);
 	return url;
 };
