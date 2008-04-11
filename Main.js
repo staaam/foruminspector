@@ -316,8 +316,14 @@ myBase=myBase.getAttribute('href');
 myBase=myBase.replace("bbbbbaaaaassssseeee.gif","");
 
 function getHref(a) {
+	return getAttr(a, 'href');
+}
+function getSrc(i) {
+	return getAttr(i, 'src');
+}
+function getAttr(a, attr) {
 	if (!a || !a.getAttribute) return null;
-	var hr = a.getAttribute('href');
+	var hr = a.getAttribute(attr);
 	if (!hr) return hr;
 	return hr.replace(myBase,"");
 }
