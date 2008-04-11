@@ -231,6 +231,12 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	this.header.dir = display.dir;
+   	
+   	if(dir == "rtl")
+   		this.header.style.textAlign = "right";
+   	else
+   		this.header.style.textAlign = "left";
+   	
    	this.header.className = "di-header";
 	
 	this.plusImg = document.createElement("img");
