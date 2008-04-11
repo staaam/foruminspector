@@ -6,7 +6,7 @@
         <Require feature='tabs'/>
 
     	<Locale lang="en" messages="http://foruminspector.googlecode.com/svn/trunk/en_ALL.xml"/>
-    	<Locale lang="he" messages="http://foruminspector.googlecode.com/svn/trunk/he_ALL.xml"/>
+    	<Locale lang="iw" messages="http://foruminspector.googlecode.com/svn/trunk/he_ALL.xml"/>
 	    <Locale lang="ru" messages="http://foruminspector.googlecode.com/svn/trunk/ru_ALL.xml"/>
 
     </ModulePrefs>
@@ -331,7 +331,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
    	
    	this.header.className = "di-header";
    	
-	var headerTextSpanH3 = document.createElement("h3");
+	var headerTextSpanH3 = document.createElement("span");
    		
 	var gotoLink = document.createElement("a");
 	gotoLink.target = "_blank";
@@ -1147,6 +1147,7 @@ function getObjectProperties (object) {
 
 function toDOM(HTMLstring) {
     var d = document.createElement('div');
+	alert("b="+HTMLstring.match(/href=["'](.*?)["']/)[1]);
     d.innerHTML = HTMLstring;
 	alert("c="+d.innerHTML.match(/href=["'](.*?)["']/)[1]);
     return d;
