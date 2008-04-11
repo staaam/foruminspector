@@ -80,13 +80,13 @@
 }
 
 .gotoArrow-ltr {
-	vertical-align:bottom;
+	background-image:url(order_arrow_small.gif);
 	height: 12px;
 	width: 19px;
 }
 
 .gotoArrow-rtl {
-	vertical-align:bottom;
+	background-image:url(order_arrow_small.gif);
 	height: 12px;
 	width: 19px;
 }
