@@ -1148,11 +1148,11 @@ function getObjectProperties (object) {
 function toDOM(HTMLstring) {
     var d = document.createElement('div');
     d.innerHTML = HTMLstring;
+	alert("b="+d.innertHTML.match(/href=["'](.*?)["']/)[1]);
     return d;
 }
 
 function getBody(html) {
-	alert("b="+html.match(/href=["'](.*?)["']/)[1]);
     return html.replace(/\n/g," ").replace(/.*<body.*?>/,"").replace(/<\/body>.*/, "");
 }
 
