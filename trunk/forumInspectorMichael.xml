@@ -808,8 +808,9 @@ ForumItem.prototype.isSelected = function () {
 ForumItem.prototype.reload = function (callback) {
     this.isLoaded = true;
     var that = this;
+  	alert(this.url);
     _IG_FetchContent(this.url, function (content) {
-        that.onLoad(content);
+        tha.onLoad(content);
         callback(that);
     });
 };
@@ -970,7 +971,6 @@ var ctrl = function () {
         getAllTopics: function () {
 			var r = [];
 			for (var i in allTopics) {
-				alert(i);
 				if (allTopics[i].parent.isSelected()) {
 					r.push(allTopics[i]);
 				}
@@ -1013,7 +1013,6 @@ var ctrl = function () {
         toggleForum: function (forum, checked) {
         	var name = forum.id;
             if (checked) {
-    	    	alert(allForums[name]);
                 selForums[name] = 1;
                 allForums[name].load(function(){});
             } else {
