@@ -262,7 +262,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.header.appendChild(gotoLink);
 	
 	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder gotoArrow";
+	gotoImg.className = "noborder gotoArrow-" + display.dir;
 	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
 	
