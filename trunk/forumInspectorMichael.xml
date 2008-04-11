@@ -1128,28 +1128,9 @@ var sorters = {
     }
 }
 
-function log(object) {
-    if (typeof object == "string") {
-        _gel('log').innerHTML += str + "<br>";
-    } else {
-        _gel('log').innerHTML += "<pre>" + getObjectProperties(object) + "</pre>";
-    }
-}
-
-function getObjectProperties (object) {
-    var result = '';
-    for (var property in object) {
-        result += property + ': ' + object[property] + '\r\n';
-    }
-    return result;
-}
-
-
 function toDOM(HTMLstring) {
     var d = document.createElement('div');
-//	alert("="+d.innerHTML.match(/href=["'](.*?)[	"']/)[1]);
     d.innerHTML = HTMLstring;
-//	alert("c="+d.innerHTML.match(/href=["'](.*?)["']/)[1]);
     return d;
 }
 
