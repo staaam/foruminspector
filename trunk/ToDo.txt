@@ -15,3 +15,11 @@
 11) explicitly say what version of phpBB we are showing in the document/help
 12) help button!!!
 13) other buttons as said to be in the document (maybe not, think about interface)
+14) enable vBulletin
+15) add second css file
+16) make the summary gadget (i.e. make some more tabs and just make another content 
+feeder using remote messages between gadgets)
+17) Think of database
+18) add option for choosing which tabs to show
+19) when forum is unselected automatically unselect it's choosen topics??! maybe maybe not?!
+because when selecting it back all previous topics are shown?! maybe maybe not
