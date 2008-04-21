@@ -1,0 +1,11 @@
+1) Add google analytic to our gadget
+2) Resizing does not work properly (starts small)
+3) 7 +-2 items in the interface (make things disabled, change interface)
+4) Loading label takes place and make the selection on nest row
+   - make it absolute
+5) the selection in small width screens is out of context
+6) links on posts make the widget larger (width) and horizontal scroll is shown
+   - Should make the links shorter ?! make the function which cut text global
+7) The meaning of selection on forum tab is different then on other tabs, should
+	make it better
+8) notifying on new/updated posts by making tab bold?! think.
