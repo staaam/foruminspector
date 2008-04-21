@@ -9,3 +9,9 @@
 7) The meaning of selection on forum tab is different then on other tabs, should
 	make it better
 8) notifying on new/updated posts by making tab bold?! think.
+9) publish our gadget on google
+10) headling of website sometimes is null should not write it in this case (or write the 
+	link to the board
+11) explicitly say what version of phpBB we are showing in the document/help
+12) help button!!!
+13) other buttons as said to be in the document (maybe not, think about interface)
