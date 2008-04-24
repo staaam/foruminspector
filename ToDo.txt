@@ -23,3 +23,4 @@ feeder using remote messages between gadgets)
 18) add option for choosing which tabs to show
 19) when forum is unselected automatically unselect it's choosen topics??! maybe maybe not?!
 because when selecting it back all previous topics are shown?! maybe maybe not
+20) add specifically what versions of what we are supporting, do more testing on other forums
