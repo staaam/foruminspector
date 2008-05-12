@@ -1,26 +1,47 @@
-1) Add google analytic to our gadget
-2) Resizing does not work properly (starts small)
-3) 7 +-2 items in the interface (make things disabled, change interface)
-4) Loading label takes place and make the selection on nest row
+1) (Low) publish our gadget on google
+		Add google analytic to our gadget
+2) (Kolman) Resizing does not work properly (starts small)
+3) (Kolman) Make tabs highlight somehow color/bold (Forums and Starred)
+   (Michael) On new topics not seen, should highlight relevant tabs.
+   				notifying on new/updated posts by making tab bold?! think.
+4) (Kolman) Loading label takes place and make the selection on nest row
    - make it absolute
-5) the selection in small width screens is out of context
-6) links on posts make the widget larger (width) and horizontal scroll is shown
+5) (Low) the selection in small width screens is out of context
+6) (Low?) links on posts make the widget larger (width) and horizontal scroll is shown
    - Should make the links shorter ?! make the function which cut text global
 7) The meaning of selection on forum tab is different then on other tabs, should
 	make it better
-8) notifying on new/updated posts by making tab bold?! think.
-9) publish our gadget on google
-10) headling of website sometimes is null should not write it in this case (or write the 
+	- (Kolman) Not clear what checkboxes do, make them as stared picture
+	- (Kolman) On forums checkbox meaning is visible in other tabs (monitored)
+ 
+10) (Michael) headling of website sometimes is null should not write it in this case (or write the 
 	link to the board
-11) explicitly say what version of phpBB we are showing in the document/help
-12) help button!!!
+11) (Michael) explicitly say what version of phpBB we are showing in the document/help
+    - http://mozilla.org.il/board/
+    - http://forums.mozillazine.org/
+    - Check on many
+12) (Kolman) help button!!!
+	(Kolman & Michael) update inner text
 13) other buttons as said to be in the document (maybe not, think about interface)
-14) enable vBulletin
-15) add second css file
-16) make the summary gadget (i.e. make some more tabs and just make another content 
+	- (Kolman & Michael) Show All/Show Selected
+	- (Kolman & Michael) Update Content
+14) (Low?) enable vBulletin
+15) (Low) add second css file
+16) (Michael) make the summary gadget (i.e. make some more tabs and just make another content 
 feeder using remote messages between gadgets)
-17) Think of database
-18) add option for choosing which tabs to show
-19) when forum is unselected automatically unselect it's choosen topics??! maybe maybe not?!
+17) (Low) Think of database
+18) (Michael) add option for choosing which tabs to show
+19) (Not) when forum is unselected automatically unselect it's choosen topics??! maybe maybe not?!
 because when selecting it back all previous topics are shown?! maybe maybe not
-20) add specifically what versions of what we are supporting, do more testing on other forums
+20) (Michael) add specifically what versions of what we are supporting, do more testing on other forums
+21) (Michael + Kolman) Add link to board name to the board itself
+22) (Michael) Add preferences as promissed 
+23) (Michael) Unstarring all topics in the Starred tab does not remove them from the tab
+24) (Michael) When changing the address of the forum, clear all stored data
+25) (Michael + Kolman) On topic view add author of each post.
+26) (Kolman) formatting problem with hebrew topic names ending in English text.
+27) Scroller in IE not working well
+28) (Michael) When opening starred topic, gadget will show the last posts page and not first.
+	(Michael) Add preferences for this
+	(Kolman) When showing posts one should understand that not all posts are shown
+		also should understand that only the beginning or end is shown.
