@@ -1024,6 +1024,8 @@ var ctrl = function () {
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
+	        	ctrl.resize();
+	        	alert("k");
 	        });
 	        
             for (var i=0;i<selForums.length;i++) {
@@ -1031,7 +1033,6 @@ var ctrl = function () {
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
                 forum.load(function(){});
             }
-            alert("kuku");
             return false;
         },
         
