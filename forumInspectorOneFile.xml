@@ -734,7 +734,7 @@ function parseLastPost(that, td) {
 	var as = lastPost.getElementsByTagName('a');
     var author = as[0];
     var date = lastPost.innerHTML;
-    var ds = date.match(/^(.*?)<br/);
+    var ds = date.match(/^(.*?)<br/i);
     if (ds && ds.length > 1) {
     	ds = ds[1];
     }
@@ -1050,6 +1050,7 @@ var ctrl = function () {
             divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
             
             tabs.alignTabs("left", 10);
+            alert(tabs.getHeaderContainer().innerHTML);
         },
         
         onStarred: function () {
