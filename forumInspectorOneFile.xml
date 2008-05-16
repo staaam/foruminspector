@@ -644,7 +644,7 @@ var display = function () {
             }
         },
         
-        setSpecialTabsClass: function( tabs ) {
+        setSpecialTabsClass: function( tabs, prefs ) {
                    
             var tabsArr = tabs.getTabs();
             for(var i = 0; i < tabsArr.length; i++ )
@@ -1071,7 +1071,7 @@ var ctrl = function () {
             
             tabs.alignTabs("left", 10);
             
-            display.setSpecialTabsClass(tabs); 
+            display.setSpecialTabsClass(tabs, prefs); 
         },
         
         onStarred: function () {
