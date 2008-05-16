@@ -1061,6 +1061,7 @@ var ctrl = function () {
             		aTab.getNameContainer().className = aTab.getNameContainer().className
             		 + " special_tab_con";
             	}
+            	alert(aTab.getNameContainer().className);
             }
             
         },
