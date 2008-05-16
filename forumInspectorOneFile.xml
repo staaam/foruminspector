@@ -1056,7 +1056,7 @@ var ctrl = function () {
             {
             	var aTab = tabsArr[i];
             	//alert(aTab.getNameContainer().className);
-            	if (aTab.getNameContainer().innerHTML == "forums")
+            	if (aTab.getNameContainer().innerHTML == prefs.getMsg("forums"))
             	{
             		aTab.getNameContainer().className = aTab.getNameContainer().className
             		 + " special_tab_con";
