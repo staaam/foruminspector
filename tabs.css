@@ -2,7 +2,7 @@
 	display: none;
 }
 
-.special_tab_con table td {
+.special_tab_con{
 	border-color:#000000;
 	border-width:2px;
 }
