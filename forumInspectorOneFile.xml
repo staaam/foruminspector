@@ -1058,8 +1058,8 @@ var ctrl = function () {
             	//alert(aTab.getNameContainer().className);
             	if (aTab.getNameContainer().innerHTML == prefs.getMsg("forums"))
             	{
-            		aTab.getNameContainer().className = aTab.getNameContainer().className
-            		 + " special_tab_con";
+            		aTab.getNameContainer().className = "special_tab_con " + 
+            			aTab.getNameContainer().className;
             	}
             	alert(aTab.getNameContainer().className);
             }
