@@ -1055,7 +1055,12 @@ var ctrl = function () {
             for(var i = 0; i < tabsArr.length; i++ )
             {
             	var aTab = tabsArr[i];
-            	alert(aTab.getNameContainer().className);
+            	//alert(aTab.getNameContainer().className);
+            	if (aTab.getNameContainer().innerHTML == "forums")
+            	{
+            		aTab.getNameContainer().className = aTab.getNameContainer().className
+            		 + " special_tab_con";
+            	}
             }
             
         },
