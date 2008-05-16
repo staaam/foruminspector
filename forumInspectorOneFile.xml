@@ -1057,10 +1057,11 @@ var ctrl = function () {
         
         createTabs: function () {
             divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); alert("Ads"); ctrl.resize; });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.resize; });
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
-            divStarred = tabs.addDynamicTab(prefs.getMsg("starred"), ctrl.onStarred);
+            divStarred = tabs.addDynamicTab(prefs.getMsg("starred"),
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onStarred });
             
             divNewTopics = tabs.addDynamicTab(prefs.getMsg("latestT"), ctrl.onNewTopics);
             divRecTopics = tabs.addDynamicTab(prefs.getMsg("recentlyUpdated"), ctrl.onLRUTopics);
