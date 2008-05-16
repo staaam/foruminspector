@@ -23,7 +23,7 @@ var ctrl = function () {
             ctrl.createTabs();
             
             //display.init(divStarred);
-            
+               
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
@@ -33,6 +33,7 @@ var ctrl = function () {
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
+	        	ctrl.resize();
 	        });
 	        
             for (var i=0;i<selForums.length;i++) {
