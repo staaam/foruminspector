@@ -1055,7 +1055,7 @@ var ctrl = function () {
             for(var i = 0; i < tabsArr.length; i++ )
             {
             	var aTab = tabsArr[i];
-            	alert(aTab.getNameContainer().innerHTML);
+            	alert(aTab.getNameContainer().className);
             }
             
         },
