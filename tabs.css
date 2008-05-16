@@ -4,6 +4,7 @@
 
 .special_tab_con {
 	border-color:#000000;
+	border-width:2px;
 }
 
 .tablib_spacerTab, .tablib_selected, .tablib_unselected {
