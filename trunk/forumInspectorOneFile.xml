@@ -1051,6 +1051,7 @@ var ctrl = function () {
             
             tabs.alignTabs("left", 10);
             alert(tabs.getHeaderContainer().innerHTML);
+            alert(divStarred.getNameContainer());
         },
         
         onStarred: function () {
