@@ -1025,7 +1025,6 @@ var ctrl = function () {
             	display.createBoardInfo(_gel(divBoardInfo), board);
 	        	display.categories(_gel(divForumList), board.subItems);
 	        	ctrl.resize();
-	        	alert("k");
 	        });
 	        
             for (var i=0;i<selForums.length;i++) {
