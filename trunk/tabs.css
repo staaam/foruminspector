@@ -29,6 +29,10 @@
 	color: #a40;
 }
 
+.special_tab_con {
+	border-color:#000000;
+}
+
 .boardTitle {
 	font-size:medium;
 	font-weight:bold;
