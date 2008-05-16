@@ -1014,7 +1014,7 @@ var ctrl = function () {
             ctrl.createTabs();
             
             //display.init(divStarred);
-            
+               
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
