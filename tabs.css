@@ -2,11 +2,6 @@
 	display: none;
 }
 
-.special_tab_con{
-	border-color:#000000;
-	border-width:2px;
-}
-
 .tablib_spacerTab, .tablib_selected, .tablib_unselected {
 	border-width: 0px;
 	border-bottom: 0px solid #d2ecf5;
@@ -32,6 +27,11 @@
 	font-size: 11px;
 	text-align: center;
 	color: #a40;
+}
+
+.special_tab_con{
+	border-color:#000000;
+	border-width:2px;
 }
 
 .boardTitle {
