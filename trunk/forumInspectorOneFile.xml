@@ -654,7 +654,7 @@ var display = function () {
             	if (aTab.getNameContainer().innerHTML == prefs.getMsg("forums") ||
             		aTab.getNameContainer().innerHTML == prefs.getMsg("starred"))
             	{
-            		setSpecialTabClass( aTab );
+            		display.setSpecialTabClass( aTab );
             	}
             }
         },
