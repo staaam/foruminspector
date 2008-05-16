@@ -26,7 +26,7 @@ var display = function () {
         			parentElem, category.title, category.url, 
         			null, loadCategoryFunction, null, null, true);
         },
-                
+        
         createSecondaryForumItem: function (parentElem, forum) {
         	
         	var selectForumFunction = function( status )
@@ -182,6 +182,26 @@ var display = function () {
                 objSpan.innerHTML = textTrimmed;
                 widthTemp = objSpan.offsetWidth;
             }
+        },
+        
+        setSpecialTabsClass: function( tabs, prefs ) {
+                   
+            var tabsArr = tabs.getTabs();
+            for(var i = 0; i < tabsArr.length; i++ )
+            {
+            	var aTab = tabsArr[i];
+            	
+            	if (aTab.getNameContainer().innerHTML == prefs.getMsg("forums") ||
+            		aTab.getNameContainer().innerHTML == prefs.getMsg("starred"))
+            	{
+            		display.setSpecialTabClass( aTab );
+            	}
+            }
+        },
+        
+        setSpecialTabClass: function ( tab ) {
+        	tab.getNameContainer().className = "special_tab_con " + 
+            	tab.getNameContainer().className;
         }
 
     }
