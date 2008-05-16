@@ -651,8 +651,8 @@ var display = function () {
             {
             	var aTab = tabsArr[i];
             	
-            	if (tab.getNameContainer().innerHTML == prefs.getMsg("forums") ||
-            		tab.getNameContainer().innerHTML == prefs.getMsg("starred"))
+            	if (aTab.getNameContainer().innerHTML == prefs.getMsg("forums") ||
+            		aTab.getNameContainer().innerHTML == prefs.getMsg("starred"))
             	{
             		setSpecialTabClass( aTab );
             	}
