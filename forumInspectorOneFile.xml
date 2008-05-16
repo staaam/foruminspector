@@ -1031,6 +1031,7 @@ var ctrl = function () {
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
                 forum.load(function(){});
             }
+            alert("kuku");
             return false;
         },
         
