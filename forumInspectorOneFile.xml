@@ -1050,8 +1050,14 @@ var ctrl = function () {
             divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
             
             tabs.alignTabs("left", 10);
-            alert(tabs.getHeaderContainer().innerHTML);
-            alert(divStarred.getNameContainer());
+            
+            var tabsArr = tabs.getTabs();
+            for(var i = 0; i < tabsArr.length; i++ )
+            {
+            	var aTab = tabsArr[i];
+            	alert(Tab.getNameContainer().innerHTML);
+            }
+            
         },
         
         onStarred: function () {
