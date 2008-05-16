@@ -1057,7 +1057,7 @@ var ctrl = function () {
         
         createTabs: function () {
             divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); alert(); ctrl.resize; });
+            	function() { display.setSpecialTabsClass(tabs, prefs); alert("Ads"); ctrl.resize; });
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
             divStarred = tabs.addDynamicTab(prefs.getMsg("starred"), ctrl.onStarred);
