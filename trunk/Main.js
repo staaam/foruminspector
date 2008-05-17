@@ -4,6 +4,11 @@ var CONST = {
 	lastPost: "lp",
 	lastTopic: "lt",
 	
+	pMostViews: "mv",
+	pMostPosts: "mp",
+	pRcntUpdtd: "ru",
+	pNewTopics: "nt",
+	
 	NULL: null
 };
 
@@ -12,8 +17,7 @@ var ctrl = function () {
 	var tabs = new _IG_Tabs(moduleID, "Forums", _gel("TabsDiv"));
     var board;
     
-    var lastPost = 0;
-    var lastTopic = 0;
+    var cachedPrefs = {};
     
     var selForums = {};
     var selTopics = {};
@@ -39,6 +43,8 @@ var ctrl = function () {
         },
         
         refresh: function () {
+    		cachedPrefs = {};
+
 		    allForums = {};
 		    allTopics = {};
 		    allPosts = {};
@@ -47,8 +53,19 @@ var ctrl = function () {
 		    
             selForums = splitKeys(prefs.getString(CONST.selForums));
             selTopics = splitKeys(prefs.getString(CONST.selTopics));
-            lastTopic = prefs.getInt(CONST.lastTopic);
-            lastPost = prefs.getInt(CONST.lastPost);
+            
+            ctrl.getLastTopic();
+            ctrl.getLastPost();
+            ctrl.getMostViews();
+	        ctrl.getMostPosts();
+	        ctrl.getRcntUpdtd();
+	        ctrl.getNewTopics();            
+            
+            var xx="";
+            for (var i in cachedPrefs) {
+            	xx += i + ": " + cachedPrefs[i] + "\n";
+            }
+            //alert(xx);
             
             board.load(function (board) {
             	display.setDirection(board.dir);
@@ -130,27 +147,36 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTopics);
         },
         
         onLRUTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId);
+        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId, CONST.pRcntUpdtd);
         },
         
         onMostViews: function () {
-        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews);
+        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews, CONST.pMostViews);
         },
         
         onMostPosts: function () {
-        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts);
+        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts, CONST.pMostPosts);
         },
         
-        displayForumsTopics: function (el, sorter) {
+        displayForumsTopics: function (el, sorter, name) {
             for (var i in allForums) {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function() {
-	        			ctrl.displayTopics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
+	        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
+	        			var ids = [ ];
+	        			for (var j in ar) {
+	        				ids[j] = ar[j].id;
+//	        				if (ar[j].id is not in ctrl.getCPA(name)) {
+//	        					mark topic as new -- how ??
+//	        				}
+	        			}
+	        			prefs.setArray(name, ids);
+	        			ctrl.displayTopics(el, ar);
 	        		});
             	}
         	}
@@ -224,21 +250,29 @@ var ctrl = function () {
             prefs.set(CONST.selTopics, joinKeys(selTopics));
         },
         
-        getLastTopic: function () {
-        	return lastTopic;
+        getCPI: function (name) {
+        	if (cachedPrefs[name] == undefined) {
+        		cachedPrefs[name] = prefs.getInt(name);
+        	}
+        	return cachedPrefs[name]; 
         },
         
-        setLastTopic: function (lastTopicId) {
-        	prefs.set(CONST.lastTopic, lastTopicId);
+        getCPA: function (name) {
+        	if (cachedPrefs[name] == undefined) {
+        		cachedPrefs[name] = prefs.getArray(name);
+        	}
+        	return cachedPrefs[name]; 
         },
+        
+        getLastTopic: function () { return ctrl.getCPI(CONST.lastTopic); },
+        getLastPost : function () { return ctrl.getCPI(CONST.lastPost); },
+        getMostViews: function () { return ctrl.getCPA(CONST.pMostViews); },
+        getMostPosts: function () { return ctrl.getCPA(CONST.pMostPosts); },
+        getRcntUpdtd: function () { return ctrl.getCPA(CONST.pRcntUpdtd); },
+        getNewTopics: function () { return ctrl.getCPA(CONST.pNewTopics); },
 
-        getLastPost: function () {
-        	return lastPost;
-        },
-        
-        setLastPost: function (lastPostId) {
-        	prefs.set(CONST.lastPost, lastPostId);
-        },
+        setLastTopic: function (lastTopicId) { prefs.set(CONST.lastTopic, lastTopicId); },
+        setLastPost : function (lastPostId) { prefs.set(CONST.lastPost, lastPostId); },
 
         resize: function (tabId) {
             _IG_AdjustIFrameHeight();
