@@ -12,8 +12,11 @@
     </ModulePrefs>
         
     <UserPref name="url" display_name="__MSG_boardURL__" default_value="http://forums.asat.co.il" />
-    <UserPref name="selForums" datatype="hidden" default_value="" />
-    <UserPref name="selTopics" datatype="hidden" default_value="" />
+    <UserPref name="sf" datatype="hidden" default_value="" />
+    <UserPref name="st" datatype="hidden" default_value="" />
+    <UserPref name="lt" datatype="hidden" default_value="0" />
+    <UserPref name="lp" datatype="hidden" default_value="0" />
+
     <UserPref name="nTopics" display_name="__MSG_numTopics__" default_value="10" />
         
     <UserPref name="defTab" display_name="__MSG_defTabs__" datatype="enum" default_value="0">
@@ -27,8 +30,8 @@
     </UserPref>
    
     <UserPref name="showForums" display_name="Show Forums" datatype="enum" default_value="1">
-	    <EnumValue value="0" display_value="Selected Only"/>
 	    <EnumValue value="1" display_value="All"/>
+	    <EnumValue value="0" display_value="Selected Only"/>
     </UserPref>
 
     <Content type="html"><![CDATA[
@@ -127,6 +130,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
 Board.prototype.parseForumsTable = function (table) {
     var trs = table.getElementsByTagName('tr'); // all table rows, first row is headers
     var cat;
+    var lastPost = 0;
     for (var i=1; i<trs.length; i++) {
         var tr = trs[i];
         var as = tr.getElementsByTagName('a');
@@ -143,9 +147,13 @@ Board.prototype.parseForumsTable = function (table) {
             var forum = ctrl.newForum(this, this.mkFullUrl(href), as[0].innerHTML);
             forum.index = i;
             forum.parseBoardTableRow(tr);
+            if (forum.lastPost.id > lastPost) {
+            	lastPost = forum.lastPost.id;
+            }
             cat.addItem(forum);
         }
     }
+    ctrl.setLastPost(lastPost);
     return true;
 };
 
@@ -838,6 +846,14 @@ ForumItem.prototype.load = function (callback) {
     this.reload(callback);
 };
 
+ForumItem.prototype.isUpdated = function () {
+	return false;
+}
+
+ForumItem.prototype.isNew = function () {
+	return false;
+}
+
 ForumItem.prototype.isSelected = function () {
 	return false;
 };
@@ -897,12 +913,26 @@ Post.prototype.parseTopicTableRow = function (tr) {
 	
 };
 /* end Post class */
+var CONST = {
+	selForums: "sf",
+	selTopics: "st",
+	lastPost: "lp",
+	lastTopic: "lt",
+	
+	NULL: null
+};
+
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
 	var tabs = new _IG_Tabs(moduleID, "Forums", _gel("TabsDiv"));
     var board;
+    
+    var lastPost = 0;
+    var lastTopic = 0;
+    
     var selForums = {};
     var selTopics = {};
+    
     var allForums = {};
     var allTopics = {};
     var allPosts = {};
@@ -930,8 +960,11 @@ var ctrl = function () {
 		    
 		    board = new Board(null, prefs.getString("url"));
 		    
-            selForums = splitKeys(prefs.getString("selForums"));
-            selTopics = splitKeys(prefs.getString("selTopics"));
+            selForums = splitKeys(prefs.getString(CONST.selForums));
+            selTopics = splitKeys(prefs.getString(CONST.selTopics));
+            lastTopic = prefs.getInt(CONST.lastTopic);
+            lastPost = prefs.getInt(CONST.lastPost);
+                        
             board.load(function (board) {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
@@ -1093,7 +1126,7 @@ var ctrl = function () {
             } else {
                 selForums[name] = null;
             }
-            prefs.set("selForums", joinKeys(selForums));
+            prefs.set(CONST.selForums, joinKeys(selForums));
         },
 
         toggleTopic: function (topic, checked) {
@@ -1103,7 +1136,15 @@ var ctrl = function () {
             } else {
                 selTopics[name] = null;
             }
-            prefs.set("selTopics", joinKeys(selTopics));
+            prefs.set(CONST.selTopics, joinKeys(selTopics));
+        },
+        
+        getLastPost: function () {
+        	return lastPost;
+        },
+        
+        setLastPost: function (lastPostId) {
+        	prefs.set(CONST.lastPost, lastPostId);
         },
 
         resize: function (tabId) {
@@ -1271,6 +1312,14 @@ Topic.prototype.parseForumTableRow = function (tr) {
     this.lastPost = parseLastPost(this, tds[5]);
     // tds[5] last post date; author, link
 };
+
+Topic.prototype.isUpdated = function () {
+	return this.lastPost.id > ctrl.getLastPost();
+}
+
+Topic.prototype.isNew = function () {
+	return this.id > ctrl.getLastTopic();
+}
 
 Topic.prototype.isSelected = function () {
 	return ctrl.isSelectedTopic(this);
