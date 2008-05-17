@@ -1154,9 +1154,9 @@ var ctrl = function () {
         	return cachedPrefs[name]; 
         },
         
-        getLastTopic: function () { return getCPI(CONST.lastTopic); },
-        getLastPost: function () { return getCPI(CONST.lastPost); },
-        
+        getLastTopic: function () { return ctrl.getCPI(CONST.lastTopic); },
+        getLastPost: function () { return ctrl.getCPI(CONST.lastPost); },
+
         setLastTopic: function (lastTopicId) {
         	prefs.set(CONST.lastTopic, lastTopicId);
         },
