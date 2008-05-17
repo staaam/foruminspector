@@ -964,6 +964,8 @@ var ctrl = function () {
             selTopics = splitKeys(prefs.getString(CONST.selTopics));
             lastTopic = prefs.getInt(CONST.lastTopic);
             lastPost = prefs.getInt(CONST.lastPost);
+            
+            alert(lastPost);
                         
             board.load(function (board) {
             	display.setDirection(board.dir);
