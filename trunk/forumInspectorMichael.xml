@@ -1066,19 +1066,19 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTopics);
         },
         
         onLRUTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId);
+        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId, CONST.pRcntUpdtd);
         },
         
         onMostViews: function () {
-        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews);
+        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews, CONST.pMostViews);
         },
         
         onMostPosts: function () {
-        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts);
+        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts, CONST.pMostPosts);
         },
         
         displayForumsTopics: function (el, sorter, name) {
