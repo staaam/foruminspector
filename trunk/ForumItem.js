@@ -45,6 +45,20 @@ ForumItem.prototype.isSelected = function () {
 	return false;
 };
 
+ForumItem.prototype.selSubItems = function () {
+	var r = [];
+	for (var i=0;i<this.subItems.length;i++) {
+		if (this.subItems[i].isSelected()) {
+			r.push(this.subItems[i]);
+		}
+	}
+	return r;
+};
+
+ForumItem.prototype.visibleSubItems = function () {
+	return this.subItems;
+}
+
 ForumItem.prototype.reload = function (callback) {
     this.isLoaded = true;
     var that = this;
