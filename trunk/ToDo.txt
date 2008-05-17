@@ -23,8 +23,8 @@
 12) (Kolman) help button!!!
 	(Kolman & Michael) update inner text
 13) other buttons as said to be in the document (maybe not, think about interface)
-+++	- (Kolman & Michael) Show All/Show Selected
-	- (Kolman & Michael) Update Content
++++	- (Kolman & Michael) Show All/Show Selected     --> currently I've put it to the setting area, do you think we should create the button for it?  
+...	- (Kolman & Michael) Refresh Content 			--> try making the button and calling ctrl.refresh() func, should work. I think right place to put it is near the Board Title (above all tabs)
 14) (Low?) enable vBulletin
 15) (Low) add second css file
 16) (Michael) make the summary gadget (i.e. make some more tabs and just make another content 
@@ -34,11 +34,11 @@ feeder using remote messages between gadgets)
 19) (Not) when forum is unselected automatically unselect it's choosen topics??! maybe maybe not?!
 because when selecting it back all previous topics are shown?! maybe maybe not
 20) (Michael) add specifically what versions of what we are supporting, do more testing on other forums
-21) (Michael + Kolman) Add link to board name to the board itself
+...	- 21) (Michael & Kolman) Add link to board name to the board itself		--> you can use board.url field to get the board url
 22) (Michael) Add preferences as promissed 
 23) (Michael) Unstarring all topics in the Starred tab does not remove them from the tab
 24) (Michael) When changing the address of the forum, clear all stored data
-25) (Michael + Kolman) On topic view add author of each post.
+25) (Michael & Kolman) On topic view add author of each post.
 26) (Kolman) formatting problem with hebrew topic names ending in English text.
 27) Scroller in IE not working well
 28) (Michael) When opening starred topic, gadget will show the last posts page and not first.
