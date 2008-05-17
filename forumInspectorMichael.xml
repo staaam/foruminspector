@@ -971,7 +971,11 @@ var ctrl = function () {
             ctrl.getLastTopic();
             ctrl.getLastPost();
             
-            alert(cachedPrefs);
+            var xx="";
+            for (var i in cachedPrefs) {
+            	xx += i + ": " + cachedPrefs[i] + "\n";
+            }
+            alert(xx);
             
             board.load(function (board) {
             	display.setDirection(board.dir);
