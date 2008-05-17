@@ -445,7 +445,7 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		display.getForumSubHeader(forum) , forum.isSelected(),
+        		display.getForumSubHeader(forum) + forum.isUpdated() ? "UPDATED" : "NONE" , forum.isSelected(),
         		selectForumFunction);
         },
         
@@ -965,8 +965,6 @@ var ctrl = function () {
             lastTopic = prefs.getInt(CONST.lastTopic);
             lastPost = prefs.getInt(CONST.lastPost);
             
-            alert(lastPost);
-                        
             board.load(function (board) {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
