@@ -917,7 +917,7 @@ var ctrl = function () {
 //    alert(board.boardInfo.general);
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
-            	ctrl.showForums(0);
+            	ctrl.showForums(1);
 	        	//display.categories(_gel(divForumList), board.subItems);
 	        	ctrl.resize();
 	        });
