@@ -445,7 +445,7 @@ var display = function () {
         	
         	var displayItem = new ForumDisplayItemSecondary(
         		parentElem, forum.title, forum.url,
-        		display.getForumSubHeader(forum) + forum.isUpdated() ? "UPDATED" : "NONE" , forum.isSelected(),
+        		display.getForumSubHeader(forum) , forum.isSelected(),
         		selectForumFunction);
         },
         
@@ -477,7 +477,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
-        			display.getTopicSubHeader( topic ), loadTopicFunction,
+        			display.getTopicSubHeader( topic ) + topic.isUpdated() ? "UPDATED" : "NONE", loadTopicFunction,
         			topic.isSelected(), selectTopicFunction, false );
         },
         
