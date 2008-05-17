@@ -1,19 +1,13 @@
-1) (Low) publish our gadget on google
-		Add google analytic to our gadget
 +++ 2) (Kolman) Resizing does not work properly (starts small)
 3) (Kolman) Make tabs highlight somehow color/bold (Forums and Starred)
    (Michael) On new topics not seen, should highlight relevant tabs.
    				notifying on new/updated posts by making tab bold?! think.
 4) (Kolman) Loading label takes place and make the selection on nest row
    - make it absolute
-5) (Low) the selection in small width screens is out of context
-6) (Low?) links on posts make the widget larger (width) and horizontal scroll is shown
-   - Should make the links shorter ?! make the function which cut text global
 7) The meaning of selection on forum tab is different then on other tabs, should
 	make it better
 	- (Kolman) Not clear what checkboxes do, make them as stared picture
 	- (Kolman) On forums checkbox meaning is visible in other tabs (monitored)
- 
 10) (Michael) headling of website sometimes is null should not write it in this case (or write the 
 	link to the board
 11) (Michael) explicitly say what version of phpBB we are showing in the document/help
@@ -25,14 +19,8 @@
 13) other buttons as said to be in the document (maybe not, think about interface)
 +++	- (Kolman & Michael) Show All/Show Selected     --> currently I've put it to the setting area, do you think we should create the button for it?  
 ...	- (Kolman & Michael) Refresh Content 			--> try making the button and calling ctrl.refresh() func, should work. I think right place to put it is near the Board Title (above all tabs)
-14) (Low?) enable vBulletin
-15) (Low) add second css file
-16) (Michael) make the summary gadget (i.e. make some more tabs and just make another content 
-feeder using remote messages between gadgets)
-17) (Low) Think of database
+16) (Michael) PROBLEMATIC A LITTLE (at least, in the way we thought)  make the summary gadget (i.e. make some more tabs and just make another content feeder using remote messages between gadgets)
 18) (Michael) add option for choosing which tabs to show
-19) (Not) when forum is unselected automatically unselect it's choosen topics??! maybe maybe not?!
-because when selecting it back all previous topics are shown?! maybe maybe not
 20) (Michael) add specifically what versions of what we are supporting, do more testing on other forums
 ...	- 21) (Michael & Kolman) Add link to board name to the board itself		--> you can use board.url field to get the board url
 22) (Michael) Add preferences as promissed 
@@ -45,3 +33,24 @@ because when selecting it back all previous topics are shown?! maybe maybe not
 	(Michael) Add preferences for this
 	(Kolman) When showing posts one should understand that not all posts are shown
 		also should understand that only the beginning or end is shown.
+
+
+
+--- Low ---
+1) (Low) publish our gadget on google
+		Add google analytic to our gadget
+5) (Low) the selection in small width screens is out of context
+6) (Low?) links on posts make the widget larger (width) and horizontal scroll is shown
+   - Should make the links shorter ?! make the function which cut text global
+14) (Low?) enable vBulletin
+15) (Low) add second css file
+17) (Low) Think of database
+
+19) (Not) when forum is unselected automatically unselect it's choosen topics??! maybe maybe not?!
+because when selecting it back all previous topics are shown?! maybe maybe not
+
+--- Done ---
+
+
+
+
