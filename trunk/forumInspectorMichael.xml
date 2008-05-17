@@ -923,6 +923,11 @@ var CONST = {
 	lastPost: "lp",
 	lastTopic: "lt",
 	
+	pMostViews: "mv",
+	pMostPosts: "mp",
+	pRcntUpdtd: "ru",
+	pNewTopics: "nt",
+	
 	NULL: null
 };
 
@@ -970,12 +975,16 @@ var ctrl = function () {
             
             ctrl.getLastTopic();
             ctrl.getLastPost();
+            ctrl.getMostViews();
+	        ctrl.getMostPosts();
+	        ctrl.getRcntUpdtd();
+	        ctrl.getNewTopics();            
             
             var xx="";
             for (var i in cachedPrefs) {
             	xx += i + ": " + cachedPrefs[i] + "\n";
             }
-            alert(xx);
+            //alert(xx);
             
             board.load(function (board) {
             	display.setDirection(board.dir);
@@ -1158,8 +1167,19 @@ var ctrl = function () {
         	return cachedPrefs[name]; 
         },
         
+        getCPL: function (name) {
+        	if (cachedPrefs[name] == undefined) {
+        		cachedPrefs[name] = prefs.getList(name);
+        	}
+        	return cachedPrefs[name]; 
+        },
+        
         getLastTopic: function () { return ctrl.getCPI(CONST.lastTopic); },
-        getLastPost: function () { return ctrl.getCPI(CONST.lastPost); },
+        getLastPost : function () { return ctrl.getCPI(CONST.lastPost); },
+        getMostViews: function () { return ctrl.getCPL(CONST.pMostViews); },
+        getMostPosts: function () { return ctrl.getCPL(CONST.pMostPosts); },
+        getRcntUpdtd: function () { return ctrl.getCPL(CONST.pRcntUpdtd); },
+        getNewTopics: function () { return ctrl.getCPL(CONST.pNewTopics); },
 
         setLastTopic: function (lastTopicId) {
         	prefs.set(CONST.lastTopic, lastTopicId);
