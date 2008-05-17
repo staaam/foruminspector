@@ -1,38 +1,58 @@
-+++ 2) (Kolman) Resizing does not work properly (starts small)
+Legend:
+... - work in progress
++++ - waiting approvement
+=== - done
+??? - waiting for your decission
+
+??? ok? ;)
+-------------------------------------------------
+
+--- Both ---
+...	- 21) (Michael & Kolman) Add link to board name to the board itself		--> you can use board.url field to get the board url
+13) other buttons as said to be in the document (maybe not, think about interface)
++++	- (Kolman & Michael) Show All/Show Selected     --> currently I've put it to the setting area, do you think we should create the button for it?  
+...	- (Kolman & Michael) Refresh Content 			--> try making the button and calling ctrl.refresh() func, should work. I think right place to put it is near the Board Title (above all tabs), probably as a small picture (similar to refresh sign in browsers?)
+25) (Michael & Kolman) On topic view add author of each post.
 3) (Kolman) Make tabs highlight somehow color/bold (Forums and Starred)
    (Michael) On new topics not seen, should highlight relevant tabs.
-   				notifying on new/updated posts by making tab bold?! think.
-4) (Kolman) Loading label takes place and make the selection on nest row
-   - make it absolute
-7) The meaning of selection on forum tab is different then on other tabs, should
-	make it better
-	- (Kolman) Not clear what checkboxes do, make them as stared picture
-	- (Kolman) On forums checkbox meaning is visible in other tabs (monitored)
+    				notifying on new/updated posts by making tab bold?! think.
+12) (Kolman) help button!!! 						--> I think right place to put it is near the Board Title (above all tabs), probably as a small picture (Question sign?)  OR in the About page (accessible in the same place as settings)  
+	(Kolman & Michael) update inner text
+
+
+
+--- Michael ---
 10) (Michael) headling of website sometimes is null should not write it in this case (or write the 
 	link to the board
 11) (Michael) explicitly say what version of phpBB we are showing in the document/help
     - http://mozilla.org.il/board/
     - http://forums.mozillazine.org/
     - Check on many
-12) (Kolman) help button!!!
-	(Kolman & Michael) update inner text
-13) other buttons as said to be in the document (maybe not, think about interface)
-+++	- (Kolman & Michael) Show All/Show Selected     --> currently I've put it to the setting area, do you think we should create the button for it?  
-...	- (Kolman & Michael) Refresh Content 			--> try making the button and calling ctrl.refresh() func, should work. I think right place to put it is near the Board Title (above all tabs)
 16) (Michael) PROBLEMATIC A LITTLE (at least, in the way we thought)  make the summary gadget (i.e. make some more tabs and just make another content feeder using remote messages between gadgets)
 18) (Michael) add option for choosing which tabs to show
 20) (Michael) add specifically what versions of what we are supporting, do more testing on other forums
-...	- 21) (Michael & Kolman) Add link to board name to the board itself		--> you can use board.url field to get the board url
 22) (Michael) Add preferences as promissed 
 23) (Michael) Unstarring all topics in the Starred tab does not remove them from the tab
 24) (Michael) When changing the address of the forum, clear all stored data
-25) (Michael & Kolman) On topic view add author of each post.
-26) (Kolman) formatting problem with hebrew topic names ending in English text.
-27) Scroller in IE not working well
 28) (Michael) When opening starred topic, gadget will show the last posts page and not first.
 	(Michael) Add preferences for this
-	(Kolman) When showing posts one should understand that not all posts are shown
+
+
+
+--- Kolman ---
++++ 2) (Kolman) Resizing does not work properly (starts small)
+4) (Kolman) Loading label takes place and make the selection on nest row
+   - make it absolute
+7) The meaning of selection on forum tab is different then on other tabs, should
+	make it better
+	- (Kolman) Not clear what checkboxes do, make them as stared picture
+	- (Kolman) On forums checkbox meaning is: visible in other tabs (monitored)
+26) (Kolman) formatting problem with hebrew topic names ending in English text.
+	--> Test case: first forum in asat board (agudat studentim - aforum areshi), most views -> topic "P" :)
+29)	(Kolman) When showing posts one should understand that not all posts are shown
 		also should understand that only the beginning or end is shown.
+27) Scroller in IE not working well		--> or is it low?
+
 
 
 
