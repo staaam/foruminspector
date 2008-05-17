@@ -1087,7 +1087,11 @@ var ctrl = function () {
             	if (forum.isSelected()) {
 	        		forum.load(function() {
 	        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
-	        			prefs.setArray(name, ar);
+	        			var ids = [];
+	        			for (var j in ar) {
+	        				ids[j] = ar[j].id;
+	        			}
+	        			prefs.setArray(name, ids);
 	        			ctl.displayTopics(el, ar);
 	        		});
             	}
