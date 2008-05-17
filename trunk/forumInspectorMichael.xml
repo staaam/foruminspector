@@ -936,20 +936,20 @@ var ctrl = function () {
         
         createTabs: function () {
             divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.resize; });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); });
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
             divStarred = tabs.addDynamicTab(prefs.getMsg("starred"),
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onStarred });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onStarred(); });
             
             divNewTopics = tabs.addDynamicTab(prefs.getMsg("latestT"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onNewTopics });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onNewTopics(); });
             divRecTopics = tabs.addDynamicTab(prefs.getMsg("recentlyUpdated"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onLRUTopics });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onLRUTopics(); });
             divMostViews = tabs.addDynamicTab(prefs.getMsg("mostViews"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostViews });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostViews(); });
             divMostPosts = tabs.addDynamicTab(prefs.getMsg("mostPosts"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostPosts });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostPosts(); });
             //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             
             divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
