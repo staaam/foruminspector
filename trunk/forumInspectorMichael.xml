@@ -984,7 +984,7 @@ var ctrl = function () {
             for (var i in cachedPrefs) {
             	xx += i + ": " + cachedPrefs[i] + "\n";
             }
-            //alert(xx);
+            alert(xx);
             
             board.load(function (board) {
             	display.setDirection(board.dir);
