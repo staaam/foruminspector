@@ -984,7 +984,7 @@ var ctrl = function () {
             for (var i in cachedPrefs) {
             	xx += i + ": " + cachedPrefs[i] + "\n";
             }
-            alert(xx);
+            //alert(xx);
             
             board.load(function (board) {
             	display.setDirection(board.dir);
@@ -1081,12 +1081,14 @@ var ctrl = function () {
         	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts);
         },
         
-        displayForumsTopics: function (el, sorter) {
+        displayForumsTopics: function (el, sorter, name) {
             for (var i in allForums) {
             	var forum = allForums[i];
             	if (forum.isSelected()) {
 	        		forum.load(function() {
-	        			ctrl.displayTopics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
+	        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
+	        			prefs.setArray(name, ar);
+	        			ctl.displayTopics(el, ar);
 	        		});
             	}
         	}
@@ -1181,13 +1183,8 @@ var ctrl = function () {
         getRcntUpdtd: function () { return ctrl.getCPA(CONST.pRcntUpdtd); },
         getNewTopics: function () { return ctrl.getCPA(CONST.pNewTopics); },
 
-        setLastTopic: function (lastTopicId) {
-        	prefs.set(CONST.lastTopic, lastTopicId);
-        },
-
-        setLastPost: function (lastPostId) {
-        	prefs.set(CONST.lastPost, lastPostId);
-        },
+        setLastTopic: function (lastTopicId) { prefs.set(CONST.lastTopic, lastTopicId); },
+        setLastPost : function (lastPostId) { prefs.set(CONST.lastPost, lastPostId); },
 
         resize: function (tabId) {
             _IG_AdjustIFrameHeight();
