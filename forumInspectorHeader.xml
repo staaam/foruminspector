@@ -10,15 +10,19 @@
 	    <Locale lang="ru" messages="http://foruminspector.googlecode.com/svn/trunk/ru_ALL.xml"/>
 
     </ModulePrefs>
-        
-    <UserPref name="url" display_name="__MSG_boardURL__" default_value="http://forums.asat.co.il" />
+
     <UserPref name="sf" datatype="hidden" default_value="" />
     <UserPref name="st" datatype="hidden" default_value="" />
     <UserPref name="lt" datatype="hidden" default_value="0" />
     <UserPref name="lp" datatype="hidden" default_value="0" />
+    <UserPref name="mv" datatype="hidden" default_value="" />
+    <UserPref name="mp" datatype="hidden" default_value="" />
+    <UserPref name="ru" datatype="hidden" default_value="" />
+    <UserPref name="nt" datatype="hidden" default_value="" />
 
+    <UserPref name="url" display_name="__MSG_boardURL__" default_value="http://forums.asat.co.il" />
     <UserPref name="nTopics" display_name="__MSG_numTopics__" default_value="10" />
-        
+       
     <UserPref name="defTab" display_name="__MSG_defTabs__" datatype="enum" default_value="0">
 	    <EnumValue value="0" display_value="__MSG_forums__"/>
 	    <EnumValue value="1" display_value="__MSG_starred__"/>

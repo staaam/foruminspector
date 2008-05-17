@@ -15,7 +15,7 @@ Legend:
 25) (Michael & Kolman) On topic view add author of each post.
 3) (Kolman) Make tabs highlight somehow color/bold (Forums and Starred)
    (Michael) On new topics not seen, should highlight relevant tabs.
-30) notifying on new/updated posts by making tab bold?! think.
+... - 30) notifying on new/updated posts by making tab bold?! think.      --> Added funtcion to all elements isUpdated (returns false by default), for Topic - returns whether is has new posts or not. Proposed notification - bold the topic itself, probably notify also the tab (bold, italic, change color)  
 12) (Kolman) help button!!! 						--> I think right place to put it is near the Board Title (above all tabs), probably as a small picture (Question sign?)  OR in the About page (accessible in the same place as settings)  
 	(Kolman & Michael) update inner text
 
