@@ -26,6 +26,11 @@
 	    <EnumValue value="6" display_value="__MSG_boardInfo__"/>
     </UserPref>
    
+    <UserPref name="showForums" display_name="Show Forums" datatype="enum" default_value="1">
+	    <EnumValue value="0" display_value="Selected Only"/>
+	    <EnumValue value="1" display_value="All"/>
+    </UserPref>
+
     <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
@@ -170,6 +175,11 @@ Category.prototype = new ForumItem();
 
 Category.prototype.idRegEx = /[?&]c=(\d+)/;
 Category.prototype.viewer = "index.php";
+
+Category.prototype.visibleSubItems = function () {
+	return ctrl.isShowAllForums() ? this.subItems : this.selSubItems();
+}
+
 /* end Category class *//* begin CategoryDisplayItem class */
 function CategoryDisplayItem(parent, headerText, headerUrl,
 	subHeader, expandingFunction, isSelected, selectFunction, isForums, direction ) {
@@ -933,6 +943,10 @@ var ctrl = function () {
             }
             return false;
         },
+        
+        isShowAllForums: function () {
+        	return prefs.getInt("showForums");
+        }
         
         showForums: function (selectedOnly) {
         	var items = [];
