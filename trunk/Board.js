@@ -80,6 +80,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
 Board.prototype.parseForumsTable = function (table) {
     var trs = table.getElementsByTagName('tr'); // all table rows, first row is headers
     var cat;
+    var lastPost = 0;
     for (var i=1; i<trs.length; i++) {
         var tr = trs[i];
         var as = tr.getElementsByTagName('a');
@@ -96,9 +97,13 @@ Board.prototype.parseForumsTable = function (table) {
             var forum = ctrl.newForum(this, this.mkFullUrl(href), as[0].innerHTML);
             forum.index = i;
             forum.parseBoardTableRow(tr);
+            if (forum.lastPost.id > lastPost) {
+            	lastPost = forum.lastPost.id;
+            }
             cat.addItem(forum);
         }
     }
+    ctrl.setLastPost(lastPost);
     return true;
 };
 
