@@ -477,7 +477,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
-        			display.getTopicSubHeader( topic ) + topic.isUpdated() ? "UPDATED" : "NONE", loadTopicFunction,
+        			display.getTopicSubHeader( topic ) + (topic.isUpdated() ? "UPDATED" : "NONE"), loadTopicFunction,
         			topic.isSelected(), selectTopicFunction, false );
         },
         
