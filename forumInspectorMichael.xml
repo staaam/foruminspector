@@ -1092,7 +1092,7 @@ var ctrl = function () {
 	        				ids[j] = ar[j].id;
 	        			}
 	        			prefs.setArray(name, ids);
-	        			ctl.displayTopics(el, ar);
+	        			ctrl.displayTopics(el, ar);
 	        		});
             	}
         	}
