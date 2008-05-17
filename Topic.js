@@ -35,6 +35,14 @@ Topic.prototype.parseForumTableRow = function (tr) {
     // tds[5] last post date; author, link
 };
 
+Topic.prototype.isUpdated = function () {
+	return this.lastPost.id > ctrl.getLastPost();
+}
+
+Topic.prototype.isNew = function () {
+	return this.id > ctrl.getLastTopic();
+}
+
 Topic.prototype.isSelected = function () {
 	return ctrl.isSelectedTopic(this);
 };

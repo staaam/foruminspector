@@ -15,7 +15,7 @@ Legend:
 25) (Michael & Kolman) On topic view add author of each post.
 3) (Kolman) Make tabs highlight somehow color/bold (Forums and Starred)
    (Michael) On new topics not seen, should highlight relevant tabs.
-    				notifying on new/updated posts by making tab bold?! think.
+30) notifying on new/updated posts by making tab bold?! think.
 12) (Kolman) help button!!! 						--> I think right place to put it is near the Board Title (above all tabs), probably as a small picture (Question sign?)  OR in the About page (accessible in the same place as settings)  
 	(Kolman & Michael) update inner text
 
@@ -24,14 +24,13 @@ Legend:
 --- Michael ---
 10) (Michael) headling of website sometimes is null should not write it in this case (or write the 
 	link to the board
-11) (Michael) explicitly say what version of phpBB we are showing in the document/help
+11) Michael) add specifically what versions of what we are supporting, do more testing on other forums
     - http://mozilla.org.il/board/
     - http://forums.mozillazine.org/
     - Check on many
 16) (Michael) PROBLEMATIC A LITTLE (at least, in the way we thought)  make the summary gadget (i.e. make some more tabs and just make another content feeder using remote messages between gadgets)
 18) (Michael) add option for choosing which tabs to show
-20) (Michael) add specifically what versions of what we are supporting, do more testing on other forums
-22) (Michael) Add preferences as promissed 
+22) (Michael) Add more preferences as promissed, TODO - what exact 
 23) (Michael) Unstarring all topics in the Starred tab does not remove them from the tab
 24) (Michael) When changing the address of the forum, clear all stored data
 28) (Michael) When opening starred topic, gadget will show the last posts page and not first.

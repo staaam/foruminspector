@@ -41,6 +41,14 @@ ForumItem.prototype.load = function (callback) {
     this.reload(callback);
 };
 
+ForumItem.prototype.isUpdated = function () {
+	return false;
+}
+
+ForumItem.prototype.isNew = function () {
+	return false;
+}
+
 ForumItem.prototype.isSelected = function () {
 	return false;
 };

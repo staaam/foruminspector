@@ -1,9 +1,23 @@
+var CONST = {
+	selForums: "sf",
+	selTopics: "st",
+	lastPost: "lp",
+	lastTopic: "lt",
+	
+	NULL: null
+};
+
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
 	var tabs = new _IG_Tabs(moduleID, "Forums", _gel("TabsDiv"));
     var board;
+    
+    var lastPost = 0;
+    var lastTopic = 0;
+    
     var selForums = {};
     var selTopics = {};
+    
     var allForums = {};
     var allTopics = {};
     var allPosts = {};
@@ -31,8 +45,11 @@ var ctrl = function () {
 		    
 		    board = new Board(null, prefs.getString("url"));
 		    
-            selForums = splitKeys(prefs.getString("selForums"));
-            selTopics = splitKeys(prefs.getString("selTopics"));
+            selForums = splitKeys(prefs.getString(CONST.selForums));
+            selTopics = splitKeys(prefs.getString(CONST.selTopics));
+            lastTopic = prefs.getInt(CONST.lastTopic);
+            lastPost = prefs.getInt(CONST.lastPost);
+            
             board.load(function (board) {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
@@ -194,7 +211,7 @@ var ctrl = function () {
             } else {
                 selForums[name] = null;
             }
-            prefs.set("selForums", joinKeys(selForums));
+            prefs.set(CONST.selForums, joinKeys(selForums));
         },
 
         toggleTopic: function (topic, checked) {
@@ -204,7 +221,23 @@ var ctrl = function () {
             } else {
                 selTopics[name] = null;
             }
-            prefs.set("selTopics", joinKeys(selTopics));
+            prefs.set(CONST.selTopics, joinKeys(selTopics));
+        },
+        
+        getLastTopic: function () {
+        	return lastTopic;
+        },
+        
+        setLastTopic: function (lastTopicId) {
+        	prefs.set(CONST.lastTopic, lastTopicId);
+        },
+
+        getLastPost: function () {
+        	return lastPost;
+        },
+        
+        setLastPost: function (lastPostId) {
+        	prefs.set(CONST.lastPost, lastPostId);
         },
 
         resize: function (tabId) {
