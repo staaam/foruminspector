@@ -1,6 +1,6 @@
 1) (Low) publish our gadget on google
 		Add google analytic to our gadget
-+ 2) (Kolman) Resizing does not work properly (starts small)
++++ 2) (Kolman) Resizing does not work properly (starts small)
 3) (Kolman) Make tabs highlight somehow color/bold (Forums and Starred)
    (Michael) On new topics not seen, should highlight relevant tabs.
    				notifying on new/updated posts by making tab bold?! think.
@@ -23,7 +23,7 @@
 12) (Kolman) help button!!!
 	(Kolman & Michael) update inner text
 13) other buttons as said to be in the document (maybe not, think about interface)
-	- (Kolman & Michael) Show All/Show Selected
++++	- (Kolman & Michael) Show All/Show Selected
 	- (Kolman & Michael) Update Content
 14) (Low?) enable vBulletin
 15) (Low) add second css file

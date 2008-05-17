@@ -17,7 +17,7 @@ var display = function () {
         
         createCategoryItem: function (parentElem, category) {
         	var loadCategoryFunction = function(callback) 
-        		{ category.load( function ( o ) { callback( o.subItems ); } ); };
+        		{ category.load( function ( o ) { callback( o.visibleSubItems() ); } ); };
         	
         	//var selectCategoryFunction = function( status )
         	//	{ ctrl.toggleForum( category, status ); };

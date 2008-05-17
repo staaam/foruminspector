@@ -32,7 +32,8 @@ var ctrl = function () {
 //    alert(board.boardInfo.general);
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
-	        	display.categories(_gel(divForumList), board.subItems);
+            	ctrl.showForums(1);
+	        	//display.categories(_gel(divForumList), board.subItems);
 	        	ctrl.resize();
 	        });
 	        
@@ -44,22 +45,37 @@ var ctrl = function () {
             return false;
         },
         
+        isShowAllForums: function () {
+        	return prefs.getInt("showForums");
+        },
+        
+        showForums: function (selectedOnly) {
+        	var items = [];
+        	for (var i=0; i<board.subItems.length; i++) {
+        		var c = board.subItems[i];
+        		if (c.visibleSubItems().length > 0) {
+        			items.push(c);
+        		}
+        	}
+	        display.categories(_gel(divForumList), items);
+        },
+        
         createTabs: function () {
             divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.resize; });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); });
             //divLog = tabs.addDynamicTab("Log", ctrl.resize);
             
             divStarred = tabs.addDynamicTab(prefs.getMsg("starred"),
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onStarred });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onStarred(); });
             
             divNewTopics = tabs.addDynamicTab(prefs.getMsg("latestT"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onNewTopics });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onNewTopics(); });
             divRecTopics = tabs.addDynamicTab(prefs.getMsg("recentlyUpdated"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onLRUTopics });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onLRUTopics(); });
             divMostViews = tabs.addDynamicTab(prefs.getMsg("mostViews"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostViews });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostViews(); });
             divMostPosts = tabs.addDynamicTab(prefs.getMsg("mostPosts"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostPosts });
+            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostPosts(); });
             //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
             
             divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
@@ -85,11 +101,7 @@ var ctrl = function () {
 	                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
             	}
         		forum.load(function() {
-        			for (var i=0;i<forum.subItems.length;i++) {
-        				if (forum.subItems[i].isSelected()) {
-	        				diTopics.push(forum.subItems[i]);
-        				}
-        			}
+        			diTopics = diTopics.concat(forum.selSubItems());
         			ctrl.displayTopics(_gel(divStarred), diTopics.sort(sorters.byId));
         		});
         	}
