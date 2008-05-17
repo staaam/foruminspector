@@ -1,7 +1,7 @@
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
 	var tabs = new _IG_Tabs(moduleID, "Forums", _gel("TabsDiv"));
-    var board = new Board(null, prefs.getString("url"));
+    var board;
     var selForums = {};
     var selTopics = {};
     var allForums = {};
@@ -21,20 +21,24 @@ var ctrl = function () {
     return {
         init: function () {
             ctrl.createTabs();
-            
-            //display.init(divStarred);
-               
+            return ctrl.refresh();
+        },
+        
+        refresh: function () {
+		    allForums = {};
+		    allTopics = {};
+		    allPosts = {};
+		    
+		    board = new Board(null, prefs.getString("url"));
+		    
             selForums = splitKeys(prefs.getString("selForums"));
             selTopics = splitKeys(prefs.getString("selTopics"));
             board.load(function (board) {
             	display.setDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
-//    alert(board.boardInfo.general);
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
-            	ctrl.showForums(1);
-	        	//display.categories(_gel(divForumList), board.subItems);
-	        	ctrl.resize();
+            	ctrl.showForums();
 	        });
 	        
             for (var i=0;i<selForums.length;i++) {
@@ -49,7 +53,7 @@ var ctrl = function () {
         	return prefs.getInt("showForums");
         },
         
-        showForums: function (selectedOnly) {
+        showForums: function () {
         	var items = [];
         	for (var i=0; i<board.subItems.length; i++) {
         		var c = board.subItems[i];
@@ -58,6 +62,7 @@ var ctrl = function () {
         		}
         	}
 	        display.categories(_gel(divForumList), items);
+        	ctrl.resize();
         },
         
         createTabs: function () {
