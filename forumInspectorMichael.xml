@@ -984,7 +984,7 @@ var ctrl = function () {
             for (var i in cachedPrefs) {
             	xx += i + ": " + cachedPrefs[i] + "\n";
             }
-            alert(xx);
+            //alert(xx);
             
             board.load(function (board) {
             	display.setDirection(board.dir);
@@ -1090,6 +1090,9 @@ var ctrl = function () {
 	        			var ids = [ ];
 	        			for (var j in ar) {
 	        				ids[j] = ar[j].id;
+//	        				if (ar[j].id is not in ctrl.getCPA(name)) {
+//	        					mark topic as new -- how ??
+//	        				}
 	        			}
 	        			prefs.setArray(name, ids);
 	        			ctrl.displayTopics(el, ar);
