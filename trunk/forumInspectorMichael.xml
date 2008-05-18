@@ -85,8 +85,9 @@ Board.prototype.parse = function (content) {
 		    e = getElClass(spans, 'gen');
 	    }
     }
-
-    this.title = getText(e);
+    if (e) {
+    	this.title = getText(e);
+    }
 };
 
 function getElClass(els, val) {
@@ -1107,7 +1108,7 @@ var ctrl = function () {
         
         displayTopics: function (el, topics) {
 			display.clear(el);
-			display.topics(el, topics);
+			display.topics(el, topics, newtopics);
         	ctrl.resize();
 		},
                 
