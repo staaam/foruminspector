@@ -1401,8 +1401,8 @@ var ctrl = function () {
         getRcntUpdtd: function () { return ctrl.getCPA(CONST.pRcntUpdtd); },
         getNewTopics: function () { return ctrl.getCPA(CONST.pNewTopics); },
 
-        setLastTopic: function (lastTopicId) { prefs.set(CONST.lastTopic, lastTopicId); },
-        setLastPost : function (lastPostId) { prefs.set(CONST.lastPost, lastPostId); },
+        setLastTopic: function (lastTopicId) { prefs.set(CONST.lastTopic, lastTopicId); alert("set " + lastTopicId);},
+        setLastPost : function (lastPostId) { prefs.set(CONST.lastPost, lastPostId); alert("set " + lastPostId);},
 
         resize: function (tabId) {
             _IG_AdjustIFrameHeight();
