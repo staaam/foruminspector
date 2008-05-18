@@ -42,6 +42,7 @@
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
 			var moduleID =__MODULE_ID__;
+			var dir = __BIDI_DIR__;
 		</script>
 
 		<div id ="beforeTabsDiv">
