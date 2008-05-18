@@ -99,9 +99,9 @@
 }
 
 .helpImage {
-	background-image:url(help.jpg);
-	height: 14px;
-	width: 14px;
+	background-image:url(help.gif);
+	height: 15px;
+	width: 27px;
 	cursor: hand;
 }
 
