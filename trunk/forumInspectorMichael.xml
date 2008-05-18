@@ -1122,7 +1122,7 @@ var ctrl = function () {
         
         displayTopics: function (el, topics) {
 			display.clear(el);
-			display.topics(el, topics, newtopics);
+			display.topics(el, topics);
         	ctrl.resize();
 		},
                 
