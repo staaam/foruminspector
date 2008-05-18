@@ -1483,7 +1483,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
 	    		author = getText(s);
 	    		break;
 	    	case 'postdetails':
-	    		details = getText(s);
+	    		details += getText(s);
 	    		break;
 	    	default:
     	}	
@@ -1509,7 +1509,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
     
     var post = ctrl.newPost(this, a);
-    post.text = author+"<br>"+details+"<br>"+text;
+    post.text = author+" ("+details+")<br>"+text;
     post.author = author;
     post.details = details;
     post.parseTopicTableRow(tr);
