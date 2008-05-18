@@ -611,7 +611,8 @@ var display = function () {
 				//if (!e) var e = window.event;
 				//e.cancelBubble = true;
 				//if (e.stopPropagation) e.stopPropagation();
-				window.open('http://foruminspector.googlecode.com/svn/trunk/help.html','mywindow','width=400,height=200');    
+				window.open("http://foruminspector.googlecode.com/svn/trunk/help.html",
+					"help","width=400,height=200,scrollbars=yes,status=no");    
 			}
 			addEventListener(helpLink, 'click', onClickHelp);
 	
