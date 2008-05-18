@@ -1245,7 +1245,7 @@ function getText(node) {
 	}
 	var text = node.innerText || node.text || node.textContent;
 	if (!text) {
-		text = "blya";
+		text = "";
 	}
 	return text.replace(/^\s*/, "").replace(/\s*$/, "");
 //	return node.text || node.textContent || (function(node){
@@ -1483,7 +1483,10 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
 	    		author = getText(s);
 	    		break;
 	    	case 'postdetails':
-	    		details += getText(s) + " ";
+	    		var t = getText(s);
+	    		if (t) {
+	    			details = t;
+	    		}
 	    		break;
 	    	default:
     	}	
