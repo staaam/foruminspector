@@ -170,7 +170,8 @@ var display = function () {
         },
         
         getTopicSubHeader: function ( topic ) {
-        	return labels.posts + ": " + topic.posts + " " +
+        	return labels.forum + ": <a href=\"" + topic.parent.url + "\" target=\"_blank\">" + topic.parent.title + "</a><br>" +
+        	labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
   			labels.views + ": " + topic.views + " " +
     		labels.lastPost + ": " + topic.lastPost.date + " " +

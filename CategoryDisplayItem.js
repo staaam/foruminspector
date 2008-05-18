@@ -75,6 +75,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		this.bylineDiv.className = "di-byline";
 		this.bylineDiv.innerHTML = subHeader;
 		this.header.appendChild(this.bylineDiv);
+		addEventListener(this.bylineDiv, 'click',onClickLink);
 	}
 	  	
    	this.myself.appendChild(this.header);
