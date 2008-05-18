@@ -1064,12 +1064,15 @@ var ctrl = function () {
 
     return {
         init: function () {
-            ctrl.createTabs();
             return ctrl.refresh();
         },
         
         refresh: function () {
         	alert("inside refresh");
+        	for (var i=tabs.getTabs().length-1; i>=0; i--) {
+        		tabs.removeTab(i);
+        	}
+            ctrl.createTabs();
     		cachedPrefs = {};
 
 		    allForums = {};
