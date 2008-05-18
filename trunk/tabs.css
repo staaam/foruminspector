@@ -100,6 +100,8 @@
 
 .helpImage {
 	background-image:url(help.jpg);
+	height: 14px;
+	width: 14px;
 }
 
 .gotoArrow-rtl {
