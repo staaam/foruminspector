@@ -81,6 +81,7 @@ ForumItem.prototype.visibleSubItems = function () {
 ForumItem.prototype.reload = function (callback) {
 	this.isLoaded = false;
     this.isLoading = true;
+    ctrl.increaseLoading();
     this.onLoadCallbacks.push(callback);
     var that = this;
     _IG_FetchContent(this.url, function (content) {
@@ -91,6 +92,7 @@ ForumItem.prototype.reload = function (callback) {
         	that.onLoadCallbacks[i](that);
         }
         that.onLoadCallbacks = [];
+        ctrl.decreaseLoading();
     });
 };
 

@@ -42,6 +42,7 @@ var ctrl = function () {
     var divRecTopics;
     
     var divStarred;
+    var loadingCount = 0;
     var displayGeneral = new DisplayGeneral();
 
     return {
@@ -54,7 +55,7 @@ var ctrl = function () {
         		tabs.removeTab(0);
         	}
         	//alert("inside refresh");
-
+			loadingCount = 0;
             ctrl.createTabs();
     		cachedPrefs = {};
 
@@ -139,6 +140,16 @@ var ctrl = function () {
 	        return tab;
         },
         
+        increaseLoading: function () {
+        	loadingCount++;
+        	display.setLoading(loadingCount);
+        },
+
+        decreaseLoading: function () {
+        	loadingCount--;
+        	display.setLoading(loadingCount);
+        },
+        
         createTabs: function () {
             divForumList = ctrl.createTab(CONST.showForums, "forums", ctrl.resize);
             divStarred   = ctrl.createTab(CONST.showStarred, "starred", ctrl.onStarred);
@@ -172,7 +183,7 @@ var ctrl = function () {
             	}
         		forum.load(function() {
         			diTopics = diTopics.concat(forum.selSubItems());
-        			ctrl.displayTopics(_gel(divStarred), diTopics.sort(sorters.byId));
+        			ctrl.displayTopics(_gel(divStarred), [], diTopics.sort(sorters.byId));
         		});
         	}
         },
@@ -207,20 +218,32 @@ var ctrl = function () {
         displayForumsTopics: function (el, sorter, name) {
         	try {
         		display.clear(el);
+    			var prevA = ctrl.getCPA(name);
+    			var prev = {};
+    			for (var i=0; i<prevA.length; i++) {
+    				prev[prevA[i]] = 1;
+    			}
+
 	            for (var i in allForums) {
 	            	var forum = allForums[i];
 	            	if (forum.isSelected()) {
 		        		forum.load(function() {
 		        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
+		        			
 		        			var ids = [ ];
+		        			var o = [];
+		        			var n = []; 
 		        			for (var j in ar) {
 		        				ids[j] = ar[j].id;
-	//	        				if (ar[j].id is not in ctrl.getCPA(name)) {
-	//	        					mark topic as new -- how ??
-	//	        				}
+		        				if (prev[ar[j].id]) {
+		        					o.push(ar[j]);		        					
+		        				}
+		        				else {
+		        					n.push(ar[j]);
+		        				}
 		        			}
 		        			try {
-			        			ctrl.displayTopics(el, ar);
+			        			ctrl.displayTopics(el, n, o);
 			        			prefs.setArray(name, ids);
 		        			} catch (e) {}
 		        		});
@@ -229,9 +252,9 @@ var ctrl = function () {
 	        } catch(e) {};
         },
         
-        displayTopics: function (el, topics) {
+        displayTopics: function (el, updTopics, oldTopics) {
 			display.clear(el);
-			display.topics(el, topics);
+			display.topics(el, updTopics, oldTopics);
         	ctrl.resize();
 		},
                 
@@ -315,10 +338,10 @@ var ctrl = function () {
         
         getLastTopic: function () { return ctrl.getCPI(CONST.lastTopic); },
         getLastPost : function () { return ctrl.getCPI(CONST.lastPost); },
+        getNewTopics: function () { return ctrl.getCPA(CONST.pNewTopics); },
+        getRcntUpdtd: function () { return ctrl.getCPA(CONST.pRcntUpdtd); },
         getMostViews: function () { return ctrl.getCPA(CONST.pMostViews); },
         getMostPosts: function () { return ctrl.getCPA(CONST.pMostPosts); },
-        getRcntUpdtd: function () { return ctrl.getCPA(CONST.pRcntUpdtd); },
-        getNewTopics: function () { return ctrl.getCPA(CONST.pNewTopics); },
 
         setLastTopic: function (lastTopicId) { prefs.set(CONST.lastTopic, lastTopicId); },
         setLastPost : function (lastPostId) { prefs.set(CONST.lastPost, lastPostId); },
