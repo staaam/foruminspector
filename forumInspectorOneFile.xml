@@ -638,7 +638,7 @@ var display = function () {
         	//a.style.color = "#000000";
         	a.className = "blackColor";
         	aSpan.appendChild(a);
-        	parentElem.appendChild(aDiv);
+        	parentElem.appendChild(aSpan);
         	
         	var helpSpan = document.createElement("div");
         	helpSpan.style.display="inline";
