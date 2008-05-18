@@ -628,6 +628,7 @@ var display = function () {
         	
         	var table = document.createElement("table");
         	table.className = "boardTitle";
+        	table.width = "100%";
         	var tr = document.createElement("tr");
         	table.appendChild(tr);
         	
