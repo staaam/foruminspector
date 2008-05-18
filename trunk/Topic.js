@@ -85,7 +85,7 @@ Topic.prototype.tryParsePostsTable = function (table) {
 };
 
 Topic.prototype.tryParsePostsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 2) {
         return false;
     }
@@ -96,9 +96,18 @@ Topic.prototype.tryParsePostsHeader = function (table) {
     
     return true;
 };
+function pushArr(arr1, arr2) {
+    for (var i=0; i<arr2.length;i++) {
+    	arr1.push(arr2[i]);
+    }
+    return arr1;
+}
 
 Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
-    var spans = tr.getElementsByTagName('span');
+    var spans = [];
+    spans = pushArr(spans, tr.getElementsByTagName('div'));
+    spans = pushArr(spans, tr.getElementsByTagName('span'));
+
     if (spans.length == 0) {
         return false;
     }
@@ -118,15 +127,23 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     if (text.length == 0) {
     	return false;
     }
-    var tb = tr.getElementsByTagName('table')[0];
-    if (!tb) {
+
+    var as = tr.getElementsByTagName('a');
+    var a;
+    for (var i in as) {
+    	try {
+    		a = this.mkFullUrl(getHref(as[i]));
+	    	if (Post.prototype.linkMatch(a)) {
+	    		break;
+	    	}
+    	} catch (e) {}
+    	a = null;
+    }
+    if (a == null) {
     	return false;
     }
-    var a = tb.getElementsByTagName('a')[0];
-    if (!a) {
-    	return false;
-    }
-    var post = ctrl.newPost(this, this.mkFullUrl(getHref(a)));
+    
+    var post = ctrl.newPost(this, a);
     post.text = text;
     post.parseTopicTableRow(tr);
     this.addItem(post);    

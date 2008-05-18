@@ -10,7 +10,12 @@ ForumItem.prototype.init = function (parent, url, title) {
     if (title == null) {
         this.title = url;
     }
-    this.id = this.linkMatch(url)[1];
+    try {
+    	this.id = this.linkMatch(url)[1];
+    }
+    catch (e) {
+    	alert(e);
+    }
     this.subItems = [];
     this.isLoaded = false;
     //printStr("new item url=" + this.url + " title=" + this.title);
@@ -83,6 +88,21 @@ ForumItem.prototype.onLoad = function (content) {
 ForumItem.prototype.parse = function (content) {
 };
 
+
+ForumItem.prototype.getTableHeader = function (table) {
+	var ths = table.getElementsByTagName('th');
+    if 	(ths == null || ths.length == 0) {
+        var tds = table.getElementsByTagName('td');
+        ths = [];
+        for (var i in tds) {
+        	var c = tds[i].className; 
+        	if (c && (c.indexOf("thCorner") >= 0 || c.indexOf("thTop") >= 0)) {
+        		ths.push(tds[i]);
+        	}
+        }
+    }
+    return ths;
+};
 //ForumItem.prototype.display = function () {
 //    ctrl.display(this);
 //};
