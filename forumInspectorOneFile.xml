@@ -869,22 +869,28 @@ var display = function () {
             		display.setSpecialTabClass( aTab );
             	}
             	
-            	for(var key in updatedTabs)
+            	if (updatedTabs)
             	{
-            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML)
-            		{
-            			tab.getNameContainer().className =
-            				tab.getNameContainer().className + " isItalic";
-            		}
+	            	for(var key in updatedTabs)
+	            	{
+	            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML)
+	            		{
+	            			tab.getNameContainer().className =
+	            				tab.getNameContainer().className + " isItalic";
+	            		}
+	            	}
             	}
             	
-            	for(var key in newTabs)
+            	if (newTabs)
             	{
-            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML)
-            		{
-            			tab.getNameContainer().className =
-            				tab.getNameContainer().className + " isBold";
-            		}
+	            	for(var key in newTabs)
+	            	{
+	            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML)
+	            		{
+	            			tab.getNameContainer().className =
+	            				tab.getNameContainer().className + " isBold";
+	            		}
+	            	}
             	}
             }
         },
