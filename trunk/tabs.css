@@ -50,6 +50,11 @@
 	padding: 0px;
 }
 
+.postAuthor {
+	color:#7E7E7E;
+	font-size:x-small;
+}
+
 .titleTable {
 	width:100%;
 }
