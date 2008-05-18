@@ -647,7 +647,10 @@ var display = function () {
         	titleTD.appendChild(a);
         	tr.appendChild(titleTD);
         	
+        	alert("!");
         	var buttonTD = document.createElement("td");
+        	alert("!!");
+        	
         	buttonTD.width = "0%";
         	buttonTD.className = "helpSpan";
         	buttonTD.dir = display.oppositeDirection(globalDir);
