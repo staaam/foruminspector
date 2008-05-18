@@ -596,8 +596,9 @@ var display = function () {
         createBoardTitle: function ( parentElem, board ){
         	
         	parentElem.className = "boardTitle thinBorder";
-        	var span = document.createElement("span");
-        	span.innerHTML = board.title;
+        	var a = document.createElement("a");
+        	a.innerHTML = board.title;
+        	a.href = board.url;
         	parentElem.appendChild(span);
         	
         	display.reduceSpanText( span, 310 );
