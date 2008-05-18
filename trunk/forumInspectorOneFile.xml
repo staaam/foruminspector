@@ -383,9 +383,12 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		
 	this.header.appendChild(gotoLink);
 	
- 	this.loadingSpan = document.createElement("span");
+ 	this.loadingSpan = document.createElement("img");
  	this.loadingSpan.className = "di-loading";
-	this.loadingSpan.innerHTML = "(Loading...)";
+	//this.loadingSpan.innerHTML = "(Loading...)";
+	this.loadingSpan.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green.gif";
+	//this.loadingSpan.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green_static.gif";
+	
 	this.header.appendChild(this.loadingSpan);
 	
 	if (selectFunction != null) {
