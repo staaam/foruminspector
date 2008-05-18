@@ -1162,14 +1162,22 @@ var ctrl = function () {
         },
         
         createTab: function (sp, name, callback) {
-        	if (prefs.getBool(sp))
-	        	return tabs.addDynamicTab(prefs.getMsg(name), 
-	            	function() { try {
-	            		display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); 
-	            	} catch (e) {} });
-	        var div = document.createElement("div");
-	        div.id = Math.random();
-	        return div.id;
+        	var nm = prefs.getMsg(name);
+        	var tab = tabs.addDynamicTab(nm, 
+            	function() { try {
+            		display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); 
+            	} catch (e) {} });
+            	
+        	if (!prefs.getBool(sp)) {
+        		var tabs = tabs.getTabs();
+        		for (var i in tabs) {
+        			if (tabs[i].getName() == nm) {
+        				tabs.removeTab(tabs[i].getIndex());
+        				break;
+        			}
+        		}
+        	}
+	        return tab;
         },
         
         createTabs: function () {
