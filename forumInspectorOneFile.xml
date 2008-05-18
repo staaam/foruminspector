@@ -546,7 +546,6 @@ var display = function () {
         },
         
         setGlobalDirection: function (dir) {
-        	alert(dir);
         	display.globalDir = dir;
         },
         
@@ -656,7 +655,7 @@ var display = function () {
         	var buttonTD = document.createElement("td");
         	alert("!!");
         	
-        	buttonTD.width = "0%";
+        	buttonTD.style.width = "0%";
         	buttonTD.className = "helpSpan";
         	alert("!!!");
         	alert(display.globalDir);
