@@ -909,7 +909,7 @@ ForumItem.prototype.parse = function (content) {
 
 ForumItem.prototype.getTableHeader = function (table) {
 	var ths = table.getElementsByTagName('th');
-    if (!ths || ths.length == 0) {
+    if 	(ths == null || ths.length == 0) {
         var tds = table.getElementsByTagName('td');
         ths = [];
         for (var i in tds) {
