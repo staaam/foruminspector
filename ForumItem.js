@@ -18,6 +18,8 @@ ForumItem.prototype.init = function (parent, url, title) {
     }
     this.subItems = [];
     this.isLoaded = false;
+    this.isLoading = false;
+    this.onLoadCallbacks = [];
     //printStr("new item url=" + this.url + " title=" + this.title);
 }
 
@@ -42,6 +44,10 @@ ForumItem.prototype.load = function (callback) {
     if (this.isLoaded) {
     	callback(this);
         return;
+    }
+    if (this.isLoading) {
+    	this.onLoadCallbacks.push(callback);
+    	return;
     }
     this.reload(callback);
 };
@@ -73,11 +79,18 @@ ForumItem.prototype.visibleSubItems = function () {
 }
 
 ForumItem.prototype.reload = function (callback) {
-    this.isLoaded = true;
+	this.isLoaded = false;
+    this.isLoading = true;
+    this.onLoadCallbacks.push(callback);
     var that = this;
     _IG_FetchContent(this.url, function (content) {
         that.onLoad(content);
-        callback(that);
+        that.isLoaded = true;
+        that.isLoading = false;
+        for (var i in that.onLoadCallbacks) {
+        	that.onLoadCallbacks[i](that);
+        }
+        that.onLoadCallbacks = [];
     });
 };
 
