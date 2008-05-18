@@ -604,6 +604,22 @@ var display = function () {
         	a.className = "blackColor";
         	parentElem.appendChild(a);
         	
+        	var helpLink = document.createElement("a");
+			//gotoLink.target = "_blank";
+			//gotoLink.href = headerUrl;
+			var onClickHelp = function (e) {
+				//if (!e) var e = window.event;
+				//e.cancelBubble = true;
+				//if (e.stopPropagation) e.stopPropagation();
+				window.open('http://www.pageresource.com/jscript/jex5.htm','mywindow','width=400,height=200');    
+			}
+			addEventListener(helpLink, 'click', onClickHelp);
+	
+        	var helpImg = document.createElement("img");
+			gotoImg.className = "noborder helpImage";
+			gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
+			gotoLink.appendChild(gotoImg);
+        	
         	display.reduceSpanText( a, 310 );
         },
         
