@@ -384,6 +384,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		this.bylineDiv.className = "di-byline";
 		this.bylineDiv.innerHTML = subHeader;
 		this.header.appendChild(this.bylineDiv);
+		addEventListener(bylineDiv, 'click',onClickLink);
 	}
 	  	
    	this.myself.appendChild(this.header);
@@ -700,7 +701,7 @@ var display = function () {
         },
         
         getTopicSubHeader: function ( topic ) {
-        	return labels.forum + ": <a href=\"" + topic.parent.url + "\" target=\"_blank\">" + topic.parent.title + "<\a><br>" +
+        	return labels.forum + ": <a href=\"" + topic.parent.url + "\" target=\"_blank\">" + topic.parent.title + "</a><br>" +
         	labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
   			labels.views + ": " + topic.views + " " +
