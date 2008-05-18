@@ -605,16 +605,8 @@ var display = function () {
         	parentElem.appendChild(a);
         	
         	var helpLink = document.createElement("a");
-			//gotoLink.target = "_blank";
-			//gotoLink.href = headerUrl;
-			var onClickHelp = function (e) {
-				//if (!e) var e = window.event;
-				//e.cancelBubble = true;
-				//if (e.stopPropagation) e.stopPropagation();
-				window.open("http://foruminspector.googlecode.com/svn/trunk/help.html",
-					"help","width=750,height=500,scrollbars=yes,status=no");    
-			}
-			addEventListener(helpLink, 'click', onClickHelp);
+			helpLink.target = "_blank";
+			helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
 	
         	var helpImg = document.createElement("img");
 			helpImg.className = "noborder helpImage";
