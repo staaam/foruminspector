@@ -630,6 +630,14 @@ var display = function () {
         	
         	parentElem.className = "boardTitle thinBorder";
         	
+        	/*var str = "<table><tr><td>" +
+        	"<a class=\"blackColor\" href=\""+ 
+        	board.url + "\" target=\"_blank\">" + board.title + "</a></td>" +
+        	"<td class=\"buttonsTD\">" +
+        	
+        	 + "</td></tr></table>";
+        	
+        	*/
         	var table = document.createElement("table");
         	table.className = "boardTitle";
         	//table.width = "100%";
@@ -672,7 +680,6 @@ var display = function () {
 			refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
 			//addEventListener(refreshImg, 'click', ctrl.refresh);
         	buttonTD.appendChild(refreshImg);
-        	parentElem.innerHTML="SAdf";
         	//tr.appendChild(buttonTD);
         	//display.reduceSpanText( a, 310 );
         },
