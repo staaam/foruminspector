@@ -630,13 +630,13 @@ var display = function () {
         	
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var str = "<table><tr><td>" +
+        	var str = "<table class=\"boardTitle\"><tr><td>" +
         	"<a class=\"blackColor\" href=\""+ 
         	board.url + "\" target=\"_blank\">" + board.title + "</a></td>" +
         	"<td class=\"buttonsTD\" dir=\""+display.oppositeDirection(display.globalDir)+"\">" +
         	"<a href=\"http://foruminspector.googlecode.com/svn/trunk/help.html\" target=\"_blank\">"+
-        	"	<img class=\"thinImgBorder helpImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
-        	"	</img>" +
+        	"<img class=\"thinImgBorder helpImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
+        	"</img>" +
         	"</a>" +
         	"<img class=\"noBorder refreshImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
         	"</img>"
