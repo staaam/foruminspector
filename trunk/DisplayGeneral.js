@@ -35,7 +35,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null, true);
+        			null, loadCategoryFunction, null, null, true, false);
         },
         
         createSecondaryForumItem: function (parentElem, forum) {
@@ -86,7 +86,7 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction, false );
+        			topic.isSelected(), selectTopicFunction, false, topic.isUpdated() );
         },
         
         createBoardInfo: function ( parentElem, board )
@@ -104,6 +104,14 @@ var display = function () {
 				"</div>";
         },
         
+        setLoading: function( isLoading ) {
+        	 var img = _gel("loadingImage");
+        	 if(isLoading)
+        	 	img.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green.gif";
+        	 else
+        	 	img.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green_static.gif";
+        },
+        
         createBoardTitle: function ( parentElem, board ){
         	
         	parentElem.className = "boardTitle thinBorder";
@@ -116,11 +124,16 @@ var display = function () {
         	"<img class=\"thinImgBorder helpImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
         	"</img>" +
         	"</a>" +
+        	"<img id=\"loadingImage\" class=\"noBorder loadingImage\"  src=\"http://foruminspector.googlecode.com/svn/trunk/loading_big_green.gif\">"+
+        	"</img>" +
         	"<img class=\"noBorder refreshImage\" onclick=\"ctrl.refresh();\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
-        	"</img>"
-        	 + "</td></tr></table>";
-        	
+        	"</img>" +
+        	"</td></tr></table>";        	
         	parentElem.innerHTML = str;
+        	
+        	//var img = _gel("loadingImage");
+        	//alert(img);
+        	
         	
         	//var table = document.createElement("table");
         	//table.className = "boardTitle";
