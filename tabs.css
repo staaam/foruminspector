@@ -172,6 +172,14 @@ body {
 	line-height:0pt;
 	overflow:hidden;
 }
+
+.post-divider {
+	background-color:#7070CC;
+	font-size:2px;
+	height:3px;
+	line-height:0pt;
+	overflow:hidden;
+}
 			
 .listDisplayItem .solidbox {
 	background:#E5ECF9;
