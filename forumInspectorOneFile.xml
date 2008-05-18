@@ -616,9 +616,10 @@ var display = function () {
 			addEventListener(helpLink, 'click', onClickHelp);
 	
         	var helpImg = document.createElement("img");
-			gotoImg.className = "noborder helpImage";
-			gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
-			gotoLink.appendChild(gotoImg);
+			helpImg.className = "noborder helpImage";
+			helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
+			helpLink.appendChild(helpImg);
+        	parentElem.appendChild(helpLink);
         	
         	display.reduceSpanText( a, 310 );
         },
