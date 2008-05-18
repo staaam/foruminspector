@@ -783,7 +783,7 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
         ths = [];
         for (var i in tds) {
         	var c = tds[i].className; 
-        	if (c.indexOf("thCorner") || c.indexOf("thTop")) {
+        	if (c && (c.indexOf("thCorner") || c.indexOf("thTop"))) {
         		ths.push(tds[i]);
         	}
         }
