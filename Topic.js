@@ -113,15 +113,30 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
     
     var text = "";
+    var author = "";
+    var details = "";
     for (var i=0; i<spans.length;i++) {
-    	if (spans[i].className == 'postbody') {
-    		var imgs = spans[i].getElementsByTagName('img');
-    		for (var j=0;j<imgs.length;j++) {
-    			imgs[j].src = this.mkFullUrl(getSrc(imgs[j]));
-    			imgs[j].className="outerImage";
-    		}
-    		text = text + spans[i].innerHTML;
-    	}
+    	var s = spans[i];
+    	switch (s.className) { 
+	    	case 'postbody' :
+	    		var imgs = s.getElementsByTagName('img');
+	    		for (var j=0;j<imgs.length;j++) {
+	    			imgs[j].src = this.mkFullUrl(getSrc(imgs[j]));
+	    			imgs[j].className="outerImage";
+	    		}
+	    		text = text + s.innerHTML;
+	    		break;
+	    	case 'name' :
+	    		author = getText(s);
+	    		break;
+	    	case 'postdetails':
+	    		var t = getText(s);
+	    		if (t) {
+	    			details = t;
+	    		}
+	    		break;
+	    	default:
+    	}	
     }
     
     if (text.length == 0) {
@@ -144,7 +159,10 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
     
     var post = ctrl.newPost(this, a);
+    //post.text = labels.author + ": " + author+" ("+details+")<br>"+text;
     post.text = text;
+    post.author = author;
+    post.details = details;
     post.parseTopicTableRow(tr);
     this.addItem(post);    
     // title/link is is first <a> tag, so look into it
