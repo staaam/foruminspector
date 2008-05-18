@@ -43,6 +43,7 @@
  		<script>
 			var moduleID =__MODULE_ID__;
 			var globalDir = "__BIDI_DIR__";
+			alert(globalDir);
 		</script>
 
 		<div id ="beforeTabsDiv">
