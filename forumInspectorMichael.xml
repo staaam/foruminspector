@@ -508,11 +508,15 @@ var display = function () {
         createBoardTitle: function ( parentElem, board ){
         	
         	parentElem.className = "boardTitle thinBorder";
-        	var span = document.createElement("span");
-        	span.innerHTML = board.title;
-        	parentElem.appendChild(span);
+        	var a = document.createElement("a");
+        	a.innerHTML = board.title;
+        	a.href = board.url;
+        	a.target = "_blank";
+        	//a.style.color = "#000000";
+        	a.className = "blackColor";
+        	parentElem.appendChild(a);
         	
-        	display.reduceSpanText( span, 310 );
+        	display.reduceSpanText( a, 310 );
         },
         
         getForumSubHeader: function ( forum ) {
@@ -780,7 +784,7 @@ Forum.prototype.tryParseTopicsHeader = function (table) {
         for (var i in tds) {
         	var c = tds[i].className; 
         	if (c.indexOf("thCorner") || c.indexOf("thTop")) {
-        		c.push(tds[i]);
+        		ths.push(tds[i]);
         	}
         }
     }
