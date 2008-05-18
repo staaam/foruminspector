@@ -41,18 +41,18 @@ Legend:
 
 
 --- Kolman ---
-+++ 2) (Kolman) Resizing does not work properly (starts small)
-4) (Kolman) Loading label takes place and make the selection on nest row
-   - make it absolute
+++. 2) (Kolman) Resizing does not work properly (starts small) - Sometimes does not make it smaller.
+27) Scroller in IE not working well	--> or is it low?
 7) The meaning of selection on forum tab is different then on other tabs, should
 	make it better
 	- (Kolman) Not clear what checkboxes do, make them as stared picture
 	- (Kolman) On forums checkbox meaning is: visible in other tabs (monitored)
 26) (Kolman) formatting problem with hebrew topic names ending in English text.
 	--> Test case: first forum in asat board (agudat studentim - aforum areshi), most views -> topic "P" :)
+4) (Kolman) Loading label takes place and make the selection on nest row
+   - make it absolute
 29)	(Kolman) When showing posts one should understand that not all posts are shown
 		also should understand that only the beginning or end is shown.
-27) Scroller in IE not working well		--> or is it low?
 
 
 
