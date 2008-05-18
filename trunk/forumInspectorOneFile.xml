@@ -523,6 +523,13 @@ var display = function () {
         	display.dir = dir;
         },
         
+        oppositeDirection: function ( dir ) {
+        	if (dir == "rtl")
+        		return "ltr";
+        	
+        	return "rtl";
+        },
+        
         createCategoryItem: function (parentElem, category) {
         	var loadCategoryFunction = function(callback) 
         		{ category.load( function ( o ) { callback( o.visibleSubItems() ); } ); };
