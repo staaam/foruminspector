@@ -104,6 +104,7 @@ Board.prototype.parseForumsTable = function (table) {
             forum.parseBoardTableRow(tr);
             if (forum.lastPost.id > lastPost) {
             	lastPost = forum.lastPost.id;
+            	//alert("new last post " + lastPost);
             }
             cat.addItem(forum);
         }
