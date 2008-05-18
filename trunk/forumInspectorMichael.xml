@@ -828,7 +828,12 @@ ForumItem.prototype.init = function (parent, url, title) {
     if (title == null) {
         this.title = url;
     }
-    this.id = this.linkMatch(url)[1];
+    try {
+    	this.id = this.linkMatch(url)[1];
+    }
+    catch (e) {
+    	alert(e);
+    }
     this.subItems = [];
     this.isLoaded = false;
     //printStr("new item url=" + this.url + " title=" + this.title);
