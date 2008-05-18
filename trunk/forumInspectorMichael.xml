@@ -235,9 +235,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	var headerTextSpan = document.createElement("span");
 	headerTextSpan.className = "di-header-span";
 	if (isUpdated)
-		headerTextSpan.className = headerTextSpan.className + " isBold";
-	if (isNew)
 		headerTextSpan.className = headerTextSpan.className + " isItalic";
+	if (isNew)
+		headerTextSpan.className = headerTextSpan.className + " isBold";
 
 	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
