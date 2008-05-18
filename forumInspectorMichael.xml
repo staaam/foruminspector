@@ -208,7 +208,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	
-   	alert("d:" + display + ", h:"+ this.header);
+   	alert("dir:" + display.dir + ", h:"+ this.header);
    	this.header.dir = display.dir;	
    	alert("x");
    	if(display.dir == "rtl")
