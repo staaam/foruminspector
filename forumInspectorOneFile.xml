@@ -586,6 +586,7 @@ var display = function () {
         	var span = document.createElement("span");
         	span.className = "postAuthor";
         	span.innerHTML = str;
+        	span.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
         	parentElem.appendChild(span);
         	
         	var postItem = document.createElement("div");
