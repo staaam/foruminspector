@@ -23,6 +23,7 @@ Legend:
 === 12) (Kolman) help button!!! 						--> I think right place to put it is near the Board Title (above all tabs), probably as a small picture (Question sign?)  OR in the About page (accessible in the same place as settings)  
 	(Kolman & Michael) update inner text
 <<<	34) (Kolman & Michael) Make is loading function + make loading display on title
+36) Test mumlatz - japanese site.
 
 
 --- Michael ---
