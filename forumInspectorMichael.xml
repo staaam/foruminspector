@@ -1246,26 +1246,28 @@ var ctrl = function () {
         },
         
         displayForumsTopics: function (el, sorter, name) {
-        	try { display.clear(el); } catch(e) {};
-            for (var i in allForums) {
-            	var forum = allForums[i];
-            	if (forum.isSelected()) {
-	        		forum.load(function() {
-	        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
-	        			var ids = [ ];
-	        			for (var j in ar) {
-	        				ids[j] = ar[j].id;
-//	        				if (ar[j].id is not in ctrl.getCPA(name)) {
-//	        					mark topic as new -- how ??
-//	        				}
-	        			}
-	        			try {
-		        			ctrl.displayTopics(el, ar);
-		        			prefs.setArray(name, ids);
-	        			} catch (e) {}
-	        		});
-            	}
-        	}
+        	try {
+        		display.clear(el);
+	            for (var i in allForums) {
+	            	var forum = allForums[i];
+	            	if (forum.isSelected()) {
+		        		forum.load(function() {
+		        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
+		        			var ids = [ ];
+		        			for (var j in ar) {
+		        				ids[j] = ar[j].id;
+	//	        				if (ar[j].id is not in ctrl.getCPA(name)) {
+	//	        					mark topic as new -- how ??
+	//	        				}
+		        			}
+		        			try {
+			        			ctrl.displayTopics(el, ar);
+			        			prefs.setArray(name, ids);
+		        			} catch (e) {}
+		        		});
+	            	}
+	        	}
+	        } catch(e) {};
         },
         
         displayTopics: function (el, topics) {
