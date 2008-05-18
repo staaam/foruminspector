@@ -1110,7 +1110,7 @@ var ctrl = function () {
         
         createTab: function (sp, name, callback) {
         	if (prefs.getBool(sp))
-	        	return tabs.addDynamicTab(prefs.getMsg(), 
+	        	return tabs.addDynamicTab(prefs.getMsg(name), 
 	            	function() { display.setSpecialTabsClass(tabs, prefs); callback(); });
 	        return document.createElement("div");
         },
