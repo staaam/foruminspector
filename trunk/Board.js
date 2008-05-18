@@ -10,6 +10,10 @@ Board.prototype.parse = function (content) {
         return;
     }
     this.dir = content.match(/<html dir="rtl">/i) ? "rtl" : "ltr";
+    this.boardInfo = {
+    	general: "Sorry, no information availible",
+    	users: "Sorry, no information availible"
+    };
     var dom = toDOM(getBody(content));
     var tables = dom.getElementsByTagName('table');
     for (var i=0; i<tables.length; i++) {
