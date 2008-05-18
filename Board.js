@@ -31,8 +31,9 @@ Board.prototype.parse = function (content) {
 		    e = getElClass(spans, 'gen');
 	    }
     }
-
-    this.title = getText(e);
+    if (e) {
+    	this.title = getText(e);
+    }
 };
 
 function getElClass(els, val) {
@@ -114,7 +115,7 @@ Board.prototype.parseForumsTable = function (table) {
 Board.prototype.idRegEx = /\/(.*)/;
 
 Board.prototype.tryParseForumsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 4) {
         return false;
     }

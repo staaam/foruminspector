@@ -86,7 +86,7 @@ Forum.prototype.tryParseTopicsTable = function (table) {
 };
 
 Forum.prototype.tryParseTopicsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 4) {
         return false;
     }
