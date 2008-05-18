@@ -628,6 +628,7 @@ var display = function () {
         	parentElem.className = "boardTitle thinBorder";
         	
         	var table = document.createElement("table");
+        	table.className = "boardTitle";
         	var tr = document.createElement("tr");
         	table.appendChild(tr);
         	
