@@ -15,6 +15,10 @@ var display = function () {
         	display.boardDir = dir;
         },
         
+        setGlobalDirection: function (dir) {
+        	display.globalDir = dir;
+        },
+        
         oppositeDirection: function ( dir ) {
         	if (dir == "rtl")
         		return "ltr";
@@ -96,51 +100,64 @@ var display = function () {
         	
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var table = document.createElement("table");
-        	table.className = "boardTitle";
-        	var tr = document.createElement("tr");
-        	table.appendChild(tr);
+        	var str = "<table class=\"titleTable boardTitle\"><tr><td>" +
+        	"<a class=\"blackColor\" href=\""+ 
+        	board.url + "\" target=\"_blank\">" + board.title + "</a></td>" +
+        	"<td class=\"buttonsTD\" dir=\""+display.oppositeDirection(display.globalDir)+"\">" +
+        	"<a href=\"http://foruminspector.googlecode.com/svn/trunk/help.html\" target=\"_blank\">"+
+        	"<img class=\"thinImgBorder helpImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
+        	"</img>" +
+        	"</a>" +
+        	"<img class=\"noBorder refreshImage\" onclick=\"ctrl.refresh();\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
+        	"</img>"
+        	 + "</td></tr></table>";
         	
-        	var aSpan = document.createElement("td");
-        	aSpan.className = "titleSpan";
+        	parentElem.innerHTML = str;
         	
-        	var a = document.createElement("a");
-        	a.innerHTML = board.title;
-        	a.href = board.url;
-        	a.target = "_blank";
+        	//var table = document.createElement("table");
+        	//table.className = "boardTitle";
+        	//table.width = "100%";
+        	//parentElem.appendChild(table);
+        	
+        	//var tr = document.createElement("tr");
+        	//table.appendChild(tr);
+        	
+        	//var titleTD = document.createElement("td");
+        	//titleTD.className = "titleSpan";
+        	
+        	//var a = document.createElement("a");
+        	//a.innerHTML = board.title;
+        	//a.href = board.url;
+        	//a.target = "_blank";
         	//a.style.color = "#000000";
-        	a.className = "blackColor";
-        	aSpan.appendChild(a);
-        	tr.appendChild(aSpan);
+        	//a.className = "blackColor";
+        	//titleTD.appendChild(a);
+        	//tr.appendChild(titleTD);
         	
-        	var refreshTD = document.createElement("td");
-       		
-        	var refreshImg = document.createElement("img");
-			refreshImg.className = "noBorder refreshImage";
-			refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
-			//addEventListener(refreshImg, 'click',ctrl.refresh());
-			
-        	refreshTD.appendChild(refreshImg);
-        	tr.appendChild(refreshTD);
+        	//var buttonTD = document.createElement("td");
         	
-        	var helpSpan = document.createElement("td");
-        	helpSpan.className = "helpSpan";
-        	helpSpan.dir = display.oppositeDirection(globalDir);
+        	//buttonTD.style.width = "0%";
+        	///buttonTD.className = "helpSpan";
+        	//alert(display.globalDir);
+        	//buttonTD.dir = display.oppositeDirection(display.globalDir);
         	
-        	var helpLink = document.createElement("a");
-			helpLink.target = "_blank";
-			helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
+        	//var helpLink = document.createElement("a");
+			//helpLink.target = "_blank";
+			//helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
 	
-        	var helpImg = document.createElement("img");
-			helpImg.className = "thinImgBorder helpImage";
-			helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
-			helpLink.appendChild(helpImg);
-			helpSpan.appendChild(helpLink);
-        	tr.appendChild(helpSpan);
+        	//var helpImg = document.createElement("img");
+			//helpImg.className = "thinImgBorder helpImage";
+			//helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
+			//helpLink.appendChild(helpImg);
+			//buttonTD.appendChild(helpLink);
         	
-        	parentElem.appendChild(table);
-        	
-        	display.reduceSpanText( a, 310 );
+        	//var refreshImg = document.createElement("img");
+			//refreshImg.className = "noBorder refreshImage";
+			//refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
+			//addEventListener(refreshImg, 'click', ctrl.refresh);
+        	//buttonTD.appendChild(refreshImg);
+        	//tr.appendChild(buttonTD);
+        	//display.reduceSpanText( a, 310 );
         },
         
         getForumSubHeader: function ( forum ) {
