@@ -24,7 +24,7 @@ Legend:
 	(Kolman & Michael) update inner text
 <<<	34) (Kolman & Michael) Make is loading function + make loading display on title
 36) Test mumlatz - japanese site.
-
+37) Identify phpBB version and saying cannot read blah
 
 --- Michael ---
 11) Michael) add specifically what versions of what we are supporting, do more testing on other forums
