@@ -25,8 +25,8 @@ Legend:
 
 --- Michael ---
 11) Michael) add specifically what versions of what we are supporting, do more testing on other forums
-    - http://mozilla.org.il/board/
-    - http://forums.mozillazine.org/
+    - http://mozilla.org.il/board/   -- phpBB3
+=== - http://forums.mozillazine.org/
     - Check on many
 18) (Michael) add option for choosing which tabs to show
 22) (Michael) Add more preferences as promissed, TODO - what exact 

@@ -297,7 +297,7 @@ function getText(node) {
 	}
 	var text = node.innerText || node.text || node.textContent;
 	if (!text) {
-		text = "blya";
+		text = "";
 	}
 	return text.replace(/^\s*/, "").replace(/\s*$/, "");
 //	return node.text || node.textContent || (function(node){
