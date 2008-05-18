@@ -1241,7 +1241,7 @@ var ctrl = function () {
             	}
         		forum.load(function() {
         			diTopics = diTopics.concat(forum.selSubItems());
-        			ctrl.displayTopics(_gel(divStarred), diTopics.sort(sorters.byId));
+        			ctrl.displayTopics(_gel(divStarred), [], diTopics.sort(sorters.byId));
         		});
         	}
         },
