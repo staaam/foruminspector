@@ -50,6 +50,13 @@
 	padding: 2px;
 }
 
+.titleSpan {
+}
+
+.helpSpan {
+	position: relative;
+}
+
 .thinImgBorder {
 	border-top: 1px solid #C5D7EF;
 	border-left: 1px solid #C5D7EF;
