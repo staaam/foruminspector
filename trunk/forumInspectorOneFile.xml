@@ -614,7 +614,7 @@ var display = function () {
         	parentElem.appendChild(a);
         	
         	var helpDiv = document.createElement("div");
-        	helpDiv.dir = oppositeDirection(display.dir);
+        	helpDiv.dir = display.oppositeDirection(display.dir);
         	
         	var helpLink = document.createElement("a");
 			helpLink.target = "_blank";
