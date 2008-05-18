@@ -46,7 +46,7 @@
 	font-size:medium;
 	font-weight:bold;
 	background-color:#E5ECF9;
-	display:block;
+	display: relative;
 	padding: 2px;
 }
 
