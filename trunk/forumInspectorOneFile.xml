@@ -599,7 +599,7 @@ var display = function () {
         	var a = document.createElement("a");
         	a.innerHTML = board.title;
         	a.href = board.url;
-        	parentElem.appendChild(span);
+        	parentElem.appendChild(a);
         	
         	display.reduceSpanText( span, 310 );
         },
