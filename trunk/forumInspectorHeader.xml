@@ -24,19 +24,27 @@
     <UserPref name="nTopics" display_name="__MSG_numTopics__" default_value="10" />
        
     <UserPref name="defTab" display_name="__MSG_defTabs__" datatype="enum" default_value="0">
-	    <EnumValue value="0" display_value="__MSG_forums__"/>
-	    <EnumValue value="1" display_value="__MSG_starred__"/>
-	    <EnumValue value="2" display_value="__MSG_latestT__"/>
-	    <EnumValue value="3" display_value="__MSG_recentlyUpdated__"/>
-	    <EnumValue value="4" display_value="__MSG_mostViews__"/>
-	    <EnumValue value="5" display_value="__MSG_mostPosts__"/>
-	    <EnumValue value="6" display_value="__MSG_boardInfo__"/>
+	    <EnumValue value="forums" display_value="__MSG_forums__"/>
+	    <EnumValue value="starred" display_value="__MSG_starred__"/>
+	    <EnumValue value="latestT" display_value="__MSG_latestT__"/>
+	    <EnumValue value="recentlyUpdated" display_value="__MSG_recentlyUpdated__"/>
+	    <EnumValue value="mostViews" display_value="__MSG_mostViews__"/>
+	    <EnumValue value="mostPosts" display_value="__MSG_mostPosts__"/>
+	    <EnumValue value="boardInfo" display_value="__MSG_boardInfo__"/>
     </UserPref>
    
     <UserPref name="showForums" display_name="Show Forums" datatype="enum" default_value="1">
 	    <EnumValue value="1" display_value="All"/>
 	    <EnumValue value="0" display_value="Selected Only"/>
     </UserPref>
+
+    <UserPref name="s0" display_name="Show Tab __MSG_forums__" datatype="bool" default_value="true" />
+    <UserPref name="s1" display_name="Show Tab __MSG_starred__" datatype="bool" default_value="true" />
+    <UserPref name="s2" display_name="Show Tab __MSG_latestT__" datatype="bool" default_value="true" />
+    <UserPref name="s3" display_name="Show Tab __MSG_recentlyUpdated__" datatype="bool" default_value="true" />
+    <UserPref name="s4" display_name="Show Tab __MSG_mostViews__" datatype="bool" default_value="true" />
+    <UserPref name="s5" display_name="Show Tab __MSG_mostPosts__" datatype="bool" default_value="true" />
+    <UserPref name="s6" display_name="Show Tab __MSG_boardInfo__" datatype="bool" default_value="true" />
 
     <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />

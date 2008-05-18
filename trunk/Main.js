@@ -9,12 +9,20 @@ var CONST = {
 	pRcntUpdtd: "ru",
 	pNewTopics: "nt",
 	
+	showForums: "s0",
+	showStarred: "s1",
+	showNewTopics: "s2",
+	showRecntUpd: "s3",
+	showMostViews: "s4",
+	showMostPosts: "s5",
+	showBoadrInfo: "s6",
+	
 	NULL: null
 };
 
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
-	var tabs = new _IG_Tabs(moduleID, "Forums", _gel("TabsDiv"));
+	var tabs = new _IG_Tabs(moduleID, prefs.getMsg(prefs.getString("defTab")), _gel("TabsDiv"));
     var board;
     
     var cachedPrefs = {};
@@ -38,11 +46,16 @@ var ctrl = function () {
 
     return {
         init: function () {
-            ctrl.createTabs();
             return ctrl.refresh();
         },
         
         refresh: function () {
+        	while(tabs.getTabs().length>0) {
+        		tabs.removeTab(0);
+        	}
+        	//alert("inside refresh");
+
+            ctrl.createTabs();
     		cachedPrefs = {};
 
 		    allForums = {};
@@ -67,20 +80,24 @@ var ctrl = function () {
             }
             //alert(xx);
             
-            board.load(function (board) {
-            	display.setBoardDirection(board.dir);
-            	display.setGlobalDirection(globalDir);
-            	tabs.setSelectedTab(prefs.getInt("defTab"));
-            	display.createBoardTitle( _gel("beforeTabsDiv"), board );
-            	display.createBoardInfo(_gel(divBoardInfo), board);
-            	ctrl.showForums();
-	        });
-	        
             for (var i=0;i<selForums.length;i++) {
             	var fid = selForums[i];
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
                 forum.load(function(){});
             }
+            board.load(function (board) {
+            	display.setBoardDirection(board.dir);
+            	display.setGlobalDirection(globalDir);
+            	display.createBoardTitle( _gel("beforeTabsDiv"), board );
+            	display.createBoardInfo(_gel(divBoardInfo), board);
+            	var tab = tabs.getSelectedTab();
+            	tabs.setSelectedTab(tab.getIndex());
+            	
+            	ctrl.onForumsSelUpdate();
+            	ctrl.onTopicsSelUpdate();
+            	ctrl.showForums();
+	        });
+	        
             return false;
         },
         
@@ -89,6 +106,9 @@ var ctrl = function () {
         },
         
         showForums: function () {
+//        	if (!prefs.getBool(CONST.showForums))
+//        		return;
+
         	var items = [];
         	for (var i=0; i<board.subItems.length; i++) {
         		var c = board.subItems[i];
@@ -100,24 +120,34 @@ var ctrl = function () {
         	ctrl.resize();
         },
         
+        createTab: function (sp, name, callback) {
+        	var nm = prefs.getMsg(name);
+        	var tab = tabs.addDynamicTab(nm, 
+            	function() { try {
+            		display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); 
+            	} catch (e) {} });
+            	
+        	if (!prefs.getBool(sp)) {
+        		var tbs = tabs.getTabs();
+        		for (var i in tbs) {
+        			if (tbs[i].getName() == nm) {
+        				tabs.removeTab(tbs[i].getIndex());
+        				break;
+        			}
+        		}
+        	}
+	        return tab;
+        },
+        
         createTabs: function () {
-            divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); });
-            //divLog = tabs.addDynamicTab("Log", ctrl.resize);
+            divForumList = ctrl.createTab(CONST.showForums, "forums", ctrl.resize);
+            divStarred   = ctrl.createTab(CONST.showStarred, "starred", ctrl.onStarred);
+            divNewTopics = ctrl.createTab(CONST.showNewTopics, "latestT", ctrl.onNewTopics);
+            divRecTopics = ctrl.createTab(CONST.showRecntUpd, "recentlyUpdated", ctrl.onLRUTopics);
+            divMostViews = ctrl.createTab(CONST.showMostViews, "mostViews", ctrl.onMostViews);
+            divMostPosts = ctrl.createTab(CONST.showMostPosts, "mostPosts", ctrl.onMostPosts);
             
-            divStarred = tabs.addDynamicTab(prefs.getMsg("starred"),
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onStarred(); });
-            
-            divNewTopics = tabs.addDynamicTab(prefs.getMsg("latestT"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onNewTopics(); });
-            divRecTopics = tabs.addDynamicTab(prefs.getMsg("recentlyUpdated"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onLRUTopics(); });
-            divMostViews = tabs.addDynamicTab(prefs.getMsg("mostViews"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostViews(); });
-            divMostPosts = tabs.addDynamicTab(prefs.getMsg("mostPosts"), 
-            	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onMostPosts(); });
-            //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
-            
+            //divBoardInfo = ctrl.createTab(CONST.showBoadrInfo, "boardInfo", ctrl.resize);
             divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
             
             tabs.alignTabs("left", 10);
@@ -147,6 +177,17 @@ var ctrl = function () {
         	}
         },
         
+        onForumsSelUpdate: function () {
+        	ctrl.onNewTopics();
+        	ctrl.onLRUTopics();
+        	ctrl.onMostViews();
+        	ctrl.onMostPosts();
+        },
+        
+        onTopicsSelUpdate: function () {
+        	ctrl.onStarred();
+        },
+        
         onNewTopics: function () {
         	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTopics);
         },
@@ -164,23 +205,28 @@ var ctrl = function () {
         },
         
         displayForumsTopics: function (el, sorter, name) {
-            for (var i in allForums) {
-            	var forum = allForums[i];
-            	if (forum.isSelected()) {
-	        		forum.load(function() {
-	        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
-	        			var ids = [ ];
-	        			for (var j in ar) {
-	        				ids[j] = ar[j].id;
-//	        				if (ar[j].id is not in ctrl.getCPA(name)) {
-//	        					mark topic as new -- how ??
-//	        				}
-	        			}
-	        			prefs.setArray(name, ids);
-	        			ctrl.displayTopics(el, ar);
-	        		});
-            	}
-        	}
+        	try {
+        		display.clear(el);
+	            for (var i in allForums) {
+	            	var forum = allForums[i];
+	            	if (forum.isSelected()) {
+		        		forum.load(function() {
+		        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
+		        			var ids = [ ];
+		        			for (var j in ar) {
+		        				ids[j] = ar[j].id;
+	//	        				if (ar[j].id is not in ctrl.getCPA(name)) {
+	//	        					mark topic as new -- how ??
+	//	        				}
+		        			}
+		        			try {
+			        			ctrl.displayTopics(el, ar);
+			        			prefs.setArray(name, ids);
+		        			} catch (e) {}
+		        		});
+	            	}
+	        	}
+	        } catch(e) {};
         },
         
         displayTopics: function (el, topics) {
@@ -239,6 +285,7 @@ var ctrl = function () {
                 selForums[name] = null;
             }
             prefs.set(CONST.selForums, joinKeys(selForums));
+            ctrl.onForumsSelUpdate();
         },
 
         toggleTopic: function (topic, checked) {
@@ -249,6 +296,7 @@ var ctrl = function () {
                 selTopics[name] = null;
             }
             prefs.set(CONST.selTopics, joinKeys(selTopics));
+            ctrl.onTopicsSelUpdate();
         },
         
         getCPI: function (name) {
