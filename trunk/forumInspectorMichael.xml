@@ -1472,7 +1472,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     	return false;
     }
 
-    var as = tr.getElementsByTagName('a')[0];
+    var as = tr.getElementsByTagName('a');
     var a;
     for (var i in as) {
     	a = this.mkFullUrl(getHref(as[i]));
