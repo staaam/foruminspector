@@ -241,7 +241,7 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, topics ) {
+        topics: function( parentElem, boldTopics, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
 
         	for(var i=0; i<topics.length; i++)
