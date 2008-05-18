@@ -43,7 +43,6 @@ var ctrl = function () {
         },
         
         refresh: function () {
-        	alert("inside refresh");
     		cachedPrefs = {};
 
 		    allForums = {};
