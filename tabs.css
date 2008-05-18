@@ -50,6 +50,14 @@
 	padding: 0px;
 }
 
+.post-divider {
+	background-color:#C5D7EF;
+	font-size:2px;
+	height:3px;
+	line-height:0pt;
+	overflow:hidden;
+}
+
 .postAuthor {
 	color:#7E7E7E;
 	background-color:#E5ECF9;
@@ -170,14 +178,6 @@ body {
 	background-color:#C5D7EF;
 	font-size:2px;
 	height:1px;
-	line-height:0pt;
-	overflow:hidden;
-}
-
-.post-divider {
-	background-color:#C5D7EF;
-	font-size:2px;
-	height:3px;
 	line-height:0pt;
 	overflow:hidden;
 }
