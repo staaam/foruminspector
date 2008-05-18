@@ -11,16 +11,16 @@ Legend:
 
 --- Both ---
 ===	- 21) (Michael & Kolman) Add link to board name to the board itself		--> you can use board.url field to get the board url
-33) On each topic write from what forum it came.    --> topic.parent.title, topic.parent.url
+>>> 33) On each topic write from what forum it came.    --> topic.parent.title, topic.parent.url
+>>> 25) (Michael & Kolman) On topic view add author of each post.       --> Added fields author and details to post. Proposed subheader: labels.author + ": " + post.author + " ("+post.details+")"
+3) (Kolman) Make tabs highlight somehow color/bold (Forums and Starred)
+>>? (Michael) On new topics not seen, should highlight relevant tabs.	--> Added hidden user prefs which store which topics was last time in each tab. it is easy to implement which topics should be highlighted, how to give this information to display funciont? 
+>>> 30) notifying on new/updated posts by making tab bold?! think.      --> Added funtcion to all elements isUpdated (returns false by default), for Topic - returns whether is has new posts or not. Proposed notification - bold the topic itself, probably notify also the tab (bold, italic, change color)  
 13) other buttons as said to be in the document (maybe not, think about interface)
 >>?	- (Kolman & Michael) Show All/Show Selected     --> currently I've put it to the setting area, do you think we should create the button for it? if so, it's your part :)  
 >>>	- (Kolman & Michael) Refresh Content 			--> try making the button and calling ctrl.refresh() func, should work. I think right place to put it is near the Board Title (above all tabs), probably as a small picture (similar to refresh sign in browsers?)
 12) (Kolman) help button!!! 						--> I think right place to put it is near the Board Title (above all tabs), probably as a small picture (Question sign?)  OR in the About page (accessible in the same place as settings)  
 	(Kolman & Michael) update inner text
->>> 25) (Michael & Kolman) On topic view add author of each post.       --> Added fields author and details to post. Proposed subheader: labels.author + ": " + post.author + " ("+post.details+")"
-3) (Kolman) Make tabs highlight somehow color/bold (Forums and Starred)
->>? (Michael) On new topics not seen, should highlight relevant tabs.	--> Added hidden user prefs which store which topics was last time in each tab. it is easy to implement which topics should be highlighted, how to give this information to display funciont? 
->>> 30) notifying on new/updated posts by making tab bold?! think.      --> Added funtcion to all elements isUpdated (returns false by default), for Topic - returns whether is has new posts or not. Proposed notification - bold the topic itself, probably notify also the tab (bold, italic, change color)  
 
 
 --- Michael ---
