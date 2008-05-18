@@ -38,6 +38,14 @@
 	    <EnumValue value="0" display_value="Selected Only"/>
     </UserPref>
 
+    <UserPref name="s0" display_value="Show Tab __MSG_forums__" datatype="boolean" default_value="true" />
+    <UserPref name="s1" display_value="Show Tab __MSG_starred__" datatype="boolean" default_value="true" />
+    <UserPref name="s2" display_value="Show Tab __MSG_latestT__" datatype="boolean" default_value="true" />
+    <UserPref name="s3" display_value="Show Tab __MSG_recentlyUpdated__" datatype="boolean" default_value="true" />
+    <UserPref name="s4" display_value="Show Tab __MSG_mostViews__" datatype="boolean" default_value="true" />
+    <UserPref name="s5" display_value="Show Tab __MSG_mostPosts__" datatype="boolean" default_value="true" />
+    <UserPref name="s6" display_value="Show Tab __MSG_boardInfo__" datatype="boolean" default_value="true" />
+
     <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
@@ -208,7 +216,6 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	
-//   	alert("d:" + display.dir + ", h:"+ this.header);
    	this.header.dir = display.boardDir;	
    	if(display.boardDir == "rtl")
    		this.header.style.textAlign = "right";
