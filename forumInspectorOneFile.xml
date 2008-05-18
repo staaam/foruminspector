@@ -630,11 +630,10 @@ var display = function () {
         	
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var titleDiv = document.createElement("div");
-        	
         	var table = document.createElement("table");
         	table.className = "boardTitle";
         	table.width = "100%";
+        	parentElem.appendChild(table);
         	
         	var tr = document.createElement("tr");
         	table.appendChild(tr);
@@ -651,17 +650,12 @@ var display = function () {
         	titleTD.appendChild(a);
         	tr.appendChild(titleTD);
         	
-        	alert("!");
         	var buttonTD = document.createElement("td");
-        	alert("!!");
         	
         	buttonTD.style.width = "0%";
         	buttonTD.className = "helpSpan";
-        	alert("!!!");
         	alert(display.globalDir);
         	buttonTD.dir = display.oppositeDirection(display.globalDir);
-        	
-        	alert("!!!!!!");
         	
         	var helpLink = document.createElement("a");
 			helpLink.target = "_blank";
@@ -673,8 +667,6 @@ var display = function () {
 			helpLink.appendChild(helpImg);
 			buttonTD.appendChild(helpLink);
         	
-        	alert("!!!!");
-        	
         	var refreshImg = document.createElement("img");
 			refreshImg.className = "noBorder refreshImage";
 			refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
@@ -682,9 +674,6 @@ var display = function () {
         	buttonTD.appendChild(refreshImg);
         	
         	tr.appendChild(buttonTD);
-        	        	
-        	parentElem.appendChild(table);
-        	
         	display.reduceSpanText( a, 310 );
         },
         
