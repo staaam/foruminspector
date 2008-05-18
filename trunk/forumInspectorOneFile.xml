@@ -878,8 +878,8 @@ var display = function () {
             			display.updatedTabs[key] == true)
             		{
             			alert("italic");
-            			tab.getNameContainer().className =
-            				tab.getNameContainer().className + " isItalic";
+            			aTab.getNameContainer().className =
+            				aTab.getNameContainer().className + " isItalic";
             		}
             	}
             	
@@ -889,8 +889,8 @@ var display = function () {
             			display.newTabs[key] == true)
             		{
             			alert("bold");
-            			tab.getNameContainer().className =
-            				tab.getNameContainer().className + " isBold";
+            			aTab.getNameContainer().className =
+            				aTab.getNameContainer().className + " isBold";
             		}
             	}
            	}
