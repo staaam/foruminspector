@@ -600,6 +600,7 @@ var display = function () {
         	a.innerHTML = board.title;
         	a.href = board.url;
         	a.target = "_blank";
+        	a.style.color = "#000000";
         	parentElem.appendChild(a);
         	
         	display.reduceSpanText( a, 310 );
