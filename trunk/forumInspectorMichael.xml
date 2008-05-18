@@ -1148,7 +1148,7 @@ var ctrl = function () {
         	if (prefs.getBool(sp))
 	        	return tabs.addDynamicTab(prefs.getMsg(name), 
 	            	function() { try {
-	            		display.setSpecialTabsClass(tabs, prefs); callback(); 
+	            		display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); 
 	            	} catch (e) {} });
 	        return tabs.addDynamicTab("", function () {});
         },
