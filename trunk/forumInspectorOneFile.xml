@@ -317,7 +317,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	
-   	this.header.dir = display.dir;	
+   	this.header.dir = display.boardDir;	
    	if(display.dir == "rtl")
    		this.header.style.textAlign = "right";
    	else
@@ -466,7 +466,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	this.header = document.createElement("div");
    	this.header.className = "di-secondary-header";
 
-   	this.header.dir = display.dir;	
+   	this.header.dir = display.boardDir;	
    	if(display.dir == "rtl")
    		this.header.style.textAlign = "right";
    	else
@@ -1222,7 +1222,6 @@ var ctrl = function () {
             //alert(xx);
             
             board.load(function (board) {
-            	alert(board.dir);
             	display.setBoardDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
