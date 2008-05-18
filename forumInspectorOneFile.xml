@@ -467,7 +467,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
    	this.header.className = "di-secondary-header";
 
    	this.header.dir = display.boardDir;	
-   	if(display.dir == "rtl")
+   	if(display.boardDir == "rtl")
    		this.header.style.textAlign = "right";
    	else
    		this.header.style.textAlign = "left";
