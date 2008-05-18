@@ -65,7 +65,12 @@ ForumItem.prototype.init = function (parent, url, title) {
     if (title == null) {
         this.title = url;
     }
-    this.id = this.linkMatch(url)[1];
+    try {
+    	this.id = this.linkMatch(url)[1];
+    }
+    catch (e) {
+    	alert(e);
+    }
     this.subItems = [];
     this.isLoaded = false;
     //printStr("new item url=" + this.url + " title=" + this.title);
@@ -138,6 +143,21 @@ ForumItem.prototype.onLoad = function (content) {
 ForumItem.prototype.parse = function (content) {
 };
 
+
+ForumItem.prototype.getTableHeader = function (table) {
+	var ths = table.getElementsByTagName('th');
+    if 	(ths == null || ths.length == 0) {
+        var tds = table.getElementsByTagName('td');
+        ths = [];
+        for (var i in tds) {
+        	var c = tds[i].className; 
+        	if (c && (c.indexOf("thCorner") >= 0 || c.indexOf("thTop") >= 0)) {
+        		ths.push(tds[i]);
+        	}
+        }
+    }
+    return ths;
+};
 //ForumItem.prototype.display = function () {
 //    ctrl.display(this);
 //};
@@ -175,8 +195,9 @@ Board.prototype.parse = function (content) {
 		    e = getElClass(spans, 'gen');
 	    }
     }
-
-    this.title = getText(e);
+    if (e) {
+    	this.title = getText(e);
+    }
 };
 
 function getElClass(els, val) {
@@ -258,7 +279,7 @@ Board.prototype.parseForumsTable = function (table) {
 Board.prototype.idRegEx = /\/(.*)/;
 
 Board.prototype.tryParseForumsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 4) {
         return false;
     }
@@ -606,7 +627,7 @@ var display = function () {
         	//parentElem.dir = dir;
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var aDiv = document.createElement("div");
+        	var aDiv = document.createElement("span");
         	
         	var a = document.createElement("a");
         	a.innerHTML = board.title;
@@ -617,7 +638,7 @@ var display = function () {
         	aDiv.appendChild(a);
         	parentElem.appendChild(aDiv);
         	
-        	var helpDiv = document.createElement("div");
+        	var helpDiv = document.createElement("span");
         	helpDiv.dir = display.oppositeDirection(display.boardDir);
         	
         	var helpLink = document.createElement("a");
@@ -892,7 +913,7 @@ Forum.prototype.tryParseTopicsTable = function (table) {
 };
 
 Forum.prototype.tryParseTopicsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 4) {
         return false;
     }
@@ -1039,7 +1060,7 @@ Topic.prototype.tryParsePostsTable = function (table) {
 };
 
 Topic.prototype.tryParsePostsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 2) {
         return false;
     }
@@ -1050,9 +1071,18 @@ Topic.prototype.tryParsePostsHeader = function (table) {
     
     return true;
 };
+function pushArr(arr1, arr2) {
+    for (var i=0; i<arr2.length;i++) {
+    	arr1.push(arr2[i]);
+    }
+    return arr1;
+}
 
 Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
-    var spans = tr.getElementsByTagName('span');
+    var spans = [];
+    spans = pushArr(spans, tr.getElementsByTagName('div'));
+    spans = pushArr(spans, tr.getElementsByTagName('span'));
+
     if (spans.length == 0) {
         return false;
     }
@@ -1072,15 +1102,23 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     if (text.length == 0) {
     	return false;
     }
-    var tb = tr.getElementsByTagName('table')[0];
-    if (!tb) {
+
+    var as = tr.getElementsByTagName('a');
+    var a;
+    for (var i in as) {
+    	try {
+    		a = this.mkFullUrl(getHref(as[i]));
+	    	if (Post.prototype.linkMatch(a)) {
+	    		break;
+	    	}
+    	} catch (e) {}
+    	a = null;
+    }
+    if (a == null) {
     	return false;
     }
-    var a = tb.getElementsByTagName('a')[0];
-    if (!a) {
-    	return false;
-    }
-    var post = ctrl.newPost(this, this.mkFullUrl(getHref(a)));
+    
+    var post = ctrl.newPost(this, a);
     post.text = text;
     post.parseTopicTableRow(tr);
     this.addItem(post);    
