@@ -62,6 +62,10 @@
 	font-weight: bold;
 }
 
+.isItalic {
+	font-style: italic;
+}
+
 .postAuthor {
 	color:#7E7E7E;
 	background-color:#E5ECF9;
