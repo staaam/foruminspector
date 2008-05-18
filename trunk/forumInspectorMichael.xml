@@ -1449,14 +1449,18 @@ Topic.prototype.tryParsePostsHeader = function (table) {
     
     return true;
 };
+function pushArr(arr1, arr2) {
+    for (var i=0; i<arr2.length;i++) {
+    	arr1.push(arr2[i]);
+    }
+    return arr1;
+}
 
 Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
-    var spans = tr.getElementsByTagName('span');
-    var divs = tr.getElementsByTagName('div');
-    for (var i=0; i<divs.length;i++) {
-    	spans.push(divs[i]);
-    }
-    
+    var spans = [];
+    spans = pushArr(spans, tr.getElementsByTagName('div'));
+    spans = pushArr(spans, tr.getElementsByTagName('span'));
+
     if (spans.length == 0) {
         return false;
     }
