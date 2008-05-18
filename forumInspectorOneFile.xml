@@ -645,7 +645,7 @@ var display = function () {
         	tr.appendChild(aSpan);
         	
         	var refreshTD = document.createElement("td");
-       		//refreshTD.width = "0%";
+       		refreshTD.width = "0%";
         	var refreshImg = document.createElement("img");
 			refreshImg.className = "noBorder refreshImage";
 			refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
@@ -655,7 +655,7 @@ var display = function () {
         	tr.appendChild(refreshTD);
         	
         	var helpSpan = document.createElement("td");
-        	//helpSpan.width = "0%";
+        	helpSpan.width = "0%";
         	helpSpan.className = "helpSpan";
         	helpSpan.dir = display.oppositeDirection(globalDir);
         	
