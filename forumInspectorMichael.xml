@@ -169,7 +169,7 @@ Board.prototype.parseForumsTable = function (table) {
 Board.prototype.idRegEx = /\/(.*)/;
 
 Board.prototype.tryParseForumsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 4) {
         return false;
     }
@@ -777,17 +777,7 @@ Forum.prototype.tryParseTopicsTable = function (table) {
 };
 
 Forum.prototype.tryParseTopicsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
-    if (ths == null || ths.length < 4) {
-        var tds = table.getElementsByTagName('td');
-        ths = [];
-        for (var i in tds) {
-        	var c = tds[i].className; 
-        	if (c && (c.indexOf("thCorner") || c.indexOf("thTop"))) {
-        		ths.push(tds[i]);
-        	}
-        }
-    }
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 4) {
         return false;
     }
@@ -911,6 +901,21 @@ ForumItem.prototype.onLoad = function (content) {
 ForumItem.prototype.parse = function (content) {
 };
 
+
+ForumItem.prototype.getTableHeader = function (table) {
+	var ths = table.getElementsByTagName('th');
+    if (!ths || ths.length == 0) {
+        var tds = table.getElementsByTagName('td');
+        ths = [];
+        for (var i in tds) {
+        	var c = tds[i].className; 
+        	if (c && (c.indexOf("thCorner") || c.indexOf("thTop"))) {
+        		ths.push(tds[i]);
+        	}
+        }
+    }
+    return ths;
+};
 //ForumItem.prototype.display = function () {
 //    ctrl.display(this);
 //};
@@ -1428,7 +1433,7 @@ Topic.prototype.tryParsePostsTable = function (table) {
 };
 
 Topic.prototype.tryParsePostsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);)
     if (ths == null || ths.length < 2) {
         return false;
     }
