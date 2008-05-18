@@ -1232,7 +1232,7 @@ var ctrl = function () {
         },
         
         refresh: function () {
-        	alert();
+        	alert("inside refresh");
     		cachedPrefs = {};
 
 		    allForums = {};
