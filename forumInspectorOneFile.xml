@@ -670,7 +670,10 @@ var display = function () {
 			helpSpan.appendChild(helpLink);
         	tr.appendChild(helpSpan);
         	
-        	parentElem.appendChild(table);
+        	var divvv = document.createElement("div");
+        	divvv.innerHTML = "sdf";
+        	
+        	parentElem.appendChild(divvv/*table/*);
         	
         	display.reduceSpanText( a, 310 );
         },
