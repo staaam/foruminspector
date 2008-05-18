@@ -1081,7 +1081,7 @@ var ctrl = function () {
             	tabs.setSelectedTab(prefs.getInt("defTab"));
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
-            	ctrl.showForums();
+            	//ctrl.showForums();
 	        });
 	        
             for (var i=0;i<selForums.length;i++) {
@@ -1116,7 +1116,7 @@ var ctrl = function () {
         },
         
         createTabs: function () {
-            divForumList = ctrl.createTab(CONST.showForums, "forums", ctrl.resize);
+            divForumList = ctrl.createTab(CONST.showForums, "forums", ctrl.showForums);
             divStarred = ctrl.createTab(CONST.showStarred, "starred", ctrl.onStarred);
             divNewTopics = ctrl.createTab(CONST.showNewTopics, "latestT", ctrl.onNewTopics);
             divRecTopics = ctrl.createTab(CONST.showRecntUpd, "recentlyUpdated", ctrl.onLRUTopics);
