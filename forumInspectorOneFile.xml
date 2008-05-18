@@ -546,6 +546,7 @@ var display = function () {
         },
         
         setGlobalDirection: function (dir) {
+        	alert(dir);
         	display.globalDir = dir;
         },
         
