@@ -1,7 +1,9 @@
 /* begin DisplayGeneral class */
 
 var display = function () {
-	var privatea;
+
+	//var newTabs;
+	//var updatedTabs;
 
     return {
         init: function () {
@@ -110,10 +112,12 @@ var display = function () {
         
         setLoading: function( isLoading ) {
         	 var img = _gel("loadingImage");
-        	 if(isLoading)
-        	 	img.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green.gif";
-        	 else
-        	 	img.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green_static.gif";
+        	 if (img) {
+	        	 if(isLoading)
+	        	 	img.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green.gif";
+	        	 else
+	        	 	img.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green_static.gif";
+        	 }
         },
         
         createBoardTitle: function ( parentElem, board ){
