@@ -583,7 +583,7 @@ var display = function () {
         createSecondaryPostItem: function ( parentElem, post ) {
         	
         	var str = labels.author + ": " + post.author + " ("+post.details+")";
-        	var span = document.createElement("span");
+        	var span = document.createElement("div");
         	span.className = "postAuthor";
         	span.innerHTML = str;
         	span.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
