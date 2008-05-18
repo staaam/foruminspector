@@ -8,8 +8,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	
-   	this.header.dir = display.dir;	
-   	if(display.dir == "rtl")
+   	this.header.dir = display.boardDir;	
+   	if(display.boardDir == "rtl")
    		this.header.style.textAlign = "right";
    	else
    		this.header.style.textAlign = "left";
@@ -39,7 +39,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	addEventListener(gotoLink, 'click',onClickLink);
 	
 	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder gotoArrow-" + display.dir;
+	gotoImg.className = "noborder gotoArrow-" + display.boardDir;
 	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
 		
@@ -52,7 +52,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
 	if (selectFunction != null) {
 		this.select = document.createElement("input");
-		this.select.className = "di-select-" + display.dir;	
+		this.select.className = "di-select-" + display.boardDir;	
 		this.select.type = "checkbox";
 		this.select.checked = isSelected;
 		var that = this;
