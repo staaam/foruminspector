@@ -657,8 +657,8 @@ var display = function () {
         	"</td></tr></table>";        	
         	parentElem.innerHTML = str;
         	
-        	var img = _gel("loadingImage");
-        	alert(img);
+        	//var img = _gel("loadingImage");
+        	//alert(img);
         	
         	
         	//var table = document.createElement("table");
