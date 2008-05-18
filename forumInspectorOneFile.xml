@@ -624,7 +624,6 @@ var display = function () {
         
         createBoardTitle: function ( parentElem, board ){
         	
-        	//parentElem.dir = dir;
         	parentElem.className = "boardTitle thinBorder";
         	
         	var table = document.createElement("table");
@@ -646,7 +645,7 @@ var display = function () {
         	
         	var helpSpan = document.createElement("td");
         	helpSpan.className = "helpSpan";
-        	helpSpan.dir = display.oppositeDirection(display.boardDir);
+        	helpSpan.dir = display.oppositeDirection(globalDir);
         	
         	var helpLink = document.createElement("a");
 			helpLink.target = "_blank";
