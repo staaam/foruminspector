@@ -547,7 +547,7 @@ var display = function () {
         
         setGlobalDirection: function (dir) {
         	display.globalDir = dir;
-        }
+        },
         
         oppositeDirection: function ( dir ) {
         	if (dir == "rtl")
