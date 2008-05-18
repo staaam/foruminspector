@@ -1471,15 +1471,21 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     if (text.length == 0) {
     	return false;
     }
-    var tb = tr.getElementsByTagName('table')[0];
-    if (!tb) {
+
+    var as = tr.getElementsByTagName('a')[0];
+    var a;
+    for (var i in as) {
+    	a = this.mkFullUrl(getHref(as[i]));
+    	if (Post.prototype.linkMatch(a)) {
+    		break;
+    	}
+    	a = null;
+    }
+    if (a == null) {
     	return false;
     }
-    var a = tb.getElementsByTagName('a')[0];
-    if (!a) {
-    	return false;
-    }
-    var post = ctrl.newPost(this, this.mkFullUrl(getHref(a)));
+    
+    var post = ctrl.newPost(this, a);
     post.text = text;
     post.parseTopicTableRow(tr);
     this.addItem(post);    
