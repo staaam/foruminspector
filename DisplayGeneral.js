@@ -35,7 +35,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null, true, false);
+        			null, loadCategoryFunction, null, null, true, false, false);
         },
         
         createSecondaryForumItem: function (parentElem, forum) {
@@ -77,6 +77,10 @@ var display = function () {
         },
         
         createTopicItem: function ( parentElem, topic ) {
+        	createTopicItem( parentElem, topic, false );
+        },
+        
+        createTopicItem: function ( parentElem, topic, isNew ) {
         	var loadTopicFunction = function(callback) 
         		{ topic.load( function ( o ) { callback( o.subItems ); } ); };
         	
@@ -86,7 +90,7 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction, false, topic.isUpdated() );
+        			topic.isSelected(), selectTopicFunction, false, topic.isUpdated(), isNew );
         },
         
         createBoardInfo: function ( parentElem, board )
@@ -241,8 +245,13 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, boldTopics, topics ) {
+        topics: function( parentElem, newTopics, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
+
+			for(var i=0; i<newTopics.length; i++)
+        	{
+        		display.createTopicItem( listDisplayItem.myself, newTopics[i], true );
+        	}   
 
         	for(var i=0; i<topics.length; i++)
         	{
