@@ -30,7 +30,7 @@
 	    <EnumValue value="__MSG_recentlyUpdated__" display_value="__MSG_recentlyUpdated__"/>
 	    <EnumValue value="__MSG_mostViews__" display_value="__MSG_mostViews__"/>
 	    <EnumValue value="__MSG_mostPosts__" display_value="__MSG_mostPosts__"/>
-	    <EnumValue value="__MSG_mostPosts__" display_value="__MSG_mostPosts__"/>
+	    <EnumValue value="__MSG_boardInfo__" display_value="__MSG_boardInfo__"/>
     </UserPref>
    
     <UserPref name="showForums" display_name="Show Forums" datatype="enum" default_value="1">
