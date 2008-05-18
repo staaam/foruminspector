@@ -627,7 +627,9 @@ var display = function () {
         	//parentElem.dir = dir;
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var aDiv = document.createElement("span");
+        	var aDiv = document.createElement("div");
+        	aDiv.style.position = "relative";
+        	aDiv.style.width="100%";
         	
         	var a = document.createElement("a");
         	a.innerHTML = board.title;
@@ -638,9 +640,10 @@ var display = function () {
         	aDiv.appendChild(a);
         	parentElem.appendChild(aDiv);
         	
-        	var helpDiv = document.createElement("span");
+        	var helpDiv = document.createElement("div");
         	helpDiv.dir = display.oppositeDirection(display.boardDir);
-        	helpDiv.style.width="80%";
+        	helpDiv.style.position = "relative";
+        	helpDiv.style.width="100%";
         	
         	var helpLink = document.createElement("a");
 			helpLink.target = "_blank";
