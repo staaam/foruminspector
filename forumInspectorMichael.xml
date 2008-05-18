@@ -1068,7 +1068,7 @@ var ctrl = function () {
         },
         
         refresh: function () {
-        	alert("inside refresh");
+        	//alert("inside refresh");
         	for (var i=tabs.getTabs().length-1; i>=0; i--) {
         		tabs.removeTab(i);
         	}
@@ -1115,7 +1115,7 @@ var ctrl = function () {
             	ctrl.onLRUTopics();
             	ctrl.onMostViews();
             	ctrl.onMostPosts();
-            	ctrl.onBoardInfo();
+            	//ctrl.onBoardInfo();
             	ctrl.showForums();
 	        });
 	        
