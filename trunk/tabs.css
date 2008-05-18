@@ -1,3 +1,7 @@
+a, a:link {
+	color:#0000CC;
+}
+
 .tablib_emptyTab {
 	display: none;
 }
@@ -164,10 +168,6 @@ body {
 
 .boardInfo {
 	margin: 4px;
-}
-			
-a, a:link {
-	color:#0000CC;
 }
 			
 .noborder {
