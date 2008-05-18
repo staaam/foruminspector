@@ -658,6 +658,15 @@ var display = function () {
 			helpSpan.appendChild(helpLink);
         	tr.appendChild(helpSpan);
         	
+       		var refreshTD = document.createElement("td");
+       		
+        	var refreshImg = document.createElement("img");
+			refreshImg.className = "noBorder refreshImage";
+			refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
+			addEventListener(refreshImg, 'click',ctrl.refresh());
+			
+        	refreshTD.appendChild(refreshImg);
+        	tr.appendChild(refreshTD);
         	parentElem.appendChild(table);
         	
         	display.reduceSpanText( a, 310 );
