@@ -877,7 +877,7 @@ var display = function () {
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.updatedTabs[key] == true)
             		{
-            			alert("italic");
+            			//alert("italic");
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isItalic";
             		}
@@ -888,7 +888,7 @@ var display = function () {
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.newTabs[key] == true)
             		{
-            			alert("bold");
+            			//alert("bold");
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isBold";
             		}
