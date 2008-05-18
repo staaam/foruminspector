@@ -655,6 +655,8 @@ var display = function () {
         	buttonTD.className = "helpSpan";
         	buttonTD.dir = display.oppositeDirection(globalDir);
         	
+        	alert("!!!");
+        	
         	var helpLink = document.createElement("a");
 			helpLink.target = "_blank";
 			helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
@@ -665,6 +667,7 @@ var display = function () {
 			helpLink.appendChild(helpImg);
 			buttonTD.appendChild(helpLink);
         	
+        	alert("!!!!");
         	
         	var refreshImg = document.createElement("img");
 			refreshImg.className = "noBorder refreshImage";
