@@ -775,6 +775,16 @@ Forum.prototype.tryParseTopicsTable = function (table) {
 Forum.prototype.tryParseTopicsHeader = function (table) {
     var ths = table.getElementsByTagName('th');
     if (ths == null || ths.length < 4) {
+        var tds = table.getElementsByTagName('td');
+        ths = [];
+        for (var i in tds) {
+        	var c = tds[i].className; 
+        	if (c.indexOf("thCorner") || c.indexOf("thTop")) {
+        		c.push(tds[i]);
+        	}
+        }
+    }
+    if (ths == null || ths.length < 4) {
         return false;
     }
     
