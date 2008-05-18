@@ -1096,14 +1096,7 @@ var ctrl = function () {
             
             board.load(function (board) {
             	display.setBoardDirection(board.dir);
-<<<<<<< .mine
-            	//var t = prefs.getString("defTab");
-            	//if (prefs.getBool(t))
-            	//tabs.setSelectedTab();
-=======
             	display.setGlobalDirection(globalDir);
-            	tabs.setSelectedTab(prefs.getInt("defTab"));
->>>>>>> .r739
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
             	var tab = tabs.getSelectedTab();
