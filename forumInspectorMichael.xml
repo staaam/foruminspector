@@ -1097,6 +1097,11 @@ var ctrl = function () {
             }
             //alert(xx);
             
+            for (var i=0;i<selForums.length;i++) {
+            	var fid = selForums[i];
+                var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
+                forum.load(function(){});
+            }
             board.load(function (board) {
             	display.setBoardDirection(board.dir);
             	display.setGlobalDirection(globalDir);
@@ -1104,7 +1109,6 @@ var ctrl = function () {
             	display.createBoardInfo(_gel(divBoardInfo), board);
             	var tab = tabs.getSelectedTab();
             	tabs.setSelectedTab(tab.getIndex());
-            	ctrl.showForums();
             	
             	ctrl.onStarred();
             	ctrl.onNewTopics();
@@ -1112,13 +1116,9 @@ var ctrl = function () {
             	ctrl.onMostViews();
             	ctrl.onMostPosts();
             	ctrl.onBoardInfo();
+            	ctrl.showForums();
 	        });
 	        
-            for (var i=0;i<selForums.length;i++) {
-            	var fid = selForums[i];
-                var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
-                forum.load(function(){});
-            }
             return false;
         },
         
