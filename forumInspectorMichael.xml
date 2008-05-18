@@ -1148,11 +1148,11 @@ var ctrl = function () {
         	if (prefs.getBool(sp))
 	        	return tabs.addDynamicTab(prefs.getMsg(name), 
 	            	function() { display.setSpecialTabsClass(tabs, prefs); callback(); });
-	        return document.createElement("div");
+	        return tabs.addDynamicTab("", function () {});
         },
         
         createTabs: function () {
-            divForumList = ctrl.createTab(CONST.showForums, "forums", ctrl.resize);
+           divForumList = ctrl.createTab(CONST.showForums, "forums", ctrl.resize);
             divStarred = ctrl.createTab(CONST.showStarred, "starred", ctrl.onStarred);
             divNewTopics = ctrl.createTab(CONST.showNewTopics, "latestT", ctrl.onNewTopics);
             divRecTopics = ctrl.createTab(CONST.showRecntUpd, "recentlyUpdated", ctrl.onLRUTopics);
