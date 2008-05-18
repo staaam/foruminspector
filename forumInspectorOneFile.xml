@@ -632,7 +632,7 @@ var display = function () {
         	
         	var table = document.createElement("table");
         	table.className = "boardTitle";
-        	table.width = "100%";
+        	//table.width = "100%";
         	parentElem.appendChild(table);
         	
         	var tr = document.createElement("tr");
@@ -673,7 +673,6 @@ var display = function () {
 			//addEventListener(refreshImg, 'click', ctrl.refresh);
         	buttonTD.appendChild(refreshImg);
         	//tr.appendChild(buttonTD);
-        	alert("lala");
         	//display.reduceSpanText( a, 310 );
         },
         
