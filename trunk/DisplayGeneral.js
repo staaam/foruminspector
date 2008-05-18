@@ -51,6 +51,14 @@ var display = function () {
         
         createSecondaryPostItem: function ( parentElem, post ) {
         	
+        	var str = labels.author + ": " + post.author + " ("+post.details+")";
+        	var span = document.createElement("div");
+        	span.className = "postAuthor";
+        	span.innerHTML = str;
+        	span.dir = display.boardDir;
+        	span.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
+        	parentElem.appendChild(span);
+        	
         	var postItem = document.createElement("div");
         	postItem.dir = display.boardDir;	
         	postItem.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
@@ -62,9 +70,9 @@ var display = function () {
         	postItem.appendChild(span);
         	parentElem.appendChild(postItem);
         	
-        	var divider = document.createElement("div");
-        	divider.className = "di-divider";
-        	parentElem.appendChild(divider);
+        	var divider2 = document.createElement("div");
+        	divider2.className = "post-divider";
+        	parentElem.appendChild(divider2);
         	
         },
         
