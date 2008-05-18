@@ -654,7 +654,7 @@ var display = function () {
         	
         	buttonTD.style.width = "0%";
         	buttonTD.className = "helpSpan";
-        	alert(display.globalDir);
+        	//alert(display.globalDir);
         	buttonTD.dir = display.oppositeDirection(display.globalDir);
         	
         	var helpLink = document.createElement("a");
@@ -673,7 +673,7 @@ var display = function () {
 			//addEventListener(refreshImg, 'click', ctrl.refresh);
         	buttonTD.appendChild(refreshImg);
         	//tr.appendChild(buttonTD);
-        	
+        	alert("lala");
         	//display.reduceSpanText( a, 310 );
         },
         
