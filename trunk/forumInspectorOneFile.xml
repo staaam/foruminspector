@@ -599,6 +599,7 @@ var display = function () {
         	var a = document.createElement("a");
         	a.innerHTML = board.title;
         	a.href = board.url;
+        	a.target = "_blank";
         	parentElem.appendChild(a);
         	
         	display.reduceSpanText( a, 310 );
