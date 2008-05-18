@@ -613,7 +613,7 @@ var display = function () {
         },
         
         createTopicItem: function ( parentElem, topic ) {
-        	createTopicItem( parentElem, topic, false );
+        	createTopicItem( parentElem, topic, true );
         },
         
         createTopicItem: function ( parentElem, topic, isNew ) {
