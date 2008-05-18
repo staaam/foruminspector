@@ -309,7 +309,7 @@ Category.prototype.visibleSubItems = function () {
 
 /* end Category class *//* begin CategoryDisplayItem class */
 function CategoryDisplayItem(parent, headerText, headerUrl,
-	subHeader, expandingFunction, isSelected, selectFunction, isForums, direction, isBold ) {
+	subHeader, expandingFunction, isSelected, selectFunction, isForums, isBold ) {
 
 	this.initDisplayItem(parent);
 	
@@ -569,7 +569,7 @@ var display = function () {
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null, true);
+        			null, loadCategoryFunction, null, null, true, false);
         },
         
         createSecondaryForumItem: function (parentElem, forum) {
@@ -620,7 +620,7 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction, false );
+        			topic.isSelected(), selectTopicFunction, false, topic.isUpdated() );
         },
         
         createBoardInfo: function ( parentElem, board )
