@@ -1475,10 +1475,12 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     var as = tr.getElementsByTagName('a');
     var a;
     for (var i in as) {
-    	a = this.mkFullUrl(getHref(as[i]));
-    	if (Post.prototype.linkMatch(a)) {
-    		break;
-    	}
+    	try {
+    		a = this.mkFullUrl(getHref(as[i]));
+	    	if (Post.prototype.linkMatch(a)) {
+	    		break;
+	    	}
+    	} catch (e) {}
     	a = null;
     }
     if (a == null) {
