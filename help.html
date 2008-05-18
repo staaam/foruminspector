@@ -1,7 +1,21 @@
 <html>
 <head>
+	<script>
+		function probFix()
+		{
+			var arr = document.getElementsByTagName("pre");
+			if (arr == null || arr.length == 0)
+				return;
+				
+			var htmlObjs = document.getElementsByTagName("html");
+				
+			var pre = arr[0];
+			
+			htmlObjs[0].outerHTML = pre.innerHTML;
+		}
+	</script>
 </head>
-<body>
+<body onload="probFix();">
 <p>This is our help</p>
 <p>This is our help</p>
 <p>This is our help</p>
