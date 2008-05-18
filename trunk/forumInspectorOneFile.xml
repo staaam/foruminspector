@@ -640,6 +640,7 @@ var display = function () {
         	
         	var helpDiv = document.createElement("span");
         	helpDiv.dir = display.oppositeDirection(display.boardDir);
+        	helpDiv.style.width="80%";
         	
         	var helpLink = document.createElement("a");
 			helpLink.target = "_blank";
