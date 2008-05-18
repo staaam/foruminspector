@@ -812,18 +812,27 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, newTopics, topics ) {
+        topics: function( parentElem, tabName, tabs, prefs, newTopics, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
+           	var tabUpdated = false;
 
 			for(var i=0; i<newTopics.length; i++)
         	{
+        		if (newTopics[i].isUpdated())
+        			tabUpdated = true;
+        			
         		display.createTopicItem( listDisplayItem.myself, newTopics[i], true );
         	}   
 
         	for(var i=0; i<topics.length; i++)
         	{
+        		tabUpdated = true;
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
-        	}    	
+        	}
+        	
+        	updatedTabs[tabName] = tabUpdated;
+        	newTabs[tabName] = (newTopics.length > 0) ? true : false;
+        	setSpecialTabsClass(tabs, prefs);
         },
         
         reduceSpanText: function( objSpan, widthFinal ) {
@@ -858,6 +867,24 @@ var display = function () {
             		aTab.getNameContainer().innerHTML == prefs.getMsg("starred"))
             	{
             		display.setSpecialTabClass( aTab );
+            	}
+            	
+            	for(var key in updatedTabs)
+            	{
+            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML)
+            		{
+            			tab.getNameContainer().className =
+            				tab.getNameContainer().className + " isItalic";
+            		}
+            	}
+            	
+            	for(var key in newTabs)
+            	{
+            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML)
+            		{
+            			tab.getNameContainer().className =
+            				tab.getNameContainer().className + " isBold";
+            		}
             	}
             }
         },
