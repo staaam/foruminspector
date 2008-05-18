@@ -208,7 +208,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	
+   	alert("d:" + display + ", h:"+ this.header);
    	this.header.dir = display.dir;	
+   	alert("x");
    	if(display.dir == "rtl")
    		this.header.style.textAlign = "right";
    	else
