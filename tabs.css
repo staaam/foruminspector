@@ -142,7 +142,7 @@
 }
 
 .loadingImage {
-	background-image:url(help.gif);
+	background-image:url(loading_big_green.gif);
 	height: 32px;
 	width: 32px;
 }
