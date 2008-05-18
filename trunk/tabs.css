@@ -47,7 +47,8 @@
 	font-weight:bold;
 	background-color:#E5ECF9;
 	display: relative;
-	padding: 2px;
+	padding: 0px;
+	width: 100%;
 }
 
 .titleSpan {
