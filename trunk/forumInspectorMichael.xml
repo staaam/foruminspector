@@ -1258,8 +1258,10 @@ var ctrl = function () {
 //	        					mark topic as new -- how ??
 //	        				}
 	        			}
-	        			prefs.setArray(name, ids);
-	        			ctrl.displayTopics(el, ar);
+	        			try {
+		        			ctrl.displayTopics(el, ar);
+		        			prefs.setArray(name, ids);
+	        			} catch (e) {}
 	        		});
             	}
         	}
