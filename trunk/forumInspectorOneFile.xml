@@ -613,6 +613,9 @@ var display = function () {
         	a.className = "blackColor";
         	parentElem.appendChild(a);
         	
+        	var helpDiv = document.createElement("div");
+        	helpDiv.dir = oppositeDirection(display.dir);
+        	
         	var helpLink = document.createElement("a");
 			helpLink.target = "_blank";
 			helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
@@ -621,7 +624,8 @@ var display = function () {
 			helpImg.className = "thinImgBorder helpImage";
 			helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 			helpLink.appendChild(helpImg);
-        	parentElem.appendChild(helpLink);
+			helpDiv.appendChild(helpLink);
+        	parentElem.appendChild(helpDiv);
         	
         	display.reduceSpanText( a, 310 );
         },
