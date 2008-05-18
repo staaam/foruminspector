@@ -1105,6 +1105,13 @@ var ctrl = function () {
             	var tab = tabs.getSelectedTab();
             	tabs.setSelectedTab(tab.getIndex());
             	ctrl.showForums();
+            	
+            	ctrl.onStarred();
+            	ctrl.onNewTopics();
+            	ctrl.onLRUTopics();
+            	ctrl.onMostViews();
+            	ctrl.onMostPosts();
+            	ctrl.onBoardInfo();
 	        });
 	        
             for (var i=0;i<selForums.length;i++) {
