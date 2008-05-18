@@ -1113,7 +1113,8 @@ var ctrl = function () {
             	var tab = tabs.getSelectedTab();
             	tabs.setSelectedTab(tab.getIndex());
             	
-            	//ctrl.onBoardInfo();
+            	ctrl.onForumsSelUpdate();
+            	ctrl.onTopicsSelUpdate();
             	ctrl.showForums();
 	        });
 	        
