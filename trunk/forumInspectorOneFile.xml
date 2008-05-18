@@ -672,9 +672,9 @@ var display = function () {
 			refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
 			//addEventListener(refreshImg, 'click', ctrl.refresh);
         	buttonTD.appendChild(refreshImg);
+        	//tr.appendChild(buttonTD);
         	
-        	tr.appendChild(buttonTD);
-        	display.reduceSpanText( a, 310 );
+        	//display.reduceSpanText( a, 310 );
         },
         
         getForumSubHeader: function ( forum ) {
