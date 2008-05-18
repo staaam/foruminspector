@@ -311,7 +311,6 @@ Category.prototype.visibleSubItems = function () {
 function CategoryDisplayItem(parent, headerText, headerUrl,
 	subHeader, expandingFunction, isSelected, selectFunction, isForums, direction ) {
 
-	alert(parent);
 	this.initDisplayItem(parent);
 	
 	this.isForums = isForums;
