@@ -612,7 +612,7 @@ var display = function () {
 				//e.cancelBubble = true;
 				//if (e.stopPropagation) e.stopPropagation();
 				window.open("http://foruminspector.googlecode.com/svn/trunk/help.html",
-					"help","width=200,height=200,scrollbars=yes,status=no");    
+					"help","width=450,height=200,scrollbars=yes,status=no");    
 			}
 			addEventListener(helpLink, 'click', onClickHelp);
 	
