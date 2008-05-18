@@ -588,10 +588,6 @@ var display = function () {
         	span.innerHTML = str;
         	parentElem.appendChild(span);
         	
-        	var divider = document.createElement("div");
-        	divider.className = "di-divider";
-        	parentElem.appendChild(divider);
-        	
         	var postItem = document.createElement("div");
         	postItem.dir = display.boardDir;	
         	postItem.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
@@ -604,7 +600,7 @@ var display = function () {
         	parentElem.appendChild(postItem);
         	
         	var divider2 = document.createElement("div");
-        	divider2.className = "di-divider";
+        	divider2.className = "post-divider";
         	parentElem.appendChild(divider2);
         	
         },
