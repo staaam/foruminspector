@@ -627,7 +627,8 @@ var display = function () {
         	//parentElem.dir = dir;
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var aSpan = document.createElement("span");
+        	var aSpan = document.createElement("div");
+        	aSpan.style.display="inline";
         	aSpan.className = "titleSpan";
         	
         	var a = document.createElement("a");
@@ -639,7 +640,8 @@ var display = function () {
         	aSpan.appendChild(a);
         	parentElem.appendChild(aDiv);
         	
-        	var helpSpan = document.createElement("span");
+        	var helpSpan = document.createElement("div");
+        	helpSpan.style.display="inline";
         	helpSpan.clannName = "helpSpan";
         	helpSpan.dir = display.oppositeDirection(display.boardDir);
         	
