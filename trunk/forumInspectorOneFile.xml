@@ -673,7 +673,7 @@ var display = function () {
         	var divvv = document.createElement("div");
         	divvv.innerHTML = "sdf";
         	
-        	parentElem.appendChild(divvv/*table/*);
+        	parentElem.appendChild(divvv/*table*/);
         	
         	display.reduceSpanText( a, 310 );
         },
