@@ -1100,7 +1100,7 @@ var ctrl = function () {
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
             	var tab = tabs.getSelectedTab();
-            	tabs.setSelectedTab(tab.index);
+            	tabs.setSlectedTab(tab.index);
             	ctrl.showForums();
 	        });
 	        
@@ -1117,8 +1117,8 @@ var ctrl = function () {
         },
         
         showForums: function () {
-        	if (!prefs.getBool(CONST.showForums))
-        		return;
+//        	if (!prefs.getBool(CONST.showForums))
+//        		return;
 
         	var items = [];
         	for (var i=0; i<board.subItems.length; i++) {
