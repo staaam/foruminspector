@@ -1335,11 +1335,11 @@ var ctrl = function () {
     
     var divStarred;
     var loadingCount = 0;
-    var displayGeneral = new DisplayGeneral();
 
     return {
         init: function () {
-        	displayGeneral.init();
+        	//displayGeneral.init();
+        	display.init();
             return ctrl.refresh();
         },
         
