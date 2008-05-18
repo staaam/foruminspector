@@ -1010,6 +1010,8 @@ var CONST = {
 	pRcntUpdtd: "ru",
 	pNewTopics: "nt",
 	
+	showForums: "s0",
+	
 	NULL: null
 };
 
@@ -1101,13 +1103,11 @@ var ctrl = function () {
         },
         
         createTabs: function () {
+        	if (prefs.getBool(CONST.showForums))
             divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), 
             	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); });
-            //divLog = tabs.addDynamicTab("Log", ctrl.resize);
-            
             divStarred = tabs.addDynamicTab(prefs.getMsg("starred"),
             	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onStarred(); });
-            
             divNewTopics = tabs.addDynamicTab(prefs.getMsg("latestT"), 
             	function() { display.setSpecialTabsClass(tabs, prefs); ctrl.onNewTopics(); });
             divRecTopics = tabs.addDynamicTab(prefs.getMsg("recentlyUpdated"), 
