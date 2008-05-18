@@ -88,11 +88,15 @@ var display = function () {
         createBoardTitle: function ( parentElem, board ){
         	
         	parentElem.className = "boardTitle thinBorder";
-        	var span = document.createElement("span");
-        	span.innerHTML = board.title;
-        	parentElem.appendChild(span);
+        	var a = document.createElement("a");
+        	a.innerHTML = board.title;
+        	a.href = board.url;
+        	a.target = "_blank";
+        	//a.style.color = "#000000";
+        	a.className = "blackColor";
+        	parentElem.appendChild(a);
         	
-        	display.reduceSpanText( span, 310 );
+        	display.reduceSpanText( a, 310 );
         },
         
         getForumSubHeader: function ( forum ) {

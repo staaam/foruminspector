@@ -10,7 +10,7 @@ Legend:
 -------------------------------------------------
 
 --- Both ---
->>>	- 21) (Michael & Kolman) Add link to board name to the board itself		--> you can use board.url field to get the board url
+===	- 21) (Michael & Kolman) Add link to board name to the board itself		--> you can use board.url field to get the board url
 13) other buttons as said to be in the document (maybe not, think about interface)
 >>?	- (Kolman & Michael) Show All/Show Selected     --> currently I've put it to the setting area, do you think we should create the button for it? if so, it's your part :)  
 >>>	- (Kolman & Michael) Refresh Content 			--> try making the button and calling ctrl.refresh() func, should work. I think right place to put it is near the Board Title (above all tabs), probably as a small picture (similar to refresh sign in browsers?)
@@ -52,8 +52,8 @@ Legend:
    - make it absolute
 29)	(Kolman) When showing posts one should understand that not all posts are shown
 		also should understand that only the beginning or end is shown.
-
-
+31) (Kolman) Left border it IE on topics is not shown.
+32) (Kolman) Some look things as spaces after +
 
 
 --- Low ---
