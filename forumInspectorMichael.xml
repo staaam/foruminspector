@@ -1433,7 +1433,7 @@ Topic.prototype.tryParsePostsTable = function (table) {
 };
 
 Topic.prototype.tryParsePostsHeader = function (table) {
-    var ths = this.getTableHeader(table);)
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 2) {
         return false;
     }
