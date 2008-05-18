@@ -626,7 +626,7 @@ var display = function () {
         	
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var table = document.createElement("table");
+        	/*var table = document.createElement("table");
         	table.className = "boardTitle";
         	table.width = "100%";
         	var tr = document.createElement("tr");
@@ -668,7 +668,7 @@ var display = function () {
 			helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 			helpLink.appendChild(helpImg);
 			helpSpan.appendChild(helpLink);
-        	tr.appendChild(helpSpan);
+        	tr.appendChild(helpSpan);*/
         	
         	var divvv = document.createElement("div");
         	divvv.innerHTML = "sdf";
