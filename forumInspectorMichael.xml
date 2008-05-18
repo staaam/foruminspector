@@ -1075,7 +1075,7 @@ var ctrl = function () {
         	}
         	alert("inside refresh");
 
-            ctr.createTabs();
+            ctrl.createTabs();
     		cachedPrefs = {};
 
 		    allForums = {};
