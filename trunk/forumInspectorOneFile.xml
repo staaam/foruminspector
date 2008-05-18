@@ -630,7 +630,7 @@ var display = function () {
         	
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var str = "<table class=\"boardTitle\"><tr><td>" +
+        	var str = "<table class=\"titleTable boardTitle\"><tr><td>" +
         	"<a class=\"blackColor\" href=\""+ 
         	board.url + "\" target=\"_blank\">" + board.title + "</a></td>" +
         	"<td class=\"buttonsTD\" dir=\""+display.oppositeDirection(display.globalDir)+"\">" +
