@@ -871,11 +871,12 @@ var display = function () {
             		display.setSpecialTabClass( aTab );
             	}
             	
-            	if (updatedTabs)
+            	if (display.updatedTabs)
             	{
-	            	for(var key in updatedTabs)
+	            	for(var key in display.updatedTabs)
 	            	{
-	            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML)
+	            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
+	            			display.updatedTabs[key] == true)
 	            		{
 	            			tab.getNameContainer().className =
 	            				tab.getNameContainer().className + " isItalic";
@@ -883,11 +884,12 @@ var display = function () {
 	            	}
             	}
             	
-            	if (newTabs)
+            	if (display.newTabs)
             	{
-	            	for(var key in newTabs)
+	            	for(var key in display.newTabs)
 	            	{
-	            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML)
+	            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
+	            			display.newTabs[key] == true)
 	            		{
 	            			tab.getNameContainer().className =
 	            				tab.getNameContainer().className + " isBold";
