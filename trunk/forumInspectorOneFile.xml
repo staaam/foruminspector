@@ -601,7 +601,7 @@ var display = function () {
         	a.href = board.url;
         	parentElem.appendChild(a);
         	
-        	display.reduceSpanText( span, 310 );
+        	display.reduceSpanText( a, 310 );
         },
         
         getForumSubHeader: function ( forum ) {
