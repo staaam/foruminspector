@@ -652,6 +652,8 @@ var display = function () {
         	"</a>" +
         	"<img class=\"noBorder refreshImage\" onclick=\"ctrl.refresh();\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
         	"</img>"
+        	"<img class=\"noBorder loadingImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
+        	"</img>"
         	 + "</td></tr></table>";
         	
         	parentElem.innerHTML = str;

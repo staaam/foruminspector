@@ -141,6 +141,12 @@
 	cursor: pointer;
 }
 
+.loadingImage {
+	background-image:url(help.gif);
+	height: 32px;
+	width: 32px;
+}
+
 .refreshImage {
 	background-image:url(refresh.gif);
 	height: 15px;
