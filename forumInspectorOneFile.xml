@@ -628,7 +628,7 @@ var display = function () {
         	parentElem.className = "boardTitle thinBorder";
         	
         	var aSpan = document.createElement("span");
-        	aPsan.className = "titleSpan";
+        	aSpan.className = "titleSpan";
         	
         	var a = document.createElement("a");
         	a.innerHTML = board.title;
