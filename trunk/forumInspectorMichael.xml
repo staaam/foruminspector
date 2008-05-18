@@ -1509,7 +1509,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
     
     var post = ctrl.newPost(this, a);
-    post.text = author+"&lt;br&gt;"+details+"&lt;br&gt;"+text;
+    post.text = author+"<br>"+details+"<br>"+text;
     post.author = author;
     post.details = details;
     post.parseTopicTableRow(tr);
