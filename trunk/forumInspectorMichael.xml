@@ -1023,7 +1023,7 @@ var CONST = {
 
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
-	alert(prefs.getMsg(prefs.getString("defTab")));
+	alert(prefs.getString("defTab")+", "+prefs.getMsg(prefs.getString("defTab")));
 	var tabs = new _IG_Tabs(moduleID, prefs.getMsg(prefs.getString("defTab")), _gel("TabsDiv"));
     var board;
     
