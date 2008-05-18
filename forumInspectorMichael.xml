@@ -1007,6 +1007,7 @@ ForumItem.prototype.visibleSubItems = function () {
 ForumItem.prototype.reload = function (callback) {
 	this.isLoaded = false;
     this.isLoading = true;
+    ctrl.increaseLoading();
     this.onLoadCallbacks.push(callback);
     var that = this;
     _IG_FetchContent(this.url, function (content) {
@@ -1017,6 +1018,7 @@ ForumItem.prototype.reload = function (callback) {
         	that.onLoadCallbacks[i](that);
         }
         that.onLoadCallbacks = [];
+        ctrl.decreaseLoading();
     });
 };
 
@@ -1111,6 +1113,7 @@ var ctrl = function () {
     var divRecTopics;
     
     var divStarred;
+    var loadingCount = 0;
     var displayGeneral = new DisplayGeneral();
 
     return {
@@ -1123,7 +1126,7 @@ var ctrl = function () {
         		tabs.removeTab(0);
         	}
         	//alert("inside refresh");
-
+			loadingCount = 0;
             ctrl.createTabs();
     		cachedPrefs = {};
 
@@ -1206,6 +1209,16 @@ var ctrl = function () {
         		}
         	}
 	        return tab;
+        },
+        
+        increaseLoading: function () {
+        	loadingCount++;
+        	display.setLoading(loadingCount);
+        },
+
+        decreaseLoading: function () {
+        	loadingCount--;
+        	display.setLoading(loadingCount);
         },
         
         createTabs: function () {
