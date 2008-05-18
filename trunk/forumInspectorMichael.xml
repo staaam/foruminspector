@@ -1147,7 +1147,7 @@ var ctrl = function () {
             for (var i in cachedPrefs) {
             	xx += i + ": " + cachedPrefs[i] + "\n";
             }
-            alert(xx);
+            //alert(xx);
             
             for (var i=0;i<selForums.length;i++) {
             	var fid = selForums[i];
@@ -1396,10 +1396,10 @@ var ctrl = function () {
         
         getLastTopic: function () { return ctrl.getCPI(CONST.lastTopic); },
         getLastPost : function () { return ctrl.getCPI(CONST.lastPost); },
+        getNewTopics: function () { return ctrl.getCPA(CONST.pNewTopics); },
+        getRcntUpdtd: function () { return ctrl.getCPA(CONST.pRcntUpdtd); },
         getMostViews: function () { return ctrl.getCPA(CONST.pMostViews); },
         getMostPosts: function () { return ctrl.getCPA(CONST.pMostPosts); },
-        getRcntUpdtd: function () { return ctrl.getCPA(CONST.pRcntUpdtd); },
-        getNewTopics: function () { return ctrl.getCPA(CONST.pNewTopics); },
 
         setLastTopic: function (lastTopicId) { prefs.set(CONST.lastTopic, lastTopicId); },
         setLastPost : function (lastPostId) { prefs.set(CONST.lastPost, lastPostId); },
