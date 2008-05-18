@@ -11,8 +11,15 @@ var display = function () {
         	el.innerHTML = "";
         },
         
-       	setDirection: function ( dir ) {
-        	display.dir = dir;
+       	setBoardDirection: function ( dir ) {
+        	display.boardDir = dir;
+        },
+        
+        oppositeDirection: function ( dir ) {
+        	if (dir == "rtl")
+        		return "ltr";
+        	
+        	return "rtl";
         },
         
         createCategoryItem: function (parentElem, category) {
@@ -41,8 +48,8 @@ var display = function () {
         createSecondaryPostItem: function ( parentElem, post ) {
         	
         	var postItem = document.createElement("div");
-        	postItem.dir = display.dir;	
-        	postItem.style.textAlign = (display.dir == "rtl")? "right" : "left";
+        	postItem.dir = display.boardDir;	
+        	postItem.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
         	postItem.className = "di-secondary-header";
         	
         	var span = document.createElement("span");
@@ -72,8 +79,8 @@ var display = function () {
         
         createBoardInfo: function ( parentElem, board )
         {
-        	parentElem.dir = display.dir;
-        	parentElem.style.textAlign = (display.dir == "rtl")? "right" : "left";
+        	parentElem.dir = display.boardDir;
+        	parentElem.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
         	parentElem.innerHTML = "" +
         		"<div class=\"di-divider\"></div>" + 
         		"<div class=\"boardInfo\">" +
@@ -87,14 +94,33 @@ var display = function () {
         
         createBoardTitle: function ( parentElem, board ){
         	
+        	//parentElem.dir = dir;
         	parentElem.className = "boardTitle thinBorder";
+        	
+        	var aDiv = document.createElement("div");
+        	
         	var a = document.createElement("a");
         	a.innerHTML = board.title;
         	a.href = board.url;
         	a.target = "_blank";
         	//a.style.color = "#000000";
         	a.className = "blackColor";
-        	parentElem.appendChild(a);
+        	aDiv.appendChild(a);
+        	parentElem.appendChild(aDiv);
+        	
+        	var helpDiv = document.createElement("div");
+        	helpDiv.dir = display.oppositeDirection(display.boardDir);
+        	
+        	var helpLink = document.createElement("a");
+			helpLink.target = "_blank";
+			helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
+	
+        	var helpImg = document.createElement("img");
+			helpImg.className = "thinImgBorder helpImage";
+			helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
+			helpLink.appendChild(helpImg);
+			helpDiv.appendChild(helpLink);
+        	parentElem.appendChild(helpDiv);
         	
         	display.reduceSpanText( a, 310 );
         },

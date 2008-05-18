@@ -68,7 +68,7 @@ var ctrl = function () {
             //alert(xx);
             
             board.load(function (board) {
-            	display.setDirection(board.dir);
+            	display.setBoardDirection(board.dir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
