@@ -570,6 +570,8 @@ var display = function () {
 
     return {
         init: function () {
+        	display.updatedTabs = [];
+        	display.newTabs = [];
         },
         
         clear: function (el) {
@@ -830,8 +832,8 @@ var display = function () {
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
         	}
         	
-        	updatedTabs[tabName] = tabUpdated;
-        	newTabs[tabName] = (newTopics.length > 0) ? true : false;
+        	display.updatedTabs[tabName] = tabUpdated;
+        	display.newTabs[tabName] = (newTopics.length > 0) ? true : false;
         	setSpecialTabsClass(tabs, prefs);
         },
         
@@ -1337,6 +1339,7 @@ var ctrl = function () {
 
     return {
         init: function () {
+        	displayGeneral.init();
             return ctrl.refresh();
         },
         
