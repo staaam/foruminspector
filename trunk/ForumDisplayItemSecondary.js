@@ -6,7 +6,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	this.header = document.createElement("div");
    	this.header.className = "di-secondary-header";
 
-   	this.header.dir = display.dir;	
+   	this.header.dir = display.boardDir;	
    	if(display.dir == "rtl")
    		this.header.style.textAlign = "right";
    	else
