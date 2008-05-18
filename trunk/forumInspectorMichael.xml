@@ -1113,11 +1113,6 @@ var ctrl = function () {
             	var tab = tabs.getSelectedTab();
             	tabs.setSelectedTab(tab.getIndex());
             	
-            	ctrl.onStarred();
-            	ctrl.onNewTopics();
-            	ctrl.onLRUTopics();
-            	ctrl.onMostViews();
-            	ctrl.onMostPosts();
             	//ctrl.onBoardInfo();
             	ctrl.showForums();
 	        });
@@ -1189,6 +1184,17 @@ var ctrl = function () {
         			ctrl.displayTopics(_gel(divStarred), diTopics.sort(sorters.byId));
         		});
         	}
+        },
+        
+        onForumsSelUpdate: function () {
+        	ctrl.onNewTopics();
+        	ctrl.onLRUTopics();
+        	ctrl.onMostViews();
+        	ctrl.onMostPosts();
+        },
+        
+        onTopicsSelUpdate: function () {
+        	ctrl.onStarred();
         },
         
         onNewTopics: function () {
@@ -1283,6 +1289,7 @@ var ctrl = function () {
                 selForums[name] = null;
             }
             prefs.set(CONST.selForums, joinKeys(selForums));
+            ctrl.onForumsSelUpdate();
         },
 
         toggleTopic: function (topic, checked) {
@@ -1293,6 +1300,7 @@ var ctrl = function () {
                 selTopics[name] = null;
             }
             prefs.set(CONST.selTopics, joinKeys(selTopics));
+            ctrl.onTopicsSelUpdate();
         },
         
         getCPI: function (name) {
