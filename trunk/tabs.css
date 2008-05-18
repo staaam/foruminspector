@@ -58,6 +58,10 @@
 	overflow:hidden;
 }
 
+.isBold {
+	font-weight: bold;
+}
+
 .postAuthor {
 	color:#7E7E7E;
 	background-color:#E5ECF9;
