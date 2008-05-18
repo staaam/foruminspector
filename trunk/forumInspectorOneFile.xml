@@ -589,7 +589,7 @@ var display = function () {
         	
         	var span = document.createElement("span");
         	//aDiv.className
-        	span.innerHTML = post.text;
+        	span.innerHTML = "huy" + post.text;
         	postItem.appendChild(span);
         	parentElem.appendChild(postItem);
         	
