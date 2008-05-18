@@ -653,6 +653,7 @@ var display = function () {
         	
         	buttonTD.width = "0%";
         	buttonTD.className = "helpSpan";
+        	alert(globalDir);
         	buttonTD.dir = display.oppositeDirection(globalDir);
         	
         	alert("!!!");
