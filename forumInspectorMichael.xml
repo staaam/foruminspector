@@ -1238,6 +1238,7 @@ var ctrl = function () {
         },
         
         onMostViews: function () {
+        	alert("mv");
         	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews, CONST.pMostViews);
         },
         
