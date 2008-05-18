@@ -649,7 +649,7 @@ var display = function () {
         	var refreshImg = document.createElement("img");
 			refreshImg.className = "noBorder refreshImage";
 			refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
-			addEventListener(refreshImg, 'click',ctrl.refresh());
+			addEventListener(refreshImg, 'click', ctrl.refresh);
 			
         	refreshTD.appendChild(refreshImg);
         	tr.appendChild(refreshTD);
