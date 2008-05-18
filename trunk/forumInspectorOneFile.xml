@@ -871,32 +871,26 @@ var display = function () {
             		display.setSpecialTabClass( aTab );
             	}
             	
-            	if (display.updatedTabs)
+            	for(var key in display.updatedTabs)
             	{
-	            	for(var key in display.updatedTabs)
-	            	{
-	            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
-	            			display.updatedTabs[key] == true)
-	            		{
-	            			tab.getNameContainer().className =
-	            				tab.getNameContainer().className + " isItalic";
-	            		}
-	            	}
+            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
+            			display.updatedTabs[key] == true)
+            		{
+            			tab.getNameContainer().className =
+            				tab.getNameContainer().className + " isItalic";
+            		}
             	}
             	
-            	if (display.newTabs)
+            	for(var key in display.newTabs)
             	{
-	            	for(var key in display.newTabs)
-	            	{
-	            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
-	            			display.newTabs[key] == true)
-	            		{
-	            			tab.getNameContainer().className =
-	            				tab.getNameContainer().className + " isBold";
-	            		}
-	            	}
+            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
+            			display.newTabs[key] == true)
+            		{
+            			tab.getNameContainer().className =
+            				tab.getNameContainer().className + " isBold";
+            		}
             	}
-            }
+           	}
         },
         
         setSpecialTabClass: function ( tab ) {
