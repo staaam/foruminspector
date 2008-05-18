@@ -1452,7 +1452,11 @@ Topic.prototype.tryParsePostsHeader = function (table) {
 
 Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     var spans = tr.getElementsByTagName('span');
-    spans = spans.concat(tr.getElementsByTagName('div'));
+    var divs = tr.getElementsByTagName('div');
+    for (var i=0; i<divs.length;i++) {
+    	spans.push(divs[i]);
+    }
+    
     if (spans.length == 0) {
         return false;
     }
