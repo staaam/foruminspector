@@ -34,11 +34,14 @@
 	border-width:2px;
 }
 
+.blackColor {
+	color: #000000;
+}
+
 .boardTitle {
 	font-size:medium;
 	font-weight:bold;
 	background-color:#E5ECF9;
-	color: #000000;
 	display:block;
 	padding: 2px;
 }

@@ -601,6 +601,7 @@ var display = function () {
         	a.href = board.url;
         	a.target = "_blank";
         	//a.style.color = "#000000";
+        	a.className = "blackColor";
         	parentElem.appendChild(a);
         	
         	display.reduceSpanText( a, 310 );
