@@ -124,6 +124,11 @@
 	width:9px;
 }
 
+.di-loading {
+	width:15px;
+	height:15px;
+}
+
 .di-sign-minus {
 	background-image:url(sprites.gif);
 	background-position:-28px -310px;
