@@ -871,7 +871,7 @@ var display = function () {
             		display.setSpecialTabClass( aTab );
             	}
             	
-            	alert("updating class names");
+            	//alert("updating class names");
             	for(var key in display.updatedTabs)
             	{
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
