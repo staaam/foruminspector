@@ -1097,7 +1097,7 @@ var ctrl = function () {
         },
         
         showForums: function () {
-        	if (prefs.getBool(CONST.showForums))
+        	if (!prefs.getBool(CONST.showForums))
         		return;
         		
         	var items = [];
