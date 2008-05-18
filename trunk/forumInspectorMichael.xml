@@ -1147,7 +1147,7 @@ var ctrl = function () {
             for (var i in cachedPrefs) {
             	xx += i + ": " + cachedPrefs[i] + "\n";
             }
-            //alert(xx);
+            alert(xx);
             
             for (var i=0;i<selForums.length;i++) {
             	var fid = selForums[i];
