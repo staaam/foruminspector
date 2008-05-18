@@ -1023,7 +1023,6 @@ var CONST = {
 
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
-	alert(prefs.getString("defTab")+", "+prefs.getMsg(prefs.getString("defTab")));
 	var tabs = new _IG_Tabs(moduleID, prefs.getMsg(prefs.getString("defTab")), _gel("TabsDiv"));
     var board;
     
@@ -1084,6 +1083,8 @@ var ctrl = function () {
             	//tabs.setSelectedTab();
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
+            	var tab = tabs.getSelectedTab();
+            	tabs.setSelectedTab(tab.index)
             	ctrl.showForums();
 	        });
 	        
