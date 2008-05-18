@@ -1169,10 +1169,10 @@ var ctrl = function () {
             	} catch (e) {} });
             	
         	if (!prefs.getBool(sp)) {
-        		var tabs = tabs.getTabs();
-        		for (var i in tabs) {
-        			if (tabs[i].getName() == nm) {
-        				tabs.removeTab(tabs[i].getIndex());
+        		var tbs = tabs.getTabs();
+        		for (var i in tbs) {
+        			if (tbs[i].getName() == nm) {
+        				tabs.removeTab(tbs[i].getIndex());
         				break;
         			}
         		}
