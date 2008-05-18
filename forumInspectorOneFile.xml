@@ -627,9 +627,8 @@ var display = function () {
         	//parentElem.dir = dir;
         	parentElem.className = "boardTitle thinBorder";
         	
-        	var aDiv = document.createElement("div");
-        	aDiv.style.position = "relative";
-        	aDiv.style.width="100%";
+        	var aSpan = document.createElement("span");
+        	aPsan.className = "titleSpan";
         	
         	var a = document.createElement("a");
         	a.innerHTML = board.title;
@@ -637,13 +636,12 @@ var display = function () {
         	a.target = "_blank";
         	//a.style.color = "#000000";
         	a.className = "blackColor";
-        	aDiv.appendChild(a);
+        	aSpan.appendChild(a);
         	parentElem.appendChild(aDiv);
         	
-        	var helpDiv = document.createElement("div");
-        	helpDiv.dir = display.oppositeDirection(display.boardDir);
-        	helpDiv.style.position = "relative";
-        	helpDiv.style.width="100%";
+        	var helpSpan = document.createElement("span");
+        	helpSpan.clannName = "helpSpan";
+        	helpSpan.dir = display.oppositeDirection(display.boardDir);
         	
         	var helpLink = document.createElement("a");
 			helpLink.target = "_blank";
@@ -653,8 +651,8 @@ var display = function () {
 			helpImg.className = "thinImgBorder helpImage";
 			helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 			helpLink.appendChild(helpImg);
-			helpDiv.appendChild(helpLink);
-        	parentElem.appendChild(helpDiv);
+			helpSpan.appendChild(helpLink);
+        	parentElem.appendChild(helpSpan);
         	
         	display.reduceSpanText( a, 310 );
         },
