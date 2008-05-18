@@ -630,56 +630,62 @@ var display = function () {
         	
         	parentElem.className = "boardTitle thinBorder";
         	
-        	/*var str = "<table><tr><td>" +
+        	var str = "<table><tr><td>" +
         	"<a class=\"blackColor\" href=\""+ 
         	board.url + "\" target=\"_blank\">" + board.title + "</a></td>" +
-        	"<td class=\"buttonsTD\">" +
-        	
+        	"<td class=\"buttonsTD\" dir=\""+display.oppositeDirection(display.globalDir)+"\">" +
+        	"<a href=\"http://foruminspector.googlecode.com/svn/trunk/help.html\" target=\"_blank\">"+
+        	"	<img class=\"thinImgBorder helpImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
+        	"	</img>" +
+        	"</a>" +
+        	"<img class=\"noBorder refreshImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
+        	"</img>"
         	 + "</td></tr></table>";
         	
-        	*/
-        	var table = document.createElement("table");
-        	table.className = "boardTitle";
+        	parentElem.innerHTML = str;
+        	
+        	//var table = document.createElement("table");
+        	//table.className = "boardTitle";
         	//table.width = "100%";
-        	parentElem.appendChild(table);
+        	//parentElem.appendChild(table);
         	
-        	var tr = document.createElement("tr");
-        	table.appendChild(tr);
+        	//var tr = document.createElement("tr");
+        	//table.appendChild(tr);
         	
-        	var titleTD = document.createElement("td");
-        	titleTD.className = "titleSpan";
+        	//var titleTD = document.createElement("td");
+        	//titleTD.className = "titleSpan";
         	
-        	var a = document.createElement("a");
-        	a.innerHTML = board.title;
-        	a.href = board.url;
-        	a.target = "_blank";
+        	//var a = document.createElement("a");
+        	//a.innerHTML = board.title;
+        	//a.href = board.url;
+        	//a.target = "_blank";
         	//a.style.color = "#000000";
-        	a.className = "blackColor";
-        	titleTD.appendChild(a);
-        	tr.appendChild(titleTD);
+        	//a.className = "blackColor";
+        	//titleTD.appendChild(a);
+        	//tr.appendChild(titleTD);
         	
-        	var buttonTD = document.createElement("td");
+        	//var buttonTD = document.createElement("td");
         	
-        	buttonTD.style.width = "0%";
-        	buttonTD.className = "helpSpan";
+        	//buttonTD.style.width = "0%";
+        	///buttonTD.className = "helpSpan";
         	//alert(display.globalDir);
-        	buttonTD.dir = display.oppositeDirection(display.globalDir);
+        	//buttonTD.dir = display.oppositeDirection(display.globalDir);
         	
-        	var helpLink = document.createElement("a");
-			helpLink.target = "_blank";
-			helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
+        	//var helpLink = document.createElement("a");
+			//helpLink.target = "_blank";
+			//helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
 	
-        	var helpImg = document.createElement("img");
-			helpImg.className = "thinImgBorder helpImage";
-			helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
-			helpLink.appendChild(helpImg);
-			buttonTD.appendChild(helpLink);
+        	//var helpImg = document.createElement("img");
+			//helpImg.className = "thinImgBorder helpImage";
+			//helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
+			//helpLink.appendChild(helpImg);
+			//buttonTD.appendChild(helpLink);
         	
-        	var refreshImg = document.createElement("img");
-			refreshImg.className = "noBorder refreshImage";
-			refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
+        	//var refreshImg = document.createElement("img");
+			//refreshImg.className = "noBorder refreshImage";
+			//refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
 			//addEventListener(refreshImg, 'click', ctrl.refresh);
-        	buttonTD.appendChild(refreshImg);
+        	//buttonTD.appendChild(refreshImg);
         	//tr.appendChild(buttonTD);
         	//display.reduceSpanText( a, 310 );
         },
