@@ -1478,7 +1478,7 @@ var ctrl = function () {
             	}
         		forum.load(function() {
         			diTopics = diTopics.concat(forum.selSubItems());
-        			ctrl.displayTopics(_gel(divStarred), "forums", tabs, prefs, [], diTopics.sort(sorters.byId));
+        			ctrl.displayTopics(_gel(divStarred), "forums", [], diTopics.sort(sorters.byId));
         		});
         	}
         },
@@ -1538,7 +1538,7 @@ var ctrl = function () {
 		        				}
 		        			}
 		        			try {
-			        			ctrl.displayTopics(el, tabName, tabs, prefs, n, o);
+			        			ctrl.displayTopics(el, tabName, n, o);
 			        			prefs.setArray(name, ids);
 		        			} catch (e) {}
 		        		});
