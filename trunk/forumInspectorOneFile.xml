@@ -43,7 +43,6 @@
  		<script>
 			var moduleID =__MODULE_ID__;
 			var globalDir = "__BIDI_DIR__";
-			alert(globalDir);
 		</script>
 
 		<div id ="beforeTabsDiv">
@@ -546,6 +545,10 @@ var display = function () {
         	display.boardDir = dir;
         },
         
+        setGlobalDirection: function (dir) {
+        	display.globalDir = dir;
+        }
+        
         oppositeDirection: function ( dir ) {
         	if (dir == "rtl")
         		return "ltr";
@@ -654,8 +657,8 @@ var display = function () {
         	
         	buttonTD.width = "0%";
         	buttonTD.className = "helpSpan";
-        	alert(globalDir);
-        	buttonTD.dir = display.oppositeDirection(globalDir);
+        	alert(display.globalDir);
+        	buttonTD.dir = display.oppositeDirection(display.globalDir);
         	
         	alert("!!!");
         	
@@ -1234,6 +1237,7 @@ var ctrl = function () {
             
             board.load(function (board) {
             	display.setBoardDirection(board.dir);
+            	display.setGlobalDirection(globalDir);
             	tabs.setSelectedTab(prefs.getInt("defTab"));
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
             	display.createBoardInfo(_gel(divBoardInfo), board);
