@@ -1,6 +1,6 @@
 /* begin CategoryDisplayItem class */
 function CategoryDisplayItem(parent, headerText, headerUrl,
-	subHeader, expandingFunction, isSelected, selectFunction, isForums, direction ) {
+	subHeader, expandingFunction, isSelected, selectFunction, isForums, isBold ) {
 
 	this.initDisplayItem(parent);
 	
@@ -25,6 +25,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
 	var headerTextSpan = document.createElement("span");
 	headerTextSpan.className = "di-header-span";
+	if (isBold)
+		headerTextSpan.className = headerTextSpan.className + " isBold";
+
 	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
 	

@@ -54,7 +54,7 @@ Legend:
 		also should understand that only the beginning or end is shown.
 31) (Kolman) Left border it IE on topics is not shown.
 32) (Kolman) Some look things as spaces after +
-
+35) (Kolman) Line break should trim in titles of board and topics
 
 --- Low ---
 1) (Low) publish our gadget on google
