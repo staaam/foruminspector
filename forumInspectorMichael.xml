@@ -944,7 +944,7 @@ ForumItem.prototype.init = function (parent, url, title) {
     	this.id = this.linkMatch(url)[1];
     }
     catch (e) {
-    	alert(e);
+    	//alert(e);
     }
     this.subItems = [];
     this.isLoaded = false;
@@ -1725,7 +1725,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     	try {
     		var a = this.mkFullUrl(getHref(as[i]));
     		post = new Post(this, a);
-	    	if (p.linkMatch(a)) {
+	    	if (post.id) {
 	    		break;
 	    	}
     	} catch (e) {}
