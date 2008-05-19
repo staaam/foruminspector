@@ -265,11 +265,14 @@ var display = function () {
 
         	for(var i=0; i<topics.length; i++)
         	{
-        		tabUpdated = true;
-        		display.createTopicItem( listDisplayItem.myself, topics[i] );
+        		if (topics[i].isUpdated())
+        			tabUpdated = true;
+
+        		display.createTopicItem( listDisplayItem.myself, topics[i], false );
         	}
         	
         	display.updatedTabs[tabName] = tabUpdated;
+        	alert(tabName + " " + newTopics.length);
         	display.newTabs[tabName] = (newTopics.length > 0) ? true : false;
         	display.setSpecialTabsClass(tabs, prefs);
         },
@@ -314,20 +317,22 @@ var display = function () {
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.updatedTabs[key] == true)
             		{
-            			//alert("italic");
+            			//alert("italic " + aTab.getNameContainer().innerHTML);
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isItalic";
+            			break;
             		}
             	}
             	
-            	for(var key in display.newonNewTopicsTabs)
+            	for(var key in display.newTabs)
             	{
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.newTabs[key] == true)
             		{
-            			//alert("bold");
+            			//alert("bold " + aTab.getNameContainer().innerHTML);
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isBold";
+            			break;
             		}
             	}
            	}
