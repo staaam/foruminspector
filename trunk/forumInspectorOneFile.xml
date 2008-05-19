@@ -1342,7 +1342,7 @@ Topic.prototype.toHTML = function () {
     return "<span class='topic'><a href=\"" + this.url + "\" target=\"_blank\">"+this.title+"</a><div class='parentForum'>"+labels.forum + ":" + this.parent.toHTMLlink() +"</div><div class='views'>"+labels.views+": "+this.views+"</div><div class='posts'>"+labels.posts+": "+this.posts+"</div></span>"
 }
 /* end Topic class */
-	var CONST = {
+var CONST = {
 	selForums: "sf",
 	selTopics: "st",
 	lastPost: "lp",
