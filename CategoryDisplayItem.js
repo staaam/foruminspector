@@ -59,10 +59,21 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.header.appendChild(this.loadingSpan);
 	
 	if (selectFunction != null) {
-		this.select = document.createElement("input");
-		this.select.className = "di-select-" + display.boardDir;	
-		this.select.type = "checkbox";
-		this.select.checked = isSelected;
+		this.selectImg = document.createElement("img");
+		this.selectImg.checked = isSelected;
+		if (isSelected)
+			this.selectImg.className = "di-select-" + display.boardDir;
+		else
+			this.selectImg.className = "di-not-select-" + display.boardDir;
+		this.selectImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
+		//his.selectImg.style.width = "15px";
+		//this.selectImg.style.height = "15px";
+		//this.selectImg.style["background-image"] = "http://foruminspector.googlecode.com/svn/trunk/icons1b.png";
+		
+		//this.select = document.createElement("input");
+		//this.select.className = "di-select-" + display.boardDir;	
+		//this.select.type = "checkbox";
+		//this.select.checked = isSelected;
 		var that = this;
 		var onClickSelect = function (e) {
 			
@@ -70,11 +81,18 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 			e.cancelBubble = true;
 			if (e.stopPropagation) e.stopPropagation();
 			
-			selectFunction( that.select.checked );
+			if (that.selectImg.checked)
+				that.selectImg.className = "di-not-select-" + display.boardDir;
+			else
+				that.selectImg.className = "di-select-" + display.boardDir;
+			that.selectImg.checked = !that.selectImg.checked;
+			//alert(selectFunction + " " + !that.selectImg.checked);
+			selectFunction( that.selectImg.checked );
 	        
 		}
-		addEventListener(this.select,'click',onClickSelect);
-		this.header.appendChild(this.select);
+		addEventListener(this.selectImg,'click',onClickSelect);
+		//this.header.appendChild(this.select);
+		this.header.appendChild(this.selectImg);
 	}
 	
 	if (subHeader != null)
