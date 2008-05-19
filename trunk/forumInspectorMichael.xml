@@ -1171,16 +1171,21 @@ var ctrl = function () {
                 forum.load(function(){});
             }
             board.load(function (board) {
-            	display.setBoardDirection(board.dir);
-            	display.setGlobalDirection(globalDir);
-            	display.createBoardTitle( _gel("beforeTabsDiv"), board );
-            	display.createBoardInfo(_gel(divBoardInfo), board);
-            	var tab = tabs.getSelectedTab();
-            	tabs.setSelectedTab(tab.getIndex());
-            	
-            	ctrl.onForumsSelUpdate();
-            	ctrl.onTopicsSelUpdate();
-            	ctrl.showForums();
+            	try {
+	            	display.setBoardDirection(board.dir);
+	            	display.setGlobalDirection(globalDir);
+	            	display.createBoardTitle( _gel("beforeTabsDiv"), board );
+	            	display.createBoardInfo(_gel(divBoardInfo), board);
+	            	var tab = tabs.getSelectedTab();
+	            	tabs.setSelectedTab(tab.getIndex());
+	            	
+	            	ctrl.onForumsSelUpdate();
+	            	ctrl.onTopicsSelUpdate();
+	            	ctrl.showForums();
+            	}
+            	catch (e) {
+            		alert("Sorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported")
+            	}
 	        });
 	        
             return false;
