@@ -1422,6 +1422,7 @@ var ctrl = function () {
                 selTopics[name] = null;
             }
             prefs.set(CONST.selTopics, joinKeys(selTopics));
+            ctrl.onForumsSelUpdate();
             ctrl.onTopicsSelUpdate();
         },
         
