@@ -96,7 +96,7 @@ ForumItem.prototype.reload = function (callback) {
 		    ctrl.decreaseLoading();
     	}
     	catch (e) {
-    		alert("Sorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported")
+    		ctrl.notSupported(this, e);
     	}
     });
 };

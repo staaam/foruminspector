@@ -102,6 +102,10 @@ var ctrl = function () {
             return false;
         },
         
+        notSupported: function (obj, err) {
+        	alert("Error while working with '"+board.url+"'\nSorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported");
+        },
+        
         isShowAllForums: function () {
         	return prefs.getInt("showForums");
         },
