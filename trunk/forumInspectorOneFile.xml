@@ -426,7 +426,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 			if (e.stopPropagation) e.stopPropagation();
 			
 			if (that.selectImg.checked)
-				that.selectImg.className = "di-non-select-" + display.boardDir;
+				that.selectImg.className = "di-not-select-" + display.boardDir;
 			else
 				that.selectImg.className = "di-select-" + display.boardDir;
 			that.selectImg.checked = !that.selectImg.checked;
