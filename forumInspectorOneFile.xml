@@ -846,6 +846,7 @@ var display = function () {
         	}
         	
         	display.updatedTabs[tabName] = tabUpdated;
+        	alert(newTopics.length);
         	display.newTabs[tabName] = (newTopics.length > 0) ? true : false;
         	display.setSpecialTabsClass(tabs, prefs);
         },
