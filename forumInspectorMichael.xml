@@ -1422,7 +1422,9 @@ var ctrl = function () {
                 selTopics[name] = null;
             }
             prefs.set(CONST.selTopics, joinKeys(selTopics));
-            ctrl.onForumsSelUpdate();
+            if (tabs.getSelectedTab().getName() == prefs.getMsg("starred")) {
+            	ctrl.onForumsSelUpdate();
+        	}
             ctrl.onTopicsSelUpdate();
         },
         
