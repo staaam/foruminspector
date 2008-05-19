@@ -1073,7 +1073,7 @@ ForumItem.prototype.reload = function (callback) {
     this.onLoadCallbacks.push(callback);
     var that = this;
     _IG_FetchContent(this.url, function (content) {
-    	//try {
+    	try {
 		    that.onLoad(content);
 		    that.isLoaded = true;
 		    that.isLoading = false;
@@ -1082,10 +1082,10 @@ ForumItem.prototype.reload = function (callback) {
 		    }
 		    that.onLoadCallbacks = [];
 		    ctrl.decreaseLoading();
-//    	}
-//    	catch (e) {
-//    		ctrl.notSupported(this, e);
-//    	}
+    	}
+    	catch (e) {
+    		ctrl.notSupported(this, e);
+    	}
     });
 };
 
@@ -1239,8 +1239,8 @@ var ctrl = function () {
             }
             board.load(function (board) {
             	if (!board.subItems || board.subItems.length == 0) {
-            		ctrl.notSupported();
-            		return;
+            		//ctrl.notSupported();
+            		//return;
             	}
             	display.setBoardDirection(board.dir);
             	display.setGlobalDirection(globalDir);
