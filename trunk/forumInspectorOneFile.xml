@@ -405,9 +405,9 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	if (selectFunction != null) {
 		this.selectImg = document.createElement("img");
 		this.selectImg.className = "di-select-" + display.boardDir;	
-		this.selectImg.style.width = "15px";
-		this.selectImg.style.height = "15px";
-		this.selectImg.style["background-image"] = "http://foruminspector.googlecode.com/svn/trunk/icons1b.png";
+		//his.selectImg.style.width = "15px";
+		//this.selectImg.style.height = "15px";
+		//this.selectImg.style["background-image"] = "http://foruminspector.googlecode.com/svn/trunk/icons1b.png";
 		
 		this.select = document.createElement("input");
 		this.select.className = "di-select-" + display.boardDir;	

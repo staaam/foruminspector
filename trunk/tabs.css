@@ -99,11 +99,15 @@
 .di-select-ltr {
 	position:absolute;
 	left:93%;
+	background-image:url(http://foruminspector.googlecode.com/svn/trunk/icons1b.png);
+	background-position:0px -20px;
 }
 
 .di-select-rtl {
 	position:absolute;
 	right:93%;
+	background-image:url(http://foruminspector.googlecode.com/svn/trunk/icons1b.png);
+	background-position:0px -20px;
 }
 
 .di-header {
