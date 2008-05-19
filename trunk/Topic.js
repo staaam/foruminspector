@@ -1,6 +1,8 @@
 /* begin Topic class */
 function Topic(parent, url, title) {
-    this.init(parent, url, title);
+	var po = "&postorder=" + ctrl.getPostOrder();
+    this.init(parent, url + po, title);
+    this.replylink = url.replace("viewtopic.php?", "posting.php?mode=reply&");
 }
 
 Topic.prototype = new ForumItem();
@@ -64,6 +66,26 @@ Topic.prototype.parse = function (content) {
                 break;
             }
         }
+    }
+    var as = dom.getElementsByTagName('a');
+    for (var i=0; i<as.length; i++) {
+    	var hr = getHref(as[i]);
+    	var text = getText(as[i]);
+    	var imgs = as[i].getElementsByTagName('img');
+    	if (!text && imgs && imgs.length > 0) {
+    		text = imgs[0].alt;
+    	}
+    	if (!text) {
+    		continue;
+    	}
+    	if (hr.match(/posting.php/)) {
+    		if (hr.match(/mode=reply/)) {
+    			labels.reply = text;
+    		}
+    		else if (hr.match(/mode=quote/)) {
+    			labels.quote = text;   			
+    		}
+    	}
     }
     var tables = dom.getElementsByTagName('table');
     for (var i=0; i<tables.length; i++) {
@@ -144,25 +166,44 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
 
     var as = tr.getElementsByTagName('a');
-    var a;
+    var post;
     for (var i in as) {
     	try {
-    		a = this.mkFullUrl(getHref(as[i]));
-	    	if (Post.prototype.linkMatch(a)) {
+    		var a = this.mkFullUrl(getHref(as[i]));
+    		post = new Post(this, a);
+	    	if (post.id) {
 	    		break;
 	    	}
     	} catch (e) {}
-    	a = null;
+    	post = null;
     }
-    if (a == null) {
+    if (post == null) {
     	return false;
     }
-    
-    var post = ctrl.newPost(this, a);
-    //post.text = labels.author + ": " + author+" ("+details+")<br>"+text;
+
     post.text = text;
     post.author = author;
     post.details = details;
+//    for (var i in as) {
+//    	var url = this.mkFullUrl(getHref(as[i]));
+//    	if (url.match(/posting.php/)) {
+//    		post.quoteLink = url;
+//
+//    		labels.quote = getText(as[i]);
+//    		if (!labels.quote) {
+//    			var img = as[i].getElementsByTagName('img');
+//    			if (img) {
+//    				img = img[0];
+//    				labels.quote = img.alt;
+//    			}
+//    			else {
+//    				labels.quote = "Quote";
+//    			} 
+//    		}
+//    		break;
+//    	}
+//    }
+    
     post.parseTopicTableRow(tr);
     this.addItem(post);    
     // title/link is is first <a> tag, so look into it

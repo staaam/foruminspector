@@ -1,4 +1,4 @@
-var CONST = {
+	var CONST = {
 	selForums: "sf",
 	selTopics: "st",
 	lastPost: "lp",
@@ -346,6 +346,9 @@ var ctrl = function () {
         setLastTopic: function (lastTopicId) { prefs.set(CONST.lastTopic, lastTopicId); },
         setLastPost : function (lastPostId) { prefs.set(CONST.lastPost, lastPostId); },
 
+		getPostOrder: function () {
+			return prefs.getString("postorder");
+		}
         resize: function (tabId) {
             _IG_AdjustIFrameHeight();
         }
@@ -360,7 +363,9 @@ var labels = {
     whoIsOnline: "Who is Online",
     
     author: "Aurhor",
-    views: "Views"
+    views: "Views",
+    quote: "Quote",
+    reply: "Reply" 
 };
 
 function getText(node) {
