@@ -2,6 +2,7 @@
 <Module>
     <ModulePrefs title="Forums Board Inspector, Gadget">
         <Require feature="dynamic-height"/>
+        <Require feature="analytics"/>
         <Require feature='setprefs'/>
         <Require feature='tabs'/>
 
@@ -1656,6 +1657,7 @@ function getAttr(a, attr) {
 	return hr.replace(myBase,"");
 }
 
+_IG_Analytics("UA-3697301-2", "/forumInspectorGadget");
 _IG_RegisterOnloadHandler(ctrl.init);
 /* begin Topic class */
 function Topic(parent, url, title) {
