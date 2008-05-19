@@ -148,7 +148,9 @@ var ctrl = function () {
         	var nm = prefs.getMsg(name);
         	var tab = tabs.addDynamicTab(nm, 
             	function() { try {
-            		display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); 
+					_IG_Analytics("UA-3697301-2", "/forumInspectorGadget/"+name);
+            		display.setSpecialTabsClass(tabs, prefs);
+            		ctrl.resize(); 
             	} catch (e) {} });
             	
         	if (!prefs.getBool(sp)) {
@@ -181,8 +183,8 @@ var ctrl = function () {
             divMostViews = ctrl.createTab(CONST.showMostViews, "mostViews", ctrl.onMostViews);
             divMostPosts = ctrl.createTab(CONST.showMostPosts, "mostPosts", ctrl.onMostPosts);
             
-            //divBoardInfo = ctrl.createTab(CONST.showBoadrInfo, "boardInfo", ctrl.resize);
-            divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
+            divBoardInfo = ctrl.createTab(CONST.showBoadrInfo, "boardInfo", ctrl.resize);
+            //divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
             
             tabs.alignTabs("left", 10);
             
@@ -509,4 +511,5 @@ function getAttr(a, attr) {
 	return hr.replace(myBase,"");
 }
 
+_IG_Analytics("UA-3697301-2", "/forumInspectorGadget");
 _IG_RegisterOnloadHandler(ctrl.init);
