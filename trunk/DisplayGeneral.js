@@ -272,7 +272,7 @@ var display = function () {
         	}
         	
         	display.updatedTabs[tabName] = tabUpdated;
-        	alert(tabName + " " + newTopics.length);
+        	//alert(tabName + " " + newTopics.length);
         	display.newTabs[tabName] = (newTopics.length > 0) ? true : false;
         	display.setSpecialTabsClass(tabs, prefs);
         },
