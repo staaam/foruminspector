@@ -299,42 +299,33 @@ var display = function () {
         },
         
         setSpecialTabsClass: function( tabs, prefs ) {
-                   
             var tabsArr = tabs.getTabs();
-            for(var i = 0; i < tabsArr.length; i++ )
-            {
+            for(var i = 0; i < tabsArr.length; i++ ) {
             	var aTab = tabsArr[i];
+            	var name = aTab.getName();
+            	var cont = aTab.getNameContainer();
             	
-            	if (aTab.getNameContainer().innerHTML == prefs.getMsg("forums") ||
-            		aTab.getNameContainer().innerHTML == prefs.getMsg("starred"))
-            	{
+            	if (name == prefs.getMsg("forums") || name == prefs.getMsg("starred"))
             		display.setSpecialTabClass( aTab );
-            	}
             	
-            	//alert("updating class names");
-            	for(var key in display.updatedTabs)
-            	{
-            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
-            			display.updatedTabs[key] == true)
-            		{
-            			//alert("italic " + aTab.getNameContainer().innerHTML);
-            			aTab.getNameContainer().className =
-            				aTab.getNameContainer().className + " isItalic";
+				cont.className = cont.className.replace("isItalic", "");
+            	for(var key in display.updatedTabs) { 
+            		if (name == prefs.getMsg(key)) { 
+            			if (display.updatedTabs[key] == true) 
+            				cont.className = cont.className + " isItalic";
             			break;
             		}
             	}
             	
-            	for(var key in display.newTabs)
-            	{
-            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
-            			display.newTabs[key] == true)
-            		{
-            			//alert("bold " + aTab.getNameContainer().innerHTML);
-            			aTab.getNameContainer().className =
-            				aTab.getNameContainer().className + " isBold";
+  				cont.className = cont.className.replace("isBold", "");
+            	for(var key in display.newTabs) {
+            		if (name == prefs.getMsg(key)) { 
+            			if (display.newTabs[key] == true) 
+            				cont.className = cont.className + " isBold";
             			break;
             		}
             	}
+            	//alert(key + " class " + cont.className);
            	}
         },
         
