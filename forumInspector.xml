@@ -1176,6 +1176,10 @@ var ctrl = function () {
                 forum.load(function(){});
             }
             board.load(function (board) {
+            	if (!board.subItems || board.subItems.length == 0) {
+            		ctrl.notSupported();
+            		return;
+            	}
             	display.setBoardDirection(board.dir);
             	display.setGlobalDirection(globalDir);
             	display.createBoardTitle( _gel("beforeTabsDiv"), board );
@@ -1192,7 +1196,9 @@ var ctrl = function () {
         },
         
         notSupported: function (obj, err) {
-        	alert("Error while working with '"+board.url+"'\nSorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported");
+        	var msg = "Error while working with '"+board.url+"'\nSorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported";
+        	//alert(msg);
+           	document.write("<pre>"+msg+"</pre");
         },
         
         isShowAllForums: function () {
