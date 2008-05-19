@@ -85,14 +85,19 @@ ForumItem.prototype.reload = function (callback) {
     this.onLoadCallbacks.push(callback);
     var that = this;
     _IG_FetchContent(this.url, function (content) {
-        that.onLoad(content);
-        that.isLoaded = true;
-        that.isLoading = false;
-        for (var i in that.onLoadCallbacks) {
-        	that.onLoadCallbacks[i](that);
-        }
-        that.onLoadCallbacks = [];
-        ctrl.decreaseLoading();
+    	try {
+		    that.onLoad(content);
+		    that.isLoaded = true;
+		    that.isLoading = false;
+		    for (var i in that.onLoadCallbacks) {
+		    	that.onLoadCallbacks[i](that);
+		    }
+		    that.onLoadCallbacks = [];
+		    ctrl.decreaseLoading();
+    	}
+    	catch (e) {
+    		alert("Sorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported")
+    	}
     });
 };
 
