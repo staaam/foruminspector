@@ -1267,7 +1267,7 @@ var ctrl = function () {
         
         onStarred: function () {
         	try {
-	        	display.clear(el);
+	        	display.clear(_gel(divStarred));
 	        	var map = {};        	
 				for (var tid in selTopics) {
 	        		var fid = selTopics[tid];
