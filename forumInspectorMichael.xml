@@ -1720,11 +1720,12 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
 
     var as = tr.getElementsByTagName('a');
+    var p = new Post(this);
     var a;
     for (var i in as) {
     	try {
     		a = this.mkFullUrl(getHref(as[i]));
-	    	if (Post.prototype.linkMatch(a)) {
+	    	if (p.linkMatch(a)) {
 	    		break;
 	    	}
     	} catch (e) {}
@@ -1735,7 +1736,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
 
     var post = ctrl.newPost(this, a);
-    post.text = "<a href='"+post.replylink + "'>" + labels.reply + "</a><br>" + text;
+    post.text = "<a href='"+post.replylink + "'>" + labels.quote + "</a><br>" + text;
     post.author = author;
     post.details = details;
 //    for (var i in as) {
