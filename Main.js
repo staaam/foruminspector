@@ -348,7 +348,7 @@ var ctrl = function () {
 
 		getPostOrder: function () {
 			return prefs.getString("postorder");
-		}
+		},
         resize: function (tabId) {
             _IG_AdjustIFrameHeight();
         }
