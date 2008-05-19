@@ -35,7 +35,7 @@ Legend:
 === 18) (Michael) add option for choosing which tabs to show
 === 22) (Michael) Add more preferences as promissed, TODO - what exact 
 === 23) (Michael) Unstarring all topics in the Starred tab does not remove them from the tab
-24) (Michael) When changing the address of the forum, clear all stored data
+=== 24) (Michael) When changing the address of the forum, clear all stored data
 === 28) (Michael) When opening starred topic, gadget will show the last posts page and not first.
 === 	(Michael) Add preferences for this
 16) (Michael) PROBLEMATIC A LITTLE (at least, in the way we thought)  make the summary gadget (i.e. make some more tabs and just make another content feeder using remote messages between gadgets)
