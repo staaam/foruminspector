@@ -1391,6 +1391,10 @@ var ctrl = function () {
 
     return {
         init: function () {
+<<<<<<< .mine
+        	//displayGeneral.init();
+        	display.init();
+=======
         	if (prefs.getString("url") != prefs.getString("oldurl")) {
         		prefs.set("oldurl", prefs.getString("url"),
         			CONST.lastPost, 0,
@@ -1569,11 +1573,8 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTopics);
-        },
-        
-        onLRUTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId, CONST.pRcntUpdtd);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTop        	ctrl.displayForumsTopics(_gel(divNewTopics), "latestT", sorters.byId, CONST.pNewTopics);
+sTopics(_gel(divRecTopics), sorters.byLastPostId, CONST.pRcntUpdtd);
         },
         
         onMostViews: function () {
