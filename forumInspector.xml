@@ -274,10 +274,21 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	this.header.appendChild(this.loadingSpan);
 	
 	if (selectFunction != null) {
-		this.select = document.createElement("input");
-		this.select.className = "di-select-" + display.boardDir;	
-		this.select.type = "checkbox";
-		this.select.checked = isSelected;
+		this.selectImg = document.createElement("img");
+		this.selectImg.checked = isSelected;
+		if (isSelected)
+			this.selectImg.className = "di-select-" + display.boardDir;
+		else
+			this.selectImg.className = "di-not-select-" + display.boardDir;
+		this.selectImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
+		//his.selectImg.style.width = "15px";
+		//this.selectImg.style.height = "15px";
+		//this.selectImg.style["background-image"] = "http://foruminspector.googlecode.com/svn/trunk/icons1b.png";
+		
+		//this.select = document.createElement("input");
+		//this.select.className = "di-select-" + display.boardDir;	
+		//this.select.type = "checkbox";
+		//this.select.checked = isSelected;
 		var that = this;
 		var onClickSelect = function (e) {
 			
@@ -285,11 +296,18 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 			e.cancelBubble = true;
 			if (e.stopPropagation) e.stopPropagation();
 			
-			selectFunction( that.select.checked );
+			if (that.selectImg.checked)
+				that.selectImg.className = "di-not-select-" + display.boardDir;
+			else
+				that.selectImg.className = "di-select-" + display.boardDir;
+			that.selectImg.checked = !that.selectImg.checked;
+			//alert(selectFunction + " " + !that.selectImg.checked);
+			selectFunction( that.selectImg.checked );
 	        
 		}
-		addEventListener(this.select,'click',onClickSelect);
-		this.header.appendChild(this.select);
+		addEventListener(this.selectImg,'click',onClickSelect);
+		//this.header.appendChild(this.select);
+		this.header.appendChild(this.selectImg);
 	}
 	
 	if (subHeader != null)
@@ -409,7 +427,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	gotoLink.appendChild(headerTextSpan);
 	
 	this.select = document.createElement("input");
-	this.select.className = "di-select-" + display.boardDir;	
+	this.select.className = "di-selectbox-" + display.boardDir;	
 	this.select.type = "checkbox";
 	this.select.checked = isSelected;
 	var that = this;
@@ -452,6 +470,8 @@ var display = function () {
 
     return {
         init: function () {
+        	display.updatedTabs = [];
+        	display.newTabs = [];
         },
         
         clear: function (el) {
@@ -694,18 +714,30 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, newTopics, topics ) {
+        topics: function( parentElem, tabName, tabs, prefs, newTopics, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
+           	var tabUpdated = false;
 
 			for(var i=0; i<newTopics.length; i++)
         	{
+        		if (newTopics[i].isUpdated())
+        			tabUpdated = true;
+        			
         		display.createTopicItem( listDisplayItem.myself, newTopics[i], true );
         	}   
 
         	for(var i=0; i<topics.length; i++)
         	{
-        		display.createTopicItem( listDisplayItem.myself, topics[i] );
-        	}    	
+        		if (topics[i].isUpdated())
+        			tabUpdated = true;
+
+        		display.createTopicItem( listDisplayItem.myself, topics[i], false );
+        	}
+        	
+        	display.updatedTabs[tabName] = tabUpdated;
+        	//alert(tabName + " " + newTopics.length);
+        	display.newTabs[tabName] = (newTopics.length > 0) ? true : false;
+        	display.setSpecialTabsClass(tabs, prefs);
         },
         
         reduceSpanText: function( objSpan, widthFinal ) {
@@ -730,18 +762,34 @@ var display = function () {
         },
         
         setSpecialTabsClass: function( tabs, prefs ) {
-                   
             var tabsArr = tabs.getTabs();
-            for(var i = 0; i < tabsArr.length; i++ )
-            {
+            for(var i = 0; i < tabsArr.length; i++ ) {
             	var aTab = tabsArr[i];
+            	var name = aTab.getName();
+            	var cont = aTab.getNameContainer();
             	
-            	if (aTab.getNameContainer().innerHTML == prefs.getMsg("forums") ||
-            		aTab.getNameContainer().innerHTML == prefs.getMsg("starred"))
-            	{
+            	if (name == prefs.getMsg("forums") || name == prefs.getMsg("starred"))
             		display.setSpecialTabClass( aTab );
+            	
+				cont.className = cont.className.replace("isItalic", "");
+            	for(var key in display.updatedTabs) { 
+            		if (name == prefs.getMsg(key)) { 
+            			if (display.updatedTabs[key] == true) 
+            				cont.className = cont.className + " isItalic";
+            			break;
+            		}
             	}
-            }
+            	
+  				cont.className = cont.className.replace("isBold", "");
+            	for(var key in display.newTabs) {
+            		if (name == prefs.getMsg(key)) { 
+            			if (display.newTabs[key] == true) 
+            				cont.className = cont.className + " isBold";
+            			break;
+            		}
+            	}
+            	//alert(key + " class " + cont.className);
+           	}
         },
         
         setSpecialTabClass: function ( tab ) {
@@ -837,25 +885,34 @@ Forum.prototype.parseBoardTableRow = function(tr) {
 function parseLastPost(that, td) {
     var lastPost = td.getElementsByTagName('span')[0];
 	var as = lastPost.getElementsByTagName('a');
-    var author = as[0];
-    var date = lastPost.innerHTML;
-    var ds = date.match(/^(.*?)<br/i);
-    if (ds && ds.length > 1) {
-    	ds = ds[1];
-    }
     var post = {
-    	date: ds,
-		author: getText(author),
-		authorProfileLink: that.mkFullUrl(getHref(author)),
+    	date: "",
+		author: "",
+		authorProfileLink: "",
 		link: "",
 		id: 0
     };
-    if (as[1]) {
-    	post.link = that.mkFullUrl(getHref(as[1]));
-    	var m = Post.prototype.linkMatch(post.link);
-    	if (m) {
-    		post.id = m[1];
-    	}
+	for (var i=0; i<as.length; i++) {
+		var a = as[i];
+		var href = getHref(a);
+		if (!href)
+			continue;
+		if (href.match(/profile.php/)) {
+			// author element
+			post.author = getText(a);
+			post.authorProfileLink = that.mkFullUrl(href);
+		}
+		else if (href.match(/viewtopic.php/)) {
+			// last post
+			post.link = that.mkFullUrl(href);
+		}
+	}
+    var date = lastPost.innerHTML;
+    var ds = date.match(/^(.*?)<br\/?>(.*?)</i);
+    if (ds && ds.length > 1) {
+    	post.date = ds[1];
+	    if (!post.author && ds.length > 2)
+	    	post.author = ds[2];
     }
     return post;
 }
@@ -1088,7 +1145,7 @@ Post.prototype.parseTopicTableRow = function (tr) {
 	
 };
 /* end Post class */
-	var CONST = {
+var CONST = {
 	selForums: "sf",
 	selTopics: "st",
 	lastPost: "lp",
@@ -1137,6 +1194,7 @@ var ctrl = function () {
 
     return {
         init: function () {
+        	display.init();
         	if (prefs.getString("url") != prefs.getString("oldurl")) {
         		prefs.set("oldurl", prefs.getString("url"),
         			CONST.lastPost, 0,
@@ -1211,6 +1269,7 @@ var ctrl = function () {
         	var msg = "Error while working with '"+board.url+"'\nSorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported";
         	//alert(msg);
            	document.write("<pre>"+msg+"</pre");
+           	ctrl.resize();
         },
         
         isShowAllForums: function () {
@@ -1296,7 +1355,7 @@ var ctrl = function () {
 	            	}
 	        		forum.load(function() {
 	        			diTopics = diTopics.concat(forum.selSubItems());
-	        			ctrl.displayTopics(_gel(divStarred), [], diTopics.sort(sorters.byId));
+	        			ctrl.displayTopics(_gel(divStarred), "forums", [], diTopics.sort(sorters.byId));
 	        		});
 	        	}
         	}
@@ -1315,22 +1374,22 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTopics);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), "latestT", sorters.byId, CONST.pNewTopics);
         },
         
         onLRUTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId, CONST.pRcntUpdtd);
+        	ctrl.displayForumsTopics(_gel(divRecTopics), "recentlyUpdated", sorters.byLastPostId, CONST.pRcntUpdtd);
         },
         
         onMostViews: function () {
-        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews, CONST.pMostViews);
+        	ctrl.displayForumsTopics(_gel(divMostViews), "mostViews", sorters.byViews, CONST.pMostViews);
         },
         
         onMostPosts: function () {
-        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts, CONST.pMostPosts);
+        	ctrl.displayForumsTopics(_gel(divMostPosts), "mostPosts", sorters.byPosts, CONST.pMostPosts);
         },
         
-        displayForumsTopics: function (el, sorter, name) {
+        displayForumsTopics: function (el, tabName, sorter, name) {
         	try {
         		display.clear(el);
     			var prevA = ctrl.getCPA(name);
@@ -1358,7 +1417,7 @@ var ctrl = function () {
 		        				}
 		        			}
 		        			try {
-			        			ctrl.displayTopics(el, n, o);
+			        			ctrl.displayTopics(el, tabName, n, o);
 			        			prefs.setArray(name, ids);
 		        			} catch (e) {}
 		        		});
@@ -1367,9 +1426,9 @@ var ctrl = function () {
 	        } catch(e) {};
         },
         
-        displayTopics: function (el, updTopics, oldTopics) {
+        displayTopics: function (el, tabName, updTopics, oldTopics) {
 			display.clear(el);
-			display.topics(el, updTopics, oldTopics);
+			display.topics(el, tabName, tabs, prefs, updTopics, oldTopics);
         	ctrl.resize();
 		},
                 
