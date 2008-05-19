@@ -404,7 +404,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
 	if (selectFunction != null) {
 		this.selectImg = document.createElement("img");
-		this.selectImg.className = "di-select-" + display.boardDir;	
+		this.selectImg.className = "di-select-" + display.boardDir;
+		this.selectImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
 		//his.selectImg.style.width = "15px";
 		//this.selectImg.style.height = "15px";
 		//this.selectImg.style["background-image"] = "http://foruminspector.googlecode.com/svn/trunk/icons1b.png";
