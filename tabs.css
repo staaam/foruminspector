@@ -96,6 +96,16 @@
 	border-right: 1px solid #C5D7EF;
 }
 
+.di-selectbox-ltr {
+	position:absolute;
+	left:93%;
+}
+
+.di-selectbox-rtl {
+	position:absolute;
+	right:93%;
+}
+
 .di-select-ltr {
 	position:absolute;
 	left:93%;
