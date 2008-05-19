@@ -1034,7 +1034,7 @@ ForumItem.prototype.reload = function (callback) {
 		    ctrl.decreaseLoading();
     	}
     	catch (e) {
-    		alert("Sorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported")
+    		ctrl.notSupported(this, e);
     	}
     });
 };
@@ -1189,6 +1189,10 @@ var ctrl = function () {
 	        });
 	        
             return false;
+        },
+        
+        notSupported: function (obj, err) {
+        	alert("Error while working with '"+board.url+"'\nSorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported");
         },
         
         isShowAllForums: function () {
