@@ -101,6 +101,8 @@
 	left:93%;
 	background-image:url(http://foruminspector.googlecode.com/svn/trunk/icons1b.png);
 	background-position:0px -20px;
+	width: 15px;
+	height: 15px;	
 }
 
 .di-select-rtl {
@@ -108,6 +110,8 @@
 	right:93%;
 	background-image:url(http://foruminspector.googlecode.com/svn/trunk/icons1b.png);
 	background-position:0px -20px;
+	width: 15px;
+	height: 15px;
 }
 
 .di-header {
