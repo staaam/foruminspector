@@ -885,25 +885,32 @@ Forum.prototype.parseBoardTableRow = function(tr) {
 function parseLastPost(that, td) {
     var lastPost = td.getElementsByTagName('span')[0];
 	var as = lastPost.getElementsByTagName('a');
-    var author = as[0];
-    var date = lastPost.innerHTML;
-    var ds = date.match(/^(.*?)<br/i);
-    if (ds && ds.length > 1) {
-    	ds = ds[1];
-    }
     var post = {
-    	date: ds,
-		author: getText(author),
-		authorProfileLink: that.mkFullUrl(getHref(author)),
+    	date: "",
+		author: "",
+		authorProfileLink: "",
 		link: "",
 		id: 0
     };
-    if (as[1]) {
-    	post.link = that.mkFullUrl(getHref(as[1]));
-    	var m = Post.prototype.linkMatch(post.link);
-    	if (m) {
-    		post.id = m[1];
-    	}
+	for (var i in as) {
+		var a = as[i];
+		var href = getHref(a);
+		if (href.match(/profile.php/)) {
+			// author element
+			post.author = getText(a);
+			post.authorProfileLink = that.mkFullUrl(href);
+		}
+		else if (href.match(/viewtopic.php/)) {
+			// last post
+			post.link = that.mkFullUrl(href);
+		}
+	}
+    var date = lastPost.innerHTML;
+    var ds = date.match(/^(.*?)<br\/?>(.*?)</i);
+    if (ds && ds.length > 1) {
+    	post.date = ds[1];
+	    if (!post.author && ds.length > 2)
+	    	post.author = ds[2];
     }
     return post;
 }
