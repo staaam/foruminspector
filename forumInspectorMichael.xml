@@ -771,26 +771,24 @@ var display = function () {
             	if (name == prefs.getMsg("forums") || name == prefs.getMsg("starred"))
             		display.setSpecialTabClass( aTab );
             	
+				cont.className = cont.className.replace("isItalic", "");
             	for(var key in display.updatedTabs) { 
             		if (name == prefs.getMsg(key)) { 
             			if (display.updatedTabs[key] == true) 
             				cont.className = cont.className + " isItalic";
-            			else
-            				cont.className = cont.className.replace("isItalic", "");
             			break;
             		}
             	}
             	
+  				cont.className = cont.className.replace("isBold", "");
             	for(var key in display.newTabs) {
             		if (name == prefs.getMsg(key)) { 
             			if (display.newTabs[key] == true) 
             				cont.className = cont.className + " isBold";
-            			else
-            				cont.className = cont.className.replace("isBold", "");
             			break;
             		}
             	}
-            	alert(key + " class " + cont.className);
+            	//alert(key + " class " + cont.className);
            	}
         },
         
