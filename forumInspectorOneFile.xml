@@ -834,7 +834,7 @@ var display = function () {
         	
         	display.updatedTabs[tabName] = tabUpdated;
         	display.newTabs[tabName] = (newTopics.length > 0) ? true : false;
-        	setSpecialTabsClass(tabs, prefs);
+        	display.setSpecialTabsClass(tabs, prefs);
         },
         
         reduceSpanText: function( objSpan, widthFinal ) {
@@ -877,18 +877,18 @@ var display = function () {
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.updatedTabs[key] == true)
             		{
-            			//alert("italic");
+            			alert("italic");
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isItalic";
             		}
             	}
             	
-            	for(var key in display.newTabs)
+            	for(var key in display.newonNewTopicsTabs)
             	{
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.newTabs[key] == true)
             		{
-            			//alert("bold");
+            			alert("bold");
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isBold";
             		}
@@ -1385,6 +1385,8 @@ var ctrl = function () {
             	display.createBoardInfo(_gel(divBoardInfo), board);
             	var tab = tabs.getSelectedTab();
             	tabs.setSelectedTab(tab.getIndex());
+            	
+            	alert("onload");
             	
             	ctrl.onForumsSelUpdate();
             	ctrl.onTopicsSelUpdate();
