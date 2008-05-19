@@ -1391,6 +1391,7 @@ var ctrl = function () {
 
     return {
         init: function () {
+        	display.init();
         	if (prefs.getString("url") != prefs.getString("oldurl")) {
         		prefs.set("oldurl", prefs.getString("url"),
         			CONST.lastPost, 0,
