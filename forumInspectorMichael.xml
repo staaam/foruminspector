@@ -892,9 +892,11 @@ function parseLastPost(that, td) {
 		link: "",
 		id: 0
     };
-	for (var i in as) {
+	for (var i=0; i<as.length; i++) {
 		var a = as[i];
 		var href = getHref(a);
+		if (!href)
+			continue;
 		if (href.match(/profile.php/)) {
 			// author element
 			post.author = getText(a);
