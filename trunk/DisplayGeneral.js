@@ -7,6 +7,8 @@ var display = function () {
 
     return {
         init: function () {
+        	display.updatedTabs = [];
+        	display.newTabs = [];
         },
         
         clear: function (el) {
@@ -249,18 +251,27 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, newTopics, topics ) {
+        topics: function( parentElem, tabName, tabs, prefs, newTopics, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
+           	var tabUpdated = false;
 
 			for(var i=0; i<newTopics.length; i++)
         	{
+        		if (newTopics[i].isUpdated())
+        			tabUpdated = true;
+        			
         		display.createTopicItem( listDisplayItem.myself, newTopics[i], true );
         	}   
 
         	for(var i=0; i<topics.length; i++)
         	{
+        		tabUpdated = true;
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
-        	}    	
+        	}
+        	
+        	display.updatedTabs[tabName] = tabUpdated;
+        	display.newTabs[tabName] = (newTopics.length > 0) ? true : false;
+        	display.setSpecialTabsClass(tabs, prefs);
         },
         
         reduceSpanText: function( objSpan, widthFinal ) {
@@ -296,7 +307,30 @@ var display = function () {
             	{
             		display.setSpecialTabClass( aTab );
             	}
-            }
+            	
+            	//alert("updating class names");
+            	for(var key in display.updatedTabs)
+            	{
+            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
+            			display.updatedTabs[key] == true)
+            		{
+            			//alert("italic");
+            			aTab.getNameContainer().className =
+            				aTab.getNameContainer().className + " isItalic";
+            		}
+            	}
+            	
+            	for(var key in display.newonNewTopicsTabs)
+            	{
+            		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
+            			display.newTabs[key] == true)
+            		{
+            			//alert("bold");
+            			aTab.getNameContainer().className =
+            				aTab.getNameContainer().className + " isBold";
+            		}
+            	}
+           	}
         },
         
         setSpecialTabClass: function ( tab ) {
