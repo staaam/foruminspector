@@ -430,7 +430,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 			else
 				that.selectImg.className = "di-select-" + display.boardDir;
 			that.selectImg.checked = !that.selectImg.checked;
-			alert(selectFunction);
+			alert(selectFunction + " " + !that.selectImg.checked);
 			selectFunction( !that.selectImg.checked );
 	        
 		}
