@@ -1266,25 +1266,29 @@ var ctrl = function () {
         },
         
         onStarred: function () {
-        	var map = {};        	
-			for (var tid in selTopics) {
-        		var fid = selTopics[tid];
-        		if (fid) {
-	        		map[fid] = tid;
-        		}
+        	try {
+	        	display.clear(_gel(divStarred));
+	        	var map = {};        	
+				for (var tid in selTopics) {
+	        		var fid = selTopics[tid];
+	        		if (fid) {
+		        		map[fid] = tid;
+	        		}
+	        	}
+	        	var diTopics = [];
+	        	
+	        	for (var fid in map) {
+	            	var forum = allForums[fid];
+	            	if (!forum) {
+		                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
+	            	}
+	        		forum.load(function() {
+	        			diTopics = diTopics.concat(forum.selSubItems());
+	        			ctrl.displayTopics(_gel(divStarred), [], diTopics.sort(sorters.byId));
+	        		});
+	        	}
         	}
-        	var diTopics = [];
-        	
-        	for (var fid in map) {
-            	var forum = allForums[fid];
-            	if (!forum) {
-	                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
-            	}
-        		forum.load(function() {
-        			diTopics = diTopics.concat(forum.selSubItems());
-        			ctrl.displayTopics(_gel(divStarred), [], diTopics.sort(sorters.byId));
-        		});
-        	}
+        	catch (e) {}
         },
         
         onForumsSelUpdate: function () {
@@ -1418,6 +1422,9 @@ var ctrl = function () {
                 selTopics[name] = null;
             }
             prefs.set(CONST.selTopics, joinKeys(selTopics));
+            if (tabs.getSelectedTab().getName() == prefs.getMsg("starred")) {
+            	ctrl.onForumsSelUpdate();
+        	}
             ctrl.onTopicsSelUpdate();
         },
         
