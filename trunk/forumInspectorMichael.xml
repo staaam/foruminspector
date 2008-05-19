@@ -489,7 +489,7 @@ var display = function () {
         
         createSecondaryPostItem: function ( parentElem, post ) {
         	
-        	var str = labels.author + ": " + post.author + " ("+post.details+")";
+        	var str = labels.author + ": " + post.author + " ("+post.details+")" + "<a href='"+post.replylink + "'>" + labels.quote + "</a>";
         	var span = document.createElement("div");
         	span.className = "postAuthor";
         	span.innerHTML = str;
@@ -1735,7 +1735,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     	return false;
     }
 
-    post.text = "<a href='"+post.replylink + "'>" + labels.quote + "</a><br>" + text;
+    post.text = text;
     post.author = author;
     post.details = details;
 //    for (var i in as) {
