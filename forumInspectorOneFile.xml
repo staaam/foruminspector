@@ -888,7 +888,7 @@ var display = function () {
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.updatedTabs[key] == true)
             		{
-            			alert("italic " + aTab.getNameContainer().innerHTML);
+            			//alert("italic " + aTab.getNameContainer().innerHTML);
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isItalic";
             		}
@@ -899,7 +899,7 @@ var display = function () {
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.newTabs[key] == true)
             		{
-            			alert("bold " + aTab.getNameContainer().innerHTML);
+            			//alert("bold " + aTab.getNameContainer().innerHTML);
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isBold";
             		}
