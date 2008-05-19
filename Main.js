@@ -122,6 +122,7 @@ var ctrl = function () {
         	var msg = "Error while working with '"+board.url+"'\nSorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported";
         	//alert(msg);
            	document.write("<pre>"+msg+"</pre");
+           	ctrl.resize();
         },
         
         isShowAllForums: function () {
