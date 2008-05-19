@@ -10,26 +10,52 @@
 	    <Locale lang="ru" messages="http://foruminspector.googlecode.com/svn/trunk/ru_ALL.xml"/>
 
     </ModulePrefs>
-        
+
+    <UserPref name="sf" datatype="hidden" default_value="" />
+    <UserPref name="st" datatype="hidden" default_value="" />
+    <UserPref name="lt" datatype="hidden" default_value="0" />
+    <UserPref name="lp" datatype="hidden" default_value="0" />
+    <UserPref name="mv" datatype="hidden" default_value="" />
+    <UserPref name="mp" datatype="hidden" default_value="" />
+    <UserPref name="ru" datatype="hidden" default_value="" />
+    <UserPref name="nt" datatype="hidden" default_value="" />
+
     <UserPref name="url" display_name="__MSG_boardURL__" default_value="http://forums.asat.co.il" />
-    <UserPref name="selForums" datatype="hidden" default_value="" />
-    <UserPref name="selTopics" datatype="hidden" default_value="" />
     <UserPref name="nTopics" display_name="__MSG_numTopics__" default_value="10" />
-        
+       
     <UserPref name="defTab" display_name="__MSG_defTabs__" datatype="enum" default_value="0">
-	    <EnumValue value="0" display_value="__MSG_forums__"/>
-	    <EnumValue value="1" display_value="__MSG_starred__"/>
-	    <EnumValue value="2" display_value="__MSG_latestT__"/>
-	    <EnumValue value="3" display_value="__MSG_recentlyUpdated__"/>
-	    <EnumValue value="4" display_value="__MSG_mostViews__"/>
-	    <EnumValue value="5" display_value="__MSG_mostPosts__"/>
-	    <EnumValue value="6" display_value="__MSG_boardInfo__"/>
+	    <EnumValue value="forums" display_value="__MSG_forums__"/>
+	    <EnumValue value="starred" display_value="__MSG_starred__"/>
+	    <EnumValue value="latestT" display_value="__MSG_latestT__"/>
+	    <EnumValue value="recentlyUpdated" display_value="__MSG_recentlyUpdated__"/>
+	    <EnumValue value="mostViews" display_value="__MSG_mostViews__"/>
+	    <EnumValue value="mostPosts" display_value="__MSG_mostPosts__"/>
+	    <EnumValue value="boardInfo" display_value="__MSG_boardInfo__"/>
     </UserPref>
    
+    <UserPref name="postorder" display_name="Posts Sort Order" datatype="enum" default_value="asc">
+	    <EnumValue value="asc" display_value="Old first"/>
+	    <EnumValue value="des" display_value="New first"/>
+    </UserPref>
+
+    <UserPref name="showForums" display_name="Show Forums" datatype="enum" default_value="1">
+	    <EnumValue value="1" display_value="All"/>
+	    <EnumValue value="0" display_value="Selected Only"/>
+    </UserPref>
+
+    <UserPref name="s0" display_name="Show Tab __MSG_forums__" datatype="bool" default_value="true" />
+    <UserPref name="s1" display_name="Show Tab __MSG_starred__" datatype="bool" default_value="true" />
+    <UserPref name="s2" display_name="Show Tab __MSG_latestT__" datatype="bool" default_value="true" />
+    <UserPref name="s3" display_name="Show Tab __MSG_recentlyUpdated__" datatype="bool" default_value="true" />
+    <UserPref name="s4" display_name="Show Tab __MSG_mostViews__" datatype="bool" default_value="true" />
+    <UserPref name="s5" display_name="Show Tab __MSG_mostPosts__" datatype="bool" default_value="true" />
+    <UserPref name="s6" display_name="Show Tab __MSG_boardInfo__" datatype="bool" default_value="true" />
+
     <Content type="html"><![CDATA[
 		<link rel="stylesheet" type="text/css" href="http://foruminspector.googlecode.com/svn/trunk/tabs.css" />
  		<script>
 			var moduleID =__MODULE_ID__;
+			var globalDir = "__BIDI_DIR__";
 		</script>
 
 		<div id ="beforeTabsDiv">
@@ -52,6 +78,10 @@ Board.prototype.parse = function (content) {
         return;
     }
     this.dir = content.match(/<html dir="rtl">/i) ? "rtl" : "ltr";
+    this.boardInfo = {
+    	general: "Sorry, no information availible",
+    	users: "Sorry, no information availible"
+    };
     var dom = toDOM(getBody(content));
     var tables = dom.getElementsByTagName('table');
     for (var i=0; i<tables.length; i++) {
@@ -69,8 +99,9 @@ Board.prototype.parse = function (content) {
 		    e = getElClass(spans, 'gen');
 	    }
     }
-
-    this.title = getText(e);
+    if (e) {
+    	this.title = getText(e);
+    }
 };
 
 function getElClass(els, val) {
@@ -122,6 +153,7 @@ Board.prototype.tryParseBoardInfo = function (table) {
 Board.prototype.parseForumsTable = function (table) {
     var trs = table.getElementsByTagName('tr'); // all table rows, first row is headers
     var cat;
+    var lastPost = 0;
     for (var i=1; i<trs.length; i++) {
         var tr = trs[i];
         var as = tr.getElementsByTagName('a');
@@ -138,16 +170,21 @@ Board.prototype.parseForumsTable = function (table) {
             var forum = ctrl.newForum(this, this.mkFullUrl(href), as[0].innerHTML);
             forum.index = i;
             forum.parseBoardTableRow(tr);
+            if (forum.lastPost.id > lastPost) {
+            	lastPost = forum.lastPost.id;
+            	//alert("new last post " + lastPost);
+            }
             cat.addItem(forum);
         }
     }
+    ctrl.setLastPost(lastPost);
     return true;
 };
 
 Board.prototype.idRegEx = /\/(.*)/;
 
 Board.prototype.tryParseForumsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 4) {
         return false;
     }
@@ -170,9 +207,14 @@ Category.prototype = new ForumItem();
 
 Category.prototype.idRegEx = /[?&]c=(\d+)/;
 Category.prototype.viewer = "index.php";
+
+Category.prototype.visibleSubItems = function () {
+	return ctrl.isShowAllForums() ? this.subItems : this.selSubItems();
+}
+
 /* end Category class *//* begin CategoryDisplayItem class */
 function CategoryDisplayItem(parent, headerText, headerUrl,
-	subHeader, expandingFunction, isSelected, selectFunction, isForums, direction ) {
+	subHeader, expandingFunction, isSelected, selectFunction, isForums, isUpdated, isNew ) {
 
 	this.initDisplayItem(parent);
 	
@@ -180,8 +222,8 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
    	this.header = document.createElement("div");
    	
-   	this.header.dir = display.dir;	
-   	if(display.dir == "rtl")
+   	this.header.dir = display.boardDir;	
+   	if(display.boardDir == "rtl")
    		this.header.style.textAlign = "right";
    	else
    		this.header.style.textAlign = "left";
@@ -197,6 +239,11 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	
 	var headerTextSpan = document.createElement("span");
 	headerTextSpan.className = "di-header-span";
+	if (isUpdated)
+		headerTextSpan.className = headerTextSpan.className + " isItalic";
+	if (isNew)
+		headerTextSpan.className = headerTextSpan.className + " isBold";
+
 	headerTextSpan.innerHTML = headerText;
 	this.header.appendChild(headerTextSpan);
 	
@@ -211,20 +258,23 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 	addEventListener(gotoLink, 'click',onClickLink);
 	
 	var gotoImg = document.createElement("img");
-	gotoImg.className = "noborder gotoArrow-" + display.dir;
+	gotoImg.className = "noborder gotoArrow-" + display.boardDir;
 	gotoImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
 	gotoLink.appendChild(gotoImg);
 		
 	this.header.appendChild(gotoLink);
 	
- 	this.loadingSpan = document.createElement("span");
+ 	this.loadingSpan = document.createElement("img");
  	this.loadingSpan.className = "di-loading";
-	this.loadingSpan.innerHTML = "(Loading...)";
+	//this.loadingSpan.innerHTML = "(Loading...)";
+	this.loadingSpan.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green.gif";
+	//this.loadingSpan.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green_static.gif";
+	
 	this.header.appendChild(this.loadingSpan);
 	
 	if (selectFunction != null) {
 		this.select = document.createElement("input");
-		this.select.className = "di-select-" + display.dir;	
+		this.select.className = "di-select-" + display.boardDir;	
 		this.select.type = "checkbox";
 		this.select.checked = isSelected;
 		var that = this;
@@ -247,6 +297,7 @@ function CategoryDisplayItem(parent, headerText, headerUrl,
 		this.bylineDiv.className = "di-byline";
 		this.bylineDiv.innerHTML = subHeader;
 		this.header.appendChild(this.bylineDiv);
+		addEventListener(this.bylineDiv, 'click',onClickLink);
 	}
 	  	
    	this.myself.appendChild(this.header);
@@ -329,8 +380,8 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	this.header = document.createElement("div");
    	this.header.className = "di-secondary-header";
 
-   	this.header.dir = display.dir;	
-   	if(display.dir == "rtl")
+   	this.header.dir = display.boardDir;	
+   	if(display.boardDir == "rtl")
    		this.header.style.textAlign = "right";
    	else
    		this.header.style.textAlign = "left";
@@ -357,7 +408,7 @@ function ForumDisplayItemSecondary(parent, headerText, headerUrl, subHeader, isS
 	gotoLink.appendChild(headerTextSpan);
 	
 	this.select = document.createElement("input");
-	this.select.className = "di-select-" + display.dir;;	
+	this.select.className = "di-select-" + display.boardDir;	
 	this.select.type = "checkbox";
 	this.select.checked = isSelected;
 	var that = this;
@@ -394,7 +445,9 @@ ForumDisplayItemSecondary.prototype = new DisplayItem();
 /* end ForumDisplayItemSecondary class */	/* begin DisplayGeneral class */
 
 var display = function () {
-	var privatea;
+
+	//var newTabs;
+	//var updatedTabs;
 
     return {
         init: function () {
@@ -404,22 +457,33 @@ var display = function () {
         	el.innerHTML = "";
         },
         
-       	setDirection: function ( dir ) {
-        	display.dir = dir;
+       	setBoardDirection: function ( dir ) {
+        	display.boardDir = dir;
+        },
+        
+        setGlobalDirection: function (dir) {
+        	display.globalDir = dir;
+        },
+        
+        oppositeDirection: function ( dir ) {
+        	if (dir == "rtl")
+        		return "ltr";
+        	
+        	return "rtl";
         },
         
         createCategoryItem: function (parentElem, category) {
         	var loadCategoryFunction = function(callback) 
-        		{ category.load( function ( o ) { callback( o.subItems ); } ); };
+        		{ category.load( function ( o ) { callback( o.visibleSubItems() ); } ); };
         	
         	//var selectCategoryFunction = function( status )
         	//	{ ctrl.toggleForum( category, status ); };
         		
         	var displayItem = new CategoryDisplayItem(
         			parentElem, category.title, category.url, 
-        			null, loadCategoryFunction, null, null, true);
+        			null, loadCategoryFunction, null, null, true, false, false);
         },
-                
+        
         createSecondaryForumItem: function (parentElem, forum) {
         	
         	var selectForumFunction = function( status )
@@ -433,9 +497,17 @@ var display = function () {
         
         createSecondaryPostItem: function ( parentElem, post ) {
         	
+        	var str = labels.author + ": " + post.author + " ("+post.details+")" + " <a href='"+post.replylink + "' target='_blank'>" + labels.quote + "</a>";
+        	var span = document.createElement("div");
+        	span.className = "postAuthor";
+        	span.innerHTML = str;
+        	span.dir = display.boardDir;
+        	span.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
+        	parentElem.appendChild(span);
+        	
         	var postItem = document.createElement("div");
-        	postItem.dir = display.dir;	
-        	postItem.style.textAlign = (display.dir == "rtl")? "right" : "left";
+        	postItem.dir = display.boardDir;	
+        	postItem.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
         	postItem.className = "di-secondary-header";
         	
         	var span = document.createElement("span");
@@ -444,13 +516,17 @@ var display = function () {
         	postItem.appendChild(span);
         	parentElem.appendChild(postItem);
         	
-        	var divider = document.createElement("div");
-        	divider.className = "di-divider";
-        	parentElem.appendChild(divider);
+        	var divider2 = document.createElement("div");
+        	divider2.className = "post-divider";
+        	parentElem.appendChild(divider2);
         	
         },
         
         createTopicItem: function ( parentElem, topic ) {
+        	createTopicItem( parentElem, topic, false );
+        },
+        
+        createTopicItem: function ( parentElem, topic, isNew ) {
         	var loadTopicFunction = function(callback) 
         		{ topic.load( function ( o ) { callback( o.subItems ); } ); };
         	
@@ -460,13 +536,13 @@ var display = function () {
         	var displayItem = new CategoryDisplayItem(
         			parentElem, topic.title, topic.url, 
         			display.getTopicSubHeader( topic ), loadTopicFunction,
-        			topic.isSelected(), selectTopicFunction, false );
+        			topic.isSelected(), selectTopicFunction, false, topic.isUpdated(), isNew );
         },
         
         createBoardInfo: function ( parentElem, board )
         {
-        	parentElem.dir = display.dir;
-        	parentElem.style.textAlign = (display.dir == "rtl")? "right" : "left";
+        	parentElem.dir = display.boardDir;
+        	parentElem.style.textAlign = (display.boardDir == "rtl")? "right" : "left";
         	parentElem.innerHTML = "" +
         		"<div class=\"di-divider\"></div>" + 
         		"<div class=\"boardInfo\">" +
@@ -478,14 +554,83 @@ var display = function () {
 				"</div>";
         },
         
+        setLoading: function( isLoading ) {
+        	 var img = _gel("loadingImage");
+        	 if (img) {
+	        	 if(isLoading)
+	        	 	img.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green.gif";
+	        	 else
+	        	 	img.src = "http://foruminspector.googlecode.com/svn/trunk/loading_big_green_static.gif";
+        	 }
+        },
+        
         createBoardTitle: function ( parentElem, board ){
         	
         	parentElem.className = "boardTitle thinBorder";
-        	var span = document.createElement("span");
-        	span.innerHTML = board.title;
-        	parentElem.appendChild(span);
         	
-        	display.reduceSpanText( span, 310 );
+        	var str = "<table class=\"titleTable boardTitle\"><tr><td>" +
+        	"<a class=\"blackColor\" href=\""+ 
+        	board.url + "\" target=\"_blank\">" + board.title + "</a></td>" +
+        	"<td class=\"buttonsTD\" dir=\""+display.oppositeDirection(display.globalDir)+"\">" +
+        	"<a href=\"http://foruminspector.googlecode.com/svn/trunk/help.html\" target=\"_blank\">"+
+        	"<img class=\"thinImgBorder helpImage\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
+        	"</img>" +
+        	"</a>" +
+        	"<img id=\"loadingImage\" class=\"noBorder loadingImage\"  src=\"http://foruminspector.googlecode.com/svn/trunk/loading_big_green.gif\">"+
+        	"</img>" +
+        	"<img class=\"noBorder refreshImage\" onclick=\"ctrl.refresh();\" src=\"http://foruminspector.googlecode.com/svn/trunk/cleardot.gif\">"+
+        	"</img>" +
+        	"</td></tr></table>";        	
+        	parentElem.innerHTML = str;
+        	
+        	//var img = _gel("loadingImage");
+        	//alert(img);
+        	
+        	
+        	//var table = document.createElement("table");
+        	//table.className = "boardTitle";
+        	//table.width = "100%";
+        	//parentElem.appendChild(table);
+        	
+        	//var tr = document.createElement("tr");
+        	//table.appendChild(tr);
+        	
+        	//var titleTD = document.createElement("td");
+        	//titleTD.className = "titleSpan";
+        	
+        	//var a = document.createElement("a");
+        	//a.innerHTML = board.title;
+        	//a.href = board.url;
+        	//a.target = "_blank";
+        	//a.style.color = "#000000";
+        	//a.className = "blackColor";
+        	//titleTD.appendChild(a);
+        	//tr.appendChild(titleTD);
+        	
+        	//var buttonTD = document.createElement("td");
+        	
+        	//buttonTD.style.width = "0%";
+        	///buttonTD.className = "helpSpan";
+        	//alert(display.globalDir);
+        	//buttonTD.dir = display.oppositeDirection(display.globalDir);
+        	
+        	//var helpLink = document.createElement("a");
+			//helpLink.target = "_blank";
+			//helpLink.href = "http://foruminspector.googlecode.com/svn/trunk/help.html";
+	
+        	//var helpImg = document.createElement("img");
+			//helpImg.className = "thinImgBorder helpImage";
+			//helpImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";	
+			//helpLink.appendChild(helpImg);
+			//buttonTD.appendChild(helpLink);
+        	
+        	//var refreshImg = document.createElement("img");
+			//refreshImg.className = "noBorder refreshImage";
+			//refreshImg.src = "http://foruminspector.googlecode.com/svn/trunk/cleardot.gif";
+			//addEventListener(refreshImg, 'click', ctrl.refresh);
+        	//buttonTD.appendChild(refreshImg);
+        	//tr.appendChild(buttonTD);
+        	//display.reduceSpanText( a, 310 );
         },
         
         getForumSubHeader: function ( forum ) {
@@ -498,7 +643,8 @@ var display = function () {
         },
         
         getTopicSubHeader: function ( topic ) {
-        	return labels.posts + ": " + topic.posts + " " +
+        	return labels.forum + ": <a href=\"" + topic.parent.url + "\" target=\"_blank\">" + topic.parent.title + "</a><br>" +
+        	labels.posts + ": " + topic.posts + " " +
   			labels.author + ": " + topic.author + " " +
   			labels.views + ": " + topic.views + " " +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
@@ -547,8 +693,13 @@ var display = function () {
         	}    	
         },
 
-        topics: function( parentElem, topics ) {
+        topics: function( parentElem, newTopics, topics ) {
            	var listDisplayItem = new ListDisplayItem( parentElem );
+
+			for(var i=0; i<newTopics.length; i++)
+        	{
+        		display.createTopicItem( listDisplayItem.myself, newTopics[i], true );
+        	}   
 
         	for(var i=0; i<topics.length; i++)
         	{
@@ -575,6 +726,26 @@ var display = function () {
                 objSpan.innerHTML = textTrimmed;
                 widthTemp = objSpan.offsetWidth;
             }
+        },
+        
+        setSpecialTabsClass: function( tabs, prefs ) {
+                   
+            var tabsArr = tabs.getTabs();
+            for(var i = 0; i < tabsArr.length; i++ )
+            {
+            	var aTab = tabsArr[i];
+            	
+            	if (aTab.getNameContainer().innerHTML == prefs.getMsg("forums") ||
+            		aTab.getNameContainer().innerHTML == prefs.getMsg("starred"))
+            	{
+            		display.setSpecialTabClass( aTab );
+            	}
+            }
+        },
+        
+        setSpecialTabClass: function ( tab ) {
+        	tab.getNameContainer().className = "special_tab_con " + 
+            	tab.getNameContainer().className;
         }
 
     }
@@ -612,7 +783,7 @@ DisplayGeneral.prototype.init = function (divStared) {
 		"			<a href=\"http://www.kuku.com?user=dan\" class=\"lastPostUser\">Dan</a>" +
 		"		</div>" +
 		"	</div>" +
-		"	<span class=\"fg-loading\"> (Loading...)</span>" +
+		"	<span class=\"fg-loading\">ï¿½(Loading...)</span>" +
 		"</div>";
 	
 	//alert(divStared);
@@ -726,7 +897,7 @@ Forum.prototype.tryParseTopicsTable = function (table) {
 };
 
 Forum.prototype.tryParseTopicsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 4) {
         return false;
     }
@@ -777,9 +948,16 @@ ForumItem.prototype.init = function (parent, url, title) {
     if (title == null) {
         this.title = url;
     }
-    this.id = this.linkMatch(url)[1];
+    try {
+    	this.id = this.linkMatch(url)[1];
+    }
+    catch (e) {
+    	//alert(e);
+    }
     this.subItems = [];
     this.isLoaded = false;
+    this.isLoading = false;
+    this.onLoadCallbacks = [];
     //printStr("new item url=" + this.url + " title=" + this.title);
 }
 
@@ -805,19 +983,59 @@ ForumItem.prototype.load = function (callback) {
     	callback(this);
         return;
     }
+    if (this.isLoading) {
+    	this.onLoadCallbacks.push(callback);
+    	return;
+    }
     this.reload(callback);
 };
+
+ForumItem.prototype.isUpdated = function () {
+	return false;
+}
+
+ForumItem.prototype.isNew = function () {
+	return false;
+}
 
 ForumItem.prototype.isSelected = function () {
 	return false;
 };
 
+ForumItem.prototype.selSubItems = function () {
+	var r = [];
+	for (var i=0;i<this.subItems.length;i++) {
+		if (this.subItems[i].isSelected()) {
+			r.push(this.subItems[i]);
+		}
+	}
+	return r;
+};
+
+ForumItem.prototype.visibleSubItems = function () {
+	return this.subItems;
+}
+
 ForumItem.prototype.reload = function (callback) {
-    this.isLoaded = true;
+	this.isLoaded = false;
+    this.isLoading = true;
+    ctrl.increaseLoading();
+    this.onLoadCallbacks.push(callback);
     var that = this;
     _IG_FetchContent(this.url, function (content) {
-        that.onLoad(content);
-        callback(that);
+    	try {
+		    that.onLoad(content);
+		    that.isLoaded = true;
+		    that.isLoading = false;
+		    for (var i in that.onLoadCallbacks) {
+		    	that.onLoadCallbacks[i](that);
+		    }
+		    that.onLoadCallbacks = [];
+		    ctrl.decreaseLoading();
+    	}
+    	catch (e) {
+    		ctrl.notSupported(this, e);
+    	}
     });
 };
 
@@ -828,6 +1046,21 @@ ForumItem.prototype.onLoad = function (content) {
 ForumItem.prototype.parse = function (content) {
 };
 
+
+ForumItem.prototype.getTableHeader = function (table) {
+	var ths = table.getElementsByTagName('th');
+    if 	(ths == null || ths.length == 0) {
+        var tds = table.getElementsByTagName('td');
+        ths = [];
+        for (var i in tds) {
+        	var c = tds[i].className; 
+        	if (c && (c.indexOf("thCorner") >= 0 || c.indexOf("thTop") >= 0)) {
+        		ths.push(tds[i]);
+        	}
+        }
+    }
+    return ths;
+};
 //ForumItem.prototype.display = function () {
 //    ctrl.display(this);
 //};
@@ -842,6 +1075,7 @@ ListDisplayItem.prototype = new DisplayItem();
 /* end ListDisplayItem class */	/* begin Post class */
 function Post(parent, url, title) {
     this.init(parent, url, title);
+    this.replylink = url.replace("viewtopic.php?", "posting.php?mode=quote&");
 }
 
 Post.prototype = new ForumItem();
@@ -853,12 +1087,38 @@ Post.prototype.parseTopicTableRow = function (tr) {
 	
 };
 /* end Post class */
+	var CONST = {
+	selForums: "sf",
+	selTopics: "st",
+	lastPost: "lp",
+	lastTopic: "lt",
+	
+	pMostViews: "mv",
+	pMostPosts: "mp",
+	pRcntUpdtd: "ru",
+	pNewTopics: "nt",
+	
+	showForums: "s0",
+	showStarred: "s1",
+	showNewTopics: "s2",
+	showRecntUpd: "s3",
+	showMostViews: "s4",
+	showMostPosts: "s5",
+	showBoadrInfo: "s6",
+	
+	NULL: null
+};
+
 var ctrl = function () {
 	var prefs = new _IG_Prefs(moduleID);//__MODULE_ID__
-	var tabs = new _IG_Tabs(moduleID, "Forums", _gel("TabsDiv"));
-    var board = new Board(null, prefs.getString("url"));
+	var tabs = new _IG_Tabs(moduleID, prefs.getMsg(prefs.getString("defTab")), _gel("TabsDiv"));
+    var board;
+    
+    var cachedPrefs = {};
+    
     var selForums = {};
     var selTopics = {};
+    
     var allForums = {};
     var allTopics = {};
     var allPosts = {};
@@ -871,48 +1131,132 @@ var ctrl = function () {
     var divRecTopics;
     
     var divStarred;
+    var loadingCount = 0;
     var displayGeneral = new DisplayGeneral();
 
     return {
         init: function () {
+            return ctrl.refresh();
+        },
+        
+        refresh: function () {
+        	while(tabs.getTabs().length>0) {
+        		tabs.removeTab(0);
+        	}
+        	//alert("inside refresh");
+			loadingCount = 0;
             ctrl.createTabs();
+    		cachedPrefs = {};
+
+		    allForums = {};
+		    allTopics = {};
+		    allPosts = {};
+		    
+		    board = new Board(null, prefs.getString("url"));
+		    
+            selForums = splitKeys(prefs.getString(CONST.selForums));
+            selTopics = splitKeys(prefs.getString(CONST.selTopics));
             
-            //display.init(divStarred);
+            ctrl.getLastTopic();
+            ctrl.getLastPost();
+            ctrl.getMostViews();
+	        ctrl.getMostPosts();
+	        ctrl.getRcntUpdtd();
+	        ctrl.getNewTopics();            
             
-            selForums = splitKeys(prefs.getString("selForums"));
-            selTopics = splitKeys(prefs.getString("selTopics"));
-            board.load(function (board) {
-            	display.setDirection(board.dir);
-            	tabs.setSelectedTab(prefs.getInt("defTab"));
-//    alert(board.boardInfo.general);
-            	display.createBoardTitle( _gel("beforeTabsDiv"), board );
-            	display.createBoardInfo(_gel(divBoardInfo), board);
-	        	display.categories(_gel(divForumList), board.subItems);
-	        });
-	        
+            var xx="";
+            for (var i in cachedPrefs) {
+            	xx += i + ": " + cachedPrefs[i] + "\n";
+            }
+            //alert(xx);
+            
             for (var i=0;i<selForums.length;i++) {
             	var fid = selForums[i];
                 var forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
                 forum.load(function(){});
             }
+            board.load(function (board) {
+            	display.setBoardDirection(board.dir);
+            	display.setGlobalDirection(globalDir);
+            	display.createBoardTitle( _gel("beforeTabsDiv"), board );
+            	display.createBoardInfo(_gel(divBoardInfo), board);
+            	var tab = tabs.getSelectedTab();
+            	tabs.setSelectedTab(tab.getIndex());
+            	
+            	ctrl.onForumsSelUpdate();
+            	ctrl.onTopicsSelUpdate();
+            	ctrl.showForums();
+	        });
+	        
             return false;
         },
         
+        notSupported: function (obj, err) {
+        	alert("Error while working with '"+board.url+"'\nSorry, this board type is not supported yet\nOnly phpBB 2.* versions are supported");
+        },
+        
+        isShowAllForums: function () {
+        	return prefs.getInt("showForums");
+        },
+        
+        showForums: function () {
+//        	if (!prefs.getBool(CONST.showForums))
+//        		return;
+
+        	var items = [];
+        	for (var i=0; i<board.subItems.length; i++) {
+        		var c = board.subItems[i];
+        		if (c.visibleSubItems().length > 0) {
+        			items.push(c);
+        		}
+        	}
+	        display.categories(_gel(divForumList), items);
+        	ctrl.resize();
+        },
+        
+        createTab: function (sp, name, callback) {
+        	var nm = prefs.getMsg(name);
+        	var tab = tabs.addDynamicTab(nm, 
+            	function() { try {
+            		display.setSpecialTabsClass(tabs, prefs); ctrl.resize(); 
+            	} catch (e) {} });
+            	
+        	if (!prefs.getBool(sp)) {
+        		var tbs = tabs.getTabs();
+        		for (var i in tbs) {
+        			if (tbs[i].getName() == nm) {
+        				tabs.removeTab(tbs[i].getIndex());
+        				break;
+        			}
+        		}
+        	}
+	        return tab;
+        },
+        
+        increaseLoading: function () {
+        	loadingCount++;
+        	display.setLoading(loadingCount);
+        },
+
+        decreaseLoading: function () {
+        	loadingCount--;
+        	display.setLoading(loadingCount);
+        },
+        
         createTabs: function () {
-            divForumList = tabs.addDynamicTab(prefs.getMsg("forums"), ctrl.resize);
-            //divLog = tabs.addDynamicTab("Log", ctrl.resize);
+            divForumList = ctrl.createTab(CONST.showForums, "forums", ctrl.resize);
+            divStarred   = ctrl.createTab(CONST.showStarred, "starred", ctrl.onStarred);
+            divNewTopics = ctrl.createTab(CONST.showNewTopics, "latestT", ctrl.onNewTopics);
+            divRecTopics = ctrl.createTab(CONST.showRecntUpd, "recentlyUpdated", ctrl.onLRUTopics);
+            divMostViews = ctrl.createTab(CONST.showMostViews, "mostViews", ctrl.onMostViews);
+            divMostPosts = ctrl.createTab(CONST.showMostPosts, "mostPosts", ctrl.onMostPosts);
             
-            divStarred = tabs.addDynamicTab(prefs.getMsg("starred"), ctrl.onStarred);
-            
-            divNewTopics = tabs.addDynamicTab(prefs.getMsg("latestT"), ctrl.onNewTopics);
-            divRecTopics = tabs.addDynamicTab(prefs.getMsg("recentlyUpdated"), ctrl.onLRUTopics);
-            divMostViews = tabs.addDynamicTab(prefs.getMsg("mostViews"), ctrl.onMostViews);
-            divMostPosts = tabs.addDynamicTab(prefs.getMsg("mostPosts"), ctrl.onMostPosts);
-            //divNewTopics = tabs.addDynamicTab("New Topics", ctrl.onNewTopics);
-            
+            //divBoardInfo = ctrl.createTab(CONST.showBoadrInfo, "boardInfo", ctrl.resize);
             divBoardInfo = tabs.addDynamicTab(prefs.getMsg("boardInfo"), ctrl.resize);
             
             tabs.alignTabs("left", 10);
+            
+            display.setSpecialTabsClass(tabs, prefs); 
         },
         
         onStarred: function () {
@@ -931,46 +1275,79 @@ var ctrl = function () {
 	                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
             	}
         		forum.load(function() {
-        			for (var i=0;i<forum.subItems.length;i++) {
-        				if (forum.subItems[i].isSelected()) {
-	        				diTopics.push(forum.subItems[i]);
-        				}
-        			}
-        			ctrl.displayTopics(_gel(divStarred), diTopics.sort(sorters.byId));
+        			diTopics = diTopics.concat(forum.selSubItems());
+        			ctrl.displayTopics(_gel(divStarred), [], diTopics.sort(sorters.byId));
         		});
         	}
         },
         
+        onForumsSelUpdate: function () {
+        	ctrl.onNewTopics();
+        	ctrl.onLRUTopics();
+        	ctrl.onMostViews();
+        	ctrl.onMostPosts();
+        },
+        
+        onTopicsSelUpdate: function () {
+        	ctrl.onStarred();
+        },
+        
         onNewTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTopics);
         },
         
         onLRUTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId);
+        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId, CONST.pRcntUpdtd);
         },
         
         onMostViews: function () {
-        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews);
+        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews, CONST.pMostViews);
         },
         
         onMostPosts: function () {
-        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts);
+        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts, CONST.pMostPosts);
         },
         
-        displayForumsTopics: function (el, sorter) {
-            for (var i in allForums) {
-            	var forum = allForums[i];
-            	if (forum.isSelected()) {
-	        		forum.load(function() {
-	        			ctrl.displayTopics(el, ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics")));
-	        		});
-            	}
-        	}
+        displayForumsTopics: function (el, sorter, name) {
+        	try {
+        		display.clear(el);
+    			var prevA = ctrl.getCPA(name);
+    			var prev = {};
+    			for (var i=0; i<prevA.length; i++) {
+    				prev[prevA[i]] = 1;
+    			}
+
+	            for (var i in allForums) {
+	            	var forum = allForums[i];
+	            	if (forum.isSelected()) {
+		        		forum.load(function() {
+		        			var ar = ctrl.getAllTopics().sort(sorter).splice(0, prefs.getInt("nTopics"));
+		        			
+		        			var ids = [ ];
+		        			var o = [];
+		        			var n = []; 
+		        			for (var j in ar) {
+		        				ids[j] = ar[j].id;
+		        				if (prev[ar[j].id]) {
+		        					o.push(ar[j]);		        					
+		        				}
+		        				else {
+		        					n.push(ar[j]);
+		        				}
+		        			}
+		        			try {
+			        			ctrl.displayTopics(el, n, o);
+			        			prefs.setArray(name, ids);
+		        			} catch (e) {}
+		        		});
+	            	}
+	        	}
+	        } catch(e) {};
         },
         
-        displayTopics: function (el, topics) {
+        displayTopics: function (el, updTopics, oldTopics) {
 			display.clear(el);
-			display.topics(el, topics);
+			display.topics(el, updTopics, oldTopics);
         	ctrl.resize();
 		},
                 
@@ -1023,7 +1400,8 @@ var ctrl = function () {
             } else {
                 selForums[name] = null;
             }
-            prefs.set("selForums", joinKeys(selForums));
+            prefs.set(CONST.selForums, joinKeys(selForums));
+            ctrl.onForumsSelUpdate();
         },
 
         toggleTopic: function (topic, checked) {
@@ -1033,9 +1411,37 @@ var ctrl = function () {
             } else {
                 selTopics[name] = null;
             }
-            prefs.set("selTopics", joinKeys(selTopics));
+            prefs.set(CONST.selTopics, joinKeys(selTopics));
+            ctrl.onTopicsSelUpdate();
         },
+        
+        getCPI: function (name) {
+        	if (cachedPrefs[name] == undefined) {
+        		cachedPrefs[name] = prefs.getInt(name);
+        	}
+        	return cachedPrefs[name]; 
+        },
+        
+        getCPA: function (name) {
+        	if (cachedPrefs[name] == undefined) {
+        		cachedPrefs[name] = prefs.getArray(name);
+        	}
+        	return cachedPrefs[name]; 
+        },
+        
+        getLastTopic: function () { return ctrl.getCPI(CONST.lastTopic); },
+        getLastPost : function () { return ctrl.getCPI(CONST.lastPost); },
+        getNewTopics: function () { return ctrl.getCPA(CONST.pNewTopics); },
+        getRcntUpdtd: function () { return ctrl.getCPA(CONST.pRcntUpdtd); },
+        getMostViews: function () { return ctrl.getCPA(CONST.pMostViews); },
+        getMostPosts: function () { return ctrl.getCPA(CONST.pMostPosts); },
 
+        setLastTopic: function (lastTopicId) { prefs.set(CONST.lastTopic, lastTopicId); },
+        setLastPost : function (lastPostId) { prefs.set(CONST.lastPost, lastPostId); },
+
+		getPostOrder: function () {
+			return prefs.getString("postorder");
+		},
         resize: function (tabId) {
             _IG_AdjustIFrameHeight();
         }
@@ -1050,7 +1456,9 @@ var labels = {
     whoIsOnline: "Who is Online",
     
     author: "Aurhor",
-    views: "Views"
+    views: "Views",
+    quote: "Quote",
+    reply: "Reply" 
 };
 
 function getText(node) {
@@ -1059,7 +1467,7 @@ function getText(node) {
 	}
 	var text = node.innerText || node.text || node.textContent;
 	if (!text) {
-		text = "blya";
+		text = "";
 	}
 	return text.replace(/^\s*/, "").replace(/\s*$/, "");
 //	return node.text || node.textContent || (function(node){
@@ -1167,7 +1575,9 @@ function getAttr(a, attr) {
 _IG_RegisterOnloadHandler(ctrl.init);
 /* begin Topic class */
 function Topic(parent, url, title) {
-    this.init(parent, url, title);
+	var po = "&postorder=" + ctrl.getPostOrder();
+    this.init(parent, url + po, title);
+    this.replylink = url.replace("viewtopic.php?", "posting.php?mode=reply&");
 }
 
 Topic.prototype = new ForumItem();
@@ -1202,6 +1612,14 @@ Topic.prototype.parseForumTableRow = function (tr) {
     // tds[5] last post date; author, link
 };
 
+Topic.prototype.isUpdated = function () {
+	return this.lastPost.id > ctrl.getLastPost();
+}
+
+Topic.prototype.isNew = function () {
+	return this.id > ctrl.getLastTopic();
+}
+
 Topic.prototype.isSelected = function () {
 	return ctrl.isSelectedTopic(this);
 };
@@ -1224,6 +1642,26 @@ Topic.prototype.parse = function (content) {
             }
         }
     }
+    var as = dom.getElementsByTagName('a');
+    for (var i=0; i<as.length; i++) {
+    	var hr = getHref(as[i]);
+    	var text = getText(as[i]);
+    	var imgs = as[i].getElementsByTagName('img');
+    	if (!text && imgs && imgs.length > 0) {
+    		text = imgs[0].alt;
+    	}
+    	if (!text) {
+    		continue;
+    	}
+    	if (hr.match(/posting.php/)) {
+    		if (hr.match(/mode=reply/)) {
+    			labels.reply = text;
+    		}
+    		else if (hr.match(/mode=quote/)) {
+    			labels.quote = text;   			
+    		}
+    	}
+    }
     var tables = dom.getElementsByTagName('table');
     for (var i=0; i<tables.length; i++) {
         this.tryParsePostsTable(tables[i]);
@@ -1244,7 +1682,7 @@ Topic.prototype.tryParsePostsTable = function (table) {
 };
 
 Topic.prototype.tryParsePostsHeader = function (table) {
-    var ths = table.getElementsByTagName('th');
+    var ths = this.getTableHeader(table);
     if (ths == null || ths.length < 2) {
         return false;
     }
@@ -1255,38 +1693,92 @@ Topic.prototype.tryParsePostsHeader = function (table) {
     
     return true;
 };
+function pushArr(arr1, arr2) {
+    for (var i=0; i<arr2.length;i++) {
+    	arr1.push(arr2[i]);
+    }
+    return arr1;
+}
 
 Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
-    var spans = tr.getElementsByTagName('span');
+    var spans = [];
+    spans = pushArr(spans, tr.getElementsByTagName('div'));
+    spans = pushArr(spans, tr.getElementsByTagName('span'));
+
     if (spans.length == 0) {
         return false;
     }
     
     var text = "";
+    var author = "";
+    var details = "";
     for (var i=0; i<spans.length;i++) {
-    	if (spans[i].className == 'postbody') {
-    		var imgs = spans[i].getElementsByTagName('img');
-    		for (var j=0;j<imgs.length;j++) {
-    			imgs[j].src = this.mkFullUrl(getSrc(imgs[j]));
-    			imgs[j].className="outerImage";
-    		}
-    		text = text + spans[i].innerHTML;
-    	}
+    	var s = spans[i];
+    	switch (s.className) { 
+	    	case 'postbody' :
+	    		var imgs = s.getElementsByTagName('img');
+	    		for (var j=0;j<imgs.length;j++) {
+	    			imgs[j].src = this.mkFullUrl(getSrc(imgs[j]));
+	    			imgs[j].className="outerImage";
+	    		}
+	    		text = text + s.innerHTML;
+	    		break;
+	    	case 'name' :
+	    		author = getText(s);
+	    		break;
+	    	case 'postdetails':
+	    		var t = getText(s);
+	    		if (t) {
+	    			details = t;
+	    		}
+	    		break;
+	    	default:
+    	}	
     }
     
     if (text.length == 0) {
     	return false;
     }
-    var tb = tr.getElementsByTagName('table')[0];
-    if (!tb) {
+
+    var as = tr.getElementsByTagName('a');
+    var post;
+    for (var i in as) {
+    	try {
+    		var a = this.mkFullUrl(getHref(as[i]));
+    		post = new Post(this, a);
+	    	if (post.id) {
+	    		break;
+	    	}
+    	} catch (e) {}
+    	post = null;
+    }
+    if (post == null) {
     	return false;
     }
-    var a = tb.getElementsByTagName('a')[0];
-    if (!a) {
-    	return false;
-    }
-    var post = ctrl.newPost(this, this.mkFullUrl(getHref(a)));
+
     post.text = text;
+    post.author = author;
+    post.details = details;
+//    for (var i in as) {
+//    	var url = this.mkFullUrl(getHref(as[i]));
+//    	if (url.match(/posting.php/)) {
+//    		post.quoteLink = url;
+//
+//    		labels.quote = getText(as[i]);
+//    		if (!labels.quote) {
+//    			var img = as[i].getElementsByTagName('img');
+//    			if (img) {
+//    				img = img[0];
+//    				labels.quote = img.alt;
+//    			}
+//    			else {
+//    				labels.quote = "Quote";
+//    			} 
+//    		}
+//    		break;
+//    	}
+//    }
+    
     post.parseTopicTableRow(tr);
     this.addItem(post);    
     // title/link is is first <a> tag, so look into it
