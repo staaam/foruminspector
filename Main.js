@@ -1,4 +1,4 @@
-	var CONST = {
+var CONST = {
 	selForums: "sf",
 	selTopics: "st",
 	lastPost: "lp",
@@ -47,6 +47,7 @@ var ctrl = function () {
 
     return {
         init: function () {
+        	display.init();
         	if (prefs.getString("url") != prefs.getString("oldurl")) {
         		prefs.set("oldurl", prefs.getString("url"),
         			CONST.lastPost, 0,
@@ -206,7 +207,7 @@ var ctrl = function () {
 	            	}
 	        		forum.load(function() {
 	        			diTopics = diTopics.concat(forum.selSubItems());
-	        			ctrl.displayTopics(_gel(divStarred), [], diTopics.sort(sorters.byId));
+	        			ctrl.displayTopics(_gel(divStarred), "forums", [], diTopics.sort(sorters.byId));
 	        		});
 	        	}
         	}
@@ -225,22 +226,22 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTopics);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), "latestT", sorters.byId, CONST.pNewTopics);
         },
         
         onLRUTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId, CONST.pRcntUpdtd);
+        	ctrl.displayForumsTopics(_gel(divRecTopics), "recentlyUpdated", sorters.byLastPostId, CONST.pRcntUpdtd);
         },
         
         onMostViews: function () {
-        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews, CONST.pMostViews);
+        	ctrl.displayForumsTopics(_gel(divMostViews), "mostViews", sorters.byViews, CONST.pMostViews);
         },
         
         onMostPosts: function () {
-        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts, CONST.pMostPosts);
+        	ctrl.displayForumsTopics(_gel(divMostPosts), "mostPosts", sorters.byPosts, CONST.pMostPosts);
         },
         
-        displayForumsTopics: function (el, sorter, name) {
+        displayForumsTopics: function (el, tabName, sorter, name) {
         	try {
         		display.clear(el);
     			var prevA = ctrl.getCPA(name);
@@ -268,7 +269,7 @@ var ctrl = function () {
 		        				}
 		        			}
 		        			try {
-			        			ctrl.displayTopics(el, n, o);
+			        			ctrl.displayTopics(el, tabName, n, o);
 			        			prefs.setArray(name, ids);
 		        			} catch (e) {}
 		        		});
@@ -277,9 +278,9 @@ var ctrl = function () {
 	        } catch(e) {};
         },
         
-        displayTopics: function (el, updTopics, oldTopics) {
+        displayTopics: function (el, tabName, updTopics, oldTopics) {
 			display.clear(el);
-			display.topics(el, updTopics, oldTopics);
+			display.topics(el, tabName, tabs, prefs, updTopics, oldTopics);
         	ctrl.resize();
 		},
                 
