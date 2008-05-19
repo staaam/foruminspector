@@ -1735,7 +1735,7 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
 
     var post = ctrl.newPost(this, a);
-    post.text = text;
+    post.text = "<a href='"+post.replylink + "'>" + labels.reply + "</a><br>" + text;
     post.author = author;
     post.details = details;
 //    for (var i in as) {
