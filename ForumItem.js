@@ -14,7 +14,7 @@ ForumItem.prototype.init = function (parent, url, title) {
     	this.id = this.linkMatch(url)[1];
     }
     catch (e) {
-    	alert(e);
+    	//alert(e);
     }
     this.subItems = [];
     this.isLoaded = false;

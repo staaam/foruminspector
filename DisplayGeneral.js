@@ -53,7 +53,7 @@ var display = function () {
         
         createSecondaryPostItem: function ( parentElem, post ) {
         	
-        	var str = labels.author + ": " + post.author + " ("+post.details+")";
+        	var str = labels.author + ": " + post.author + " ("+post.details+")" + " <a href='"+post.replylink + "' target='_blank'>" + labels.quote + "</a>";
         	var span = document.createElement("div");
         	span.className = "postAuthor";
         	span.innerHTML = str;
