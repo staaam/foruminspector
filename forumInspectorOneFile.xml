@@ -1387,13 +1387,10 @@ var ctrl = function () {
     
     var divStarred;
     var loadingCount = 0;
+    var displayGeneral = new DisplayGeneral();
 
     return {
         init: function () {
-<<<<<<< .mine
-        	//displayGeneral.init();
-        	display.init();
-=======
         	if (prefs.getString("url") != prefs.getString("oldurl")) {
         		prefs.set("oldurl", prefs.getString("url"),
         			CONST.lastPost, 0,
@@ -1405,7 +1402,6 @@ var ctrl = function () {
         			CONST.selForums, "", 
         			CONST.selTopics, "");
         	}
->>>>>>> .r879
             return ctrl.refresh();
         },
         
@@ -1456,8 +1452,6 @@ var ctrl = function () {
             	display.createBoardInfo(_gel(divBoardInfo), board);
             	var tab = tabs.getSelectedTab();
             	tabs.setSelectedTab(tab.getIndex());
-            	
-            	alert("onload");
             	
             	ctrl.onForumsSelUpdate();
             	ctrl.onTopicsSelUpdate();
@@ -1560,22 +1554,7 @@ var ctrl = function () {
 	        		});
 	        	}
         	}
-<<<<<<< .mine
-        	var diTopics = [];
-        	
-        	for (var fid in map) {
-            	var forum = allForums[fid];
-            	if (!forum) {
-	                forum = ctrl.newForum(board, board.mkFullUrl(Forum.prototype.viewer + fid));
-            	}
-        		forum.load(function() {
-        			diTopics = diTopics.concat(forum.selSubItems());
-        			ctrl.displayTopics(_gel(divStarred), "forums", [], diTopics.sort(sorters.byId));
-        		});
-        	}
-=======
         	catch (e) {}
->>>>>>> .r879
         },
         
         onForumsSelUpdate: function () {
@@ -1590,22 +1569,22 @@ var ctrl = function () {
         },
         
         onNewTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divNewTopics), "latestT", sorters.byId, CONST.pNewTopics);
+        	ctrl.displayForumsTopics(_gel(divNewTopics), sorters.byId, CONST.pNewTopics);
         },
         
         onLRUTopics: function () {
-        	ctrl.displayForumsTopics(_gel(divRecTopics), "recentlyUpdated", sorters.byLastPostId, CONST.pRcntUpdtd);
+        	ctrl.displayForumsTopics(_gel(divRecTopics), sorters.byLastPostId, CONST.pRcntUpdtd);
         },
         
         onMostViews: function () {
-        	ctrl.displayForumsTopics(_gel(divMostViews), "mostViews", sorters.byViews, CONST.pMostViews);
+        	ctrl.displayForumsTopics(_gel(divMostViews), sorters.byViews, CONST.pMostViews);
         },
         
         onMostPosts: function () {
-        	ctrl.displayForumsTopics(_gel(divMostPosts), "mostPosts", sorters.byPosts, CONST.pMostPosts);
+        	ctrl.displayForumsTopics(_gel(divMostPosts), sorters.byPosts, CONST.pMostPosts);
         },
         
-        displayForumsTopics: function (el, tabName, sorter, name) {
+        displayForumsTopics: function (el, sorter, name) {
         	try {
         		display.clear(el);
     			var prevA = ctrl.getCPA(name);
@@ -1633,7 +1612,7 @@ var ctrl = function () {
 		        				}
 		        			}
 		        			try {
-			        			ctrl.displayTopics(el, tabName, n, o);
+			        			ctrl.displayTopics(el, n, o);
 			        			prefs.setArray(name, ids);
 		        			} catch (e) {}
 		        		});
@@ -1642,9 +1621,9 @@ var ctrl = function () {
 	        } catch(e) {};
         },
         
-        displayTopics: function (el, tabName, updTopics, oldTopics) {
+        displayTopics: function (el, updTopics, oldTopics) {
 			display.clear(el);
-			display.topics(el, tabName, tabs, prefs, updTopics, oldTopics);
+			display.topics(el, updTopics, oldTopics);
         	ctrl.resize();
 		},
                 
