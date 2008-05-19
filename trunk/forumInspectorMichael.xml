@@ -1720,22 +1720,21 @@ Topic.prototype.tryParseTopicTableRow = function (tr, idx) {
     }
 
     var as = tr.getElementsByTagName('a');
-    var p = new Post(this);
-    var a;
+    var post;
     for (var i in as) {
     	try {
-    		a = this.mkFullUrl(getHref(as[i]));
+    		var a = this.mkFullUrl(getHref(as[i]));
+    		post = new Post(this, a);
 	    	if (p.linkMatch(a)) {
 	    		break;
 	    	}
     	} catch (e) {}
-    	a = null;
+    	post = null;
     }
-    if (a == null) {
+    if (post == null) {
     	return false;
     }
 
-    var post = ctrl.newPost(this, a);
     post.text = "<a href='"+post.replylink + "'>" + labels.quote + "</a><br>" + text;
     post.author = author;
     post.details = details;
