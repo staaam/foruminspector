@@ -47,6 +47,17 @@ var ctrl = function () {
 
     return {
         init: function () {
+        	if (prefs.getString("url") != prefs.getString("oldurl")) {
+        		prefs.set("oldurl", prefs.getString("url"),
+        			CONST.lastPost, 0,
+        			CONST.lastTopic, 0, 
+        			CONST.pMostPosts, "", 
+        			CONST.pMostViews, "", 
+        			CONST.pNewTopics, "", 
+        			CONST.pRcntUpdtd, "", 
+        			CONST.selForums, "", 
+        			CONST.selTopics, "");
+        	}
             return ctrl.refresh();
         },
         
