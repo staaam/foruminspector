@@ -895,7 +895,7 @@ var display = function () {
             		}
             	}
             	
-            	for(var key in display.newonNewTopicsTabs)
+            	for(var key in display.newTabs)
             	{
             		if (prefs.getMsg(key) == aTab.getNameContainer().innerHTML && 
             			display.newTabs[key] == true)
