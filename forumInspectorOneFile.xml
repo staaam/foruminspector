@@ -841,6 +841,7 @@ var display = function () {
         	{
         		if (topics[i].isUpdated())
         			tabUpdated = true;
+
         		display.createTopicItem( listDisplayItem.myself, topics[i] );
         	}
         	
@@ -892,6 +893,7 @@ var display = function () {
             			//alert("italic " + aTab.getNameContainer().innerHTML);
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isItalic";
+            			break;
             		}
             	}
             	
@@ -903,6 +905,7 @@ var display = function () {
             			//alert("bold " + aTab.getNameContainer().innerHTML);
             			aTab.getNameContainer().className =
             				aTab.getNameContainer().className + " isBold";
+            			break;
             		}
             	}
            	}
