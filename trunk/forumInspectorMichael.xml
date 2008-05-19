@@ -790,6 +790,7 @@ var display = function () {
             			break;
             		}
             	}
+            	alert(key + " class " + cont.className);
            	}
         },
         
@@ -1239,8 +1240,8 @@ var ctrl = function () {
             }
             board.load(function (board) {
             	if (!board.subItems || board.subItems.length == 0) {
-            		//ctrl.notSupported();
-            		//return;
+            		ctrl.notSupported();
+            		return;
             	}
             	display.setBoardDirection(board.dir);
             	display.setGlobalDirection(globalDir);
