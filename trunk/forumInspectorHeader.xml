@@ -33,7 +33,7 @@
 	    <EnumValue value="boardInfo" display_value="__MSG_boardInfo__"/>
     </UserPref>
    
-    <UserPref name="postorder" display_name="Posts Sort order" datatype="enum" default_value="1">
+    <UserPref name="postorder" display_name="Posts Sort Order" datatype="enum" default_value="asc">
 	    <EnumValue value="asc" display_value="Old first"/>
 	    <EnumValue value="des" display_value="New first"/>
     </UserPref>
