@@ -915,7 +915,12 @@ function parseLastPost(that, td) {
 	    if (!post.author && ds.length > 2)
 	    	post.author = ds[2];
     }
-    return post;
+	var p = new Post(that, post.link);
+	p.date = post.date;
+	p.author = post.author;
+	p.authorProfileLink = post.authorProfileLink;
+	p.link = post.link;
+    return p;
 }
 
 Forum.prototype.parse = function (content) {
@@ -1401,7 +1406,7 @@ var ctrl = function () {
     				prev[prevA[i]] = 1;
     			}
 
-	            for (var i=0;i<allForums.length;i++) {
+	            for (var i in allForums) {
 	            	var forum = allForums[i];
 	            	if (forum.isSelected()) {
 		        		forum.load(function() {
@@ -1410,7 +1415,7 @@ var ctrl = function () {
 		        			var ids = [ ];
 		        			var o = [];
 		        			var n = []; 
-		        			for (var j=0;j<ar.length;j++) {
+		        			for (var j in ar) {
 		        				ids[j] = ar[j].id;
 		        				if (prev[ar[j].id]) {
 		        					o.push(ar[j]);		        					
