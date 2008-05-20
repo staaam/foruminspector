@@ -1401,7 +1401,7 @@ var ctrl = function () {
     				prev[prevA[i]] = 1;
     			}
 
-	            for (var i in allForums) {
+	            for (var i=0;i<allForums.length;i++) {
 	            	var forum = allForums[i];
 	            	if (forum.isSelected()) {
 		        		forum.load(function() {
@@ -1410,7 +1410,7 @@ var ctrl = function () {
 		        			var ids = [ ];
 		        			var o = [];
 		        			var n = []; 
-		        			for (var j in ar) {
+		        			for (var j=0;j<ar.length;j++) {
 		        				ids[j] = ar[j].id;
 		        				if (prev[ar[j].id]) {
 		        					o.push(ar[j]);		        					
