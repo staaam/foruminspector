@@ -196,7 +196,7 @@ var display = function () {
   			labels.posts + ": " + forum.posts + "<br>" +
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
-    		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\" target=\"_blank\">" +
+    		forum.lastPost.author + "<a href=\"" + forum.lastPost.url + "\" target=\"_blank\">" +
     		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
         },
         
@@ -207,7 +207,7 @@ var display = function () {
   			labels.views + ": " + topic.views + " " +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
     		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
-    		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +
+    		topic.lastPost.author + "<a href=\"" + topic.lastPost.url + "\" target=\"_blank\">" +
     		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
         },
         

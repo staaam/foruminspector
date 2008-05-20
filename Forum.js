@@ -29,7 +29,7 @@ function parseLastPost(that, td) {
     	date: "",
 		author: "",
 		authorProfileLink: "",
-		link: "",
+		url: "",
 		id: 0
     };
 	for (var i=0; i<as.length; i++) {
@@ -44,7 +44,7 @@ function parseLastPost(that, td) {
 		}
 		else if (href.match(/viewtopic.php/)) {
 			// last post
-			post.link = that.mkFullUrl(href);
+			post.url = that.mkFullUrl(href);
 		}
 	}
     var date = lastPost.innerHTML;
@@ -54,7 +54,11 @@ function parseLastPost(that, td) {
 	    if (!post.author && ds.length > 2)
 	    	post.author = ds[2];
     }
-    return post;
+	var p = new Post(that, post.url);
+	p.date = post.date;
+	p.author = post.author;
+	p.authorProfileLink = post.authorProfileLink;
+    return p;
 }
 
 Forum.prototype.parse = function (content) {
