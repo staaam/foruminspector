@@ -660,7 +660,7 @@ var display = function () {
   			labels.posts + ": " + forum.posts + "<br>" +
     		labels.lastPost + ": " + forum.lastPost.date + " " +
     		"<a href=\"" + forum.lastPost.authorProfileLink + "\" target=\"_blank\">" +
-    		forum.lastPost.author + "<a href=\"" + forum.lastPost.link + "\" target=\"_blank\">" +
+    		forum.lastPost.author + "<a href=\"" + forum.lastPost.url + "\" target=\"_blank\">" +
     		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
         },
         
@@ -671,7 +671,7 @@ var display = function () {
   			labels.views + ": " + topic.views + " " +
     		labels.lastPost + ": " + topic.lastPost.date + " " +
     		"<a href=\"" + topic.lastPost.authorProfileLink + "\" target=\"_blank\">" +
-    		topic.lastPost.author + "<a href=\"" + topic.lastPost.link + "\" target=\"_blank\">" +
+    		topic.lastPost.author + "<a href=\"" + topic.lastPost.url + "\" target=\"_blank\">" +
     		"<img class=\"noborder\" src=\"http://foruminspector.googlecode.com/svn/trunk/icon_latest_reply.gif\"></a>";
         },
         
@@ -890,7 +890,7 @@ function parseLastPost(that, td) {
     	date: "",
 		author: "",
 		authorProfileLink: "",
-		link: "",
+		url: "",
 		id: 0
     };
 	for (var i=0; i<as.length; i++) {
@@ -905,7 +905,7 @@ function parseLastPost(that, td) {
 		}
 		else if (href.match(/viewtopic.php/)) {
 			// last post
-			post.link = that.mkFullUrl(href);
+			post.url = that.mkFullUrl(href);
 		}
 	}
     var date = lastPost.innerHTML;
@@ -915,11 +915,10 @@ function parseLastPost(that, td) {
 	    if (!post.author && ds.length > 2)
 	    	post.author = ds[2];
     }
-	var p = new Post(that, post.link);
+	var p = new Post(that, post.url);
 	p.date = post.date;
 	p.author = post.author;
 	p.authorProfileLink = post.authorProfileLink;
-	p.link = post.link;
     return p;
 }
 
